@@ -1,0 +1,64 @@
+<form #OperationForm="ngForm">
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+      cols="4"
+      required
+      minlength="3"
+      #Description="ngModel"
+    ></textarea>
+    <span
+      class="text-danger"
+      *ngIf="
+        (Description.touched || OperationForm.submitted) && Description.invalid
+      "
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addOperation()"
+      *ngIf="operationList.id == 0"
+      class="btn btn-primary"
+      [disabled]="OperationForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="operationList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateOperation()"
+      *ngIf="operationList.id != 0"
+      class="btn btn-primary"
+      [disabled]="OperationForm.invalid"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="operationList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

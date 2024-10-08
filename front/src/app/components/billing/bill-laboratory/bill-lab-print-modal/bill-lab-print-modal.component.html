@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col" id="printData">
+      <table class="table mt-3">
+        <thead class="table-primary">
+          <tr class="m-3 ps-3 text-bold">
+            <th scope="col" colspan="2">Bill Laboratory</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col">ID :</th>
+            <td>{{ BillLabPrintModalList.id }}</td>
+          </tr>
+          <tr>
+            <th scope="col">Service Charge :</th>
+            <td>
+              {{ serviceChargeList.name }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Price :</th>
+            <td>
+              {{ serviceChargeList.price | currency : "ETB" }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Accountant :</th>
+            <td>
+              {{ employeeList.firstName + " " + employeeList.lastName }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Date :</th>
+            <td>
+              {{ BillLabPrintModalList.date | date : "medium" }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Description :</th>
+            <td>
+              {{ BillLabPrintModalList.description }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="justify-right">
+    <button type="button" (click)="printPDF()" class="btn btn-outline-primary">
+      <i class="bi bi-printer"></i>
+    </button>
+  </div>
+</div>

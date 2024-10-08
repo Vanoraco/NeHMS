@@ -1,0 +1,663 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" routerLink="/dashboard">
+        <i class="bi bi-grid"></i> <span>{{ "dashboard" | translate }}</span>
+      </a>
+    </li>
+    <li
+      *ngIf="
+        employeeRole.name == 'Admin' ||
+        employeeRole.name == 'Receptionist' ||
+        employeeRole.name == 'Doctor' ||
+        employeeRole.name == 'Accountant'
+      "
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#patient-schedule-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-calendar-plus"></i
+        ><span>{{ "patient_schedule" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="patient-schedule-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Receptionist' ||
+            employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/unpaid-patient-schedules">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "unpaid_patient_schedule" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Receptionist' ||
+            employeeRole.name == 'Doctor' ||
+            employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/paid-patient-schedules">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "paid_patient_schedule" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#ipd-opd-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-folder"></i><span>{{ "ipd_opd" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="ipd-opd-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/ipds">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "in_patient" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/opds">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "out_patient" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'"
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#billing-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-cash-stack"></i><span>{{ "billing" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="billing-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/bill-schedules">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "bill_schedule" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/bill-laboratories">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "bill_laboratory" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/service-charges">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "service_charge" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="
+        employeeRole.name == 'Admin' ||
+        employeeRole.name == 'Doctor' ||
+        employeeRole.name == 'Nurse'
+      "
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#patient-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-person"></i><span>{{ "patient" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="patient-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/responsible-person">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "responsible_person" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/schedules">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "schedule" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/appointments">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "appointment" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/medical-history-drug">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medical_history_drug" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/medical-history-families">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medical_history_family" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/allergies">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "allergy" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/medical-interview-allergies">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medical_interview_allergy" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/medical-certificates">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medical_certificate" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/medical-interview-socrates">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medical_interview_socrates" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#laboratory-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-eyedropper"></i
+        ><span>{{ "laboratory" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="laboratory-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/laboratoy-test-results">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "laboratory_test_result" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Laboratorist'
+          "
+        >
+          <a routerLink="/laboratoy-test-types">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "laboratory_test_type" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Laboratorist'
+          "
+        >
+          <a routerLink="/laboratoy-test-categories">
+            <i class="bi bi-arrow-right"></i>
+            <span>{{ "laboratory_test_category" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" routerLink="/add-admission">
+        <i class="bi bi-journal-check"></i>
+        <span>{{ "addmission" | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="employeeRole.name == 'Admin'" class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#hr-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-layout-text-window-reverse"></i
+        ><span>{{ "human_resource" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="hr-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/employee-list">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "employee" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="
+        employeeRole.name == 'Admin' ||
+        employeeRole.name == 'Pharmacist' ||
+        employeeRole.name == 'Accountant'
+      "
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#pharmacy-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-cart-plus"></i><span>{{ "pharmacy" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="pharmacy-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <!-- <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Pharmacist'
+          "
+        >
+          <a routerLink="/pharmacy">
+            <i class="bi bi-arrow-right"></i><span>Pharmacy</span>
+          </a>
+        </li> -->
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Pharmacist' ||
+            employeeRole.name == 'Nurse' ||
+            employeeRole.name == 'Doctor'
+          "
+        >
+          <a routerLink="/medications">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medication" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Pharmacist' ||
+            employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/medicine-suppliers">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medicine_supplier" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Pharmacist' ||
+            employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/pharmacy-sales">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "pharmacy_sales" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            employeeRole.name == 'Nurse' ||
+            employeeRole.name == 'Doctor'
+          "
+        >
+          <a routerLink="/medicine-stock-hospitals">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "medicine_stock_hospital" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Pharmacist'
+          "
+        >
+          <a routerLink="/pharmacy-medicine-stocks">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "pharmacy_medicine_stock" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Pharmacist'
+          "
+        >
+          <a routerLink="/vaccines">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "vaccine" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'"
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#expense-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-graph-up-arrow"></i
+        ><span>{{ "expense" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="expense-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/expenses">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "expense" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/expense-categories">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "expense_category" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pharmacy-expenses">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "pharmacy_expense" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pharmacy-expense-categories">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "pharmacy_expense_category" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'"
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#payroll-system"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-activity"></i
+        ><span>{{ "payroll_system" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="payroll-system"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/payroll-reports">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "payroll_report" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/allowance-deductions">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "allowance_deducation" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/allowance-deduction-types">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "allowance_deducation_type" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="
+        employeeRole.name == 'Admin' || employeeRole.name == 'Laboratorist'
+      "
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#inventory-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-basket"></i><span>{{ "inventory" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="inventory-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/inventories">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "inventory" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/inventory-suppliers">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "inventory_supplier" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'"
+      class="nav-item"
+    >
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#revenue-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-coin"></i><span>{{ "revenue" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="revenue-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/revenues">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "revenue" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/revenue-categories">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "revenue_category" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#blood-bank-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-droplet-half"></i
+        ><span>{{ "blood_bank" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="blood-bank-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/blood-groups">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "blood_group" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/blood-group-status">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "blood_group_status" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/donors">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "doner" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-heading">{{ "settings" | translate }}</li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#setting-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-gear-fill"></i><span>{{ "settings" | translate }}</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="setting-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/general-settings">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "general_settings" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/languages">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "languages" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/bed">
+            <i class="bi bi-arrow-right"></i>
+            <span>{{ "bed" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'
+          "
+        >
+          <a routerLink="/ward">
+            <i class="bi bi-arrow-right"></i>
+            <span>{{ "ward" | translate }}</span>
+          </a>
+        </li>
+        <li
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Receptionist'
+          "
+        >
+          <a routerLink="/new-patients">
+            <i class="bi bi-arrow-right"></i>
+            <span>{{ "patient" | translate }}</span>
+          </a>
+        </li>
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/admission-types">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "admission_type" | translate }}</span>
+          </a>
+        </li>
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/email-sms-setups">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "email_sms" | translate }}</span>
+          </a>
+        </li>
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/payment-options">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "payment" | translate }}</span>
+          </a>
+        </li>
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/tax-rules">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "tax_rule" | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/notices">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "notice" | translate }}</span>
+          </a>
+        </li>
+        <li *ngIf="employeeRole.name == 'Admin'">
+          <a routerLink="/messages">
+            <i class="bi bi-arrow-right"></i
+            ><span>{{ "messages" | translate }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>

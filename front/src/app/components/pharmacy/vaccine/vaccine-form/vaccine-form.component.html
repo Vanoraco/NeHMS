@@ -1,0 +1,64 @@
+<form  #VForm="ngForm" >
+  <div class="row g-3">
+      <div class="col-12">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="name"
+          name="name"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #ZName="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(ZName.touched ||  VForm.submitted) && ZName.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="col-12">
+        <label for="description" class="form-label">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="description"
+          name="description"
+        />
+      </div>
+      <div class="text-center float-end justify-right">
+        <button
+          (click)="addVaccine()"
+          *ngIf="VaccineList.id == 0"
+          class="btn btn-primary"
+          [disabled]="VForm.invalid"
+        >
+          Save
+        </button>
+        <button
+          type="reset"
+          *ngIf="VaccineList.id == 0"
+          class="btn btn-info ms-3"
+        >
+          Reset
+        </button>
+        <button
+          (click)="updateVaccine()"
+          *ngIf="VaccineList.id != 0"
+          class="btn btn-primary"
+          [disabled]="VForm.invalid"
+        >
+          Update
+        </button>
+        <button
+          type="reset"
+          *ngIf="VaccineList.id != 0"
+          class="btn btn-info ms-3"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>

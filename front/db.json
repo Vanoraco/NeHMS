@@ -1,0 +1,25 @@
+{
+  "Messages": [
+    {
+      "id": 1,
+      "status": false,
+      "employeeId": 1,
+      "date": "2023-02-28T16:51",
+      "message": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "id": 2,
+      "status": false,
+      "employeeId": 2,
+      "date": "2023-02-28T16:51",
+      "message": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "id": 3,
+      "status": false,
+      "employeeId": 4,
+      "date": "2023-02-28T16:51",
+      "message": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    }
+  ]
+}

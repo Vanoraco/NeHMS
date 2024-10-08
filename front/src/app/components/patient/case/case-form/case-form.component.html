@@ -1,0 +1,74 @@
+<form #CaseForm="ngForm">
+  <div class="row g-3">
+    <div class="col-12">
+      <label for="title" class="form-label">Case Title</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="title"
+        name="title"
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #Title="ngModel"
+        required
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Title.touched || CaseForm.submitted) && Title.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="caseDetail" class="form-label">Case Detail</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="caseDetail"
+        name="caseDetail"
+        required
+        minlength="3"
+        #CaseDetail="ngModel"
+      ></textarea>
+      <span
+        class="text-danger"
+        *ngIf="(CaseDetail.touched || CaseForm.submitted) && CaseDetail.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="date" class="form-label">Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="date"
+        name="date"
+        required
+      />
+    </div>
+    <div class="text-center float-end justify-right">
+      <button
+        (click)="addCase()"
+        *ngIf="CaseList.id == 0"
+        class="btn btn-primary"
+        [disabled]="CaseForm.invalid"
+      >
+        Add
+      </button>
+      <button type="reset" *ngIf="CaseList.id == 0" class="btn btn-info ms-3">
+        Reset
+      </button>
+      <button
+        (click)="updateCase()"
+        *ngIf="CaseList.id != 0"
+        class="btn btn-primary"
+        [disabled]="CaseForm.invalid"
+      >
+        Update
+      </button>
+      <button type="reset" *ngIf="CaseList.id != 0" class="btn btn-info ms-3">
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

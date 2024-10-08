@@ -1,0 +1,67 @@
+<form #exForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+      required
+      #Name="ngModel"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(Name.touched || exForm.submitted) && Name.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Blood Group Status</label>
+    <select
+      id="bloodGroupStatusId"
+      [(ngModel)]="bloodGroupStatusId"
+      name="bloodGroupStatusId"
+    >
+      <option
+        *ngFor="let item of bloodGroupStatusList$ | async as list"
+        selected
+        [value]="item.id"
+        >{{ item.status }}</option
+      >
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    ></textarea>
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addBloodGroup()"
+      *ngIf="bloodGroupList.id == 0"
+      class="btn btn-primary"
+      [disabled]="exForm.invalid"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="bloodGroupList.id == 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+    <button
+      (click)="updateBloodGroup()"
+      *ngIf="bloodGroupList.id != 0"
+      class="btn btn-primary"
+      [disabled]="exForm.invalid"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="bloodGroupList.id != 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+  </div>
+</form>

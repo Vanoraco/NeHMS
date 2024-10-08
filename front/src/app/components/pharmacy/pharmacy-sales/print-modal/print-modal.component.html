@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col" id="printData">
+      <table class="table mt-3">
+        <thead class="table-primary">
+          <tr class="m-3 ps-3 text-bold">
+            <th scope="col" colspan="2">Pahrmacy Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col">ID :</th>
+            <td>{{ PrintModalList.id }}</td>
+          </tr>
+          <tr>
+            <th scope="col">Medicine Stock :</th>
+            <td>
+              {{ PrintModalList.pharmacyMedStock.name }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Pharmacist :</th>
+            <td>
+              {{
+                PrintModalList.employee.firstName +
+                  " " +
+                  PrintModalList.employee.lastName
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Amount :</th>
+            <td>{{ PrintModalList.amount }}</td>
+          </tr>
+          <tr>
+            <th scope="col">Price :</th>
+            <td>{{ PrintModalList.price | currency : "ETB" }}</td>
+          </tr>
+          <tr>
+            <th scope="col">Timestamp :</th>
+            <td>
+              {{ PrintModalList.timeStamp | date : "medium" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="justify-right">
+    <button type="button" (click)="printPDF()" class="btn btn-outline-primary">
+      <i class="bi bi-printer"></i>
+    </button>
+  </div>
+</div>

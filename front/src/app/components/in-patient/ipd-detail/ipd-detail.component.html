@@ -1,0 +1,197 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>IPD - In Patient</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item Active">IPD-Detail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-body pt-3">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#ipd-overview"
+                >
+                  Overview
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#medication"
+                >
+                  Medication
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#prescription"
+                >
+                  Prescription
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#lab-history"
+                >
+                  Lab History
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#bed-history"
+                >
+                  Bed History
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#treatment-history"
+                >
+                  Treatment History
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div
+                class="tab-pane fade show active profile-overview"
+                id="ipd-overview"
+              >
+                <h5 class="card-title">Patient Details</h5>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Full Name</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.firstName + " " + inPatientId.lastName }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Age</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.age }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Date of Birth</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.dateOfBirth | date : "mediumDate" }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Phone</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.phone }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Email</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.email }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Address</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.address }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Gender</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ genderMap.get(inPatientId.genderId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Marital Status</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ maritalStatusMap.get(inPatientId.maritalStatusId) }}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Country</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ countryMap.get(inPatientId.countryId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">City</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ cityMap.get(inPatientId.cityId) }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Language</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ languageMap.get(inPatientId.languageId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Education Level</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          educationLevelNameMap.get(
+                            inPatientId.educationLevelId
+                          )
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Blood Group</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ bloodGroupMap.get(inPatientId.bloodGroupId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Is Decessed</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ inPatientId.is_decessed }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="medication">
+                <app-medication></app-medication>
+              </div>
+              <div class="tab-pane fade pt-3" id="prescription">
+                <app-prescription></app-prescription>
+              </div>
+              <div class="tab-pane fade pt-3" id="lab-history">
+                <!-- <app-medical-history></app-medical-history> -->
+              </div>
+              <div class="tab-pane fade pt-3" id="bed-history">
+                <h1>Bed History Tab</h1>
+              </div>
+              <div class="tab-pane fade pt-3" id="treatment-history">
+                <h1>Treatment History Tab</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

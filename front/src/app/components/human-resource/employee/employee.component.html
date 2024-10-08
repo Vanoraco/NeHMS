@@ -1,0 +1,183 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Human Resource</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item">Human Resource</li>
+        <li class="breadcrumb-item active">Employee</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">List Of Employee</h5>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  (click)="modalAdd()"
+                >
+                  <i class="bi bi-plus-lg"></i>
+                  Employee
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-between">
+              <div class="col-2 mb-3">
+                <select
+                  (change)="onTableSizeChange($event)"
+                  class="form-select mt-2"
+                  id="pagination"
+                >
+                  <option *ngFor="let size of tableSizes">{{ size }}</option>
+                </select>
+              </div>
+              <div class="col-4 mb-3">
+                <input
+                  type="text"
+                  id="search"
+                  name="searchName"
+                  [(ngModel)]="searchName"
+                  class="form-control mt-2"
+                  (ngModelChange)="searchByName()"
+                  placeholder="Search here ..."
+                />
+              </div>
+            </div>
+            <table class="table" id="employee-table">
+              <thead>
+                <tr>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Id<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('firstName')">
+                    First Name<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('lastName')">
+                    Last Name<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('age')">
+                    Age<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('genderId')">
+                    Gender<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('emailAddress')">
+                    Email<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('phone')">
+                    Phone<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('employeeRoleId')">
+                    Role<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th colspan="2" style="align-items: center" scope="col">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of employeeList$
+                  "
+                >
+                  <th scope="row">{{ item.id }}</th>
+                  <td>{{ item.firstName }}</td>
+                  <td>{{ item.lastName }}</td>
+                  <td>{{ item.age }}</td>
+                  <td>{{ employeeGenderMap.get(item.genderId) }}</td>
+                  <td>{{ item.emailAddress }}</td>
+                  <td>{{ item.phone }}</td>
+                  <td>{{ employeeRoleMap.get(item.employeeRoleId) }}</td>
+
+                  <td>
+                    <i
+                      [routerLink]="['/employee-profile/', item.id]"
+                      class="bi bi-list icon-show"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Show"
+                    ></i>
+                    <i
+                      (click)="modalEdit(item)"
+                      data-bs-toggle="modal"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Edit"
+                      data-bs-target="#staticBackdrop"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      (click)="delete(item)"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Delete"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="onTableDataChange($event)"
+            ></pagination-controls>
+
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div
+                class="modal-dialog modal-fullscreen rounded-1 border border-0"
+              >
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-employee-form
+                      [employeeList]="employeeList"
+                      *ngIf="activateEmployeeComponent"
+                    >
+                    </app-employee-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

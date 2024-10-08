@@ -1,0 +1,61 @@
+<form #availableForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Available Name</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #AName="ngModel"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(AName.touched || availableForm.submitted) && AName.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addAvailable()"
+      [disabled]="availableForm.invalid"
+      *ngIf="availableList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="availableList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateAavailable()"
+      *ngIf="availableList.id != 0"
+      [disabled]="availableForm.invalid"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="availableList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

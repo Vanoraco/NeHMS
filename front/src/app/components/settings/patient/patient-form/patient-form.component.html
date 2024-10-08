@@ -1,0 +1,316 @@
+<form #patientForm="ngForm">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="form-group mt-2">
+        <label for="firstname" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="firstName"
+          name="firstName"
+          pattern="[a-zA-Z\s]+$"
+          minlength="3"
+          #FirstName="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="
+            (FirstName.touched || patientForm.submitted) && FirstName.invalid
+          "
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="form-group mt-2">
+        <label for="middlename" class="form-label">Middle Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="middleName"
+          name="middleName"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #MName="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(MName.touched || patientForm.submitted) && MName.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="form-group mt-2">
+        <label for="lastname" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="lastName"
+          name="lastName"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #LName="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(LName.touched || patientForm.submitted) && LName.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="form-group mt-2">
+        <label for="gender" class="form-label">Gender</label>
+        <select class="form-select" [(ngModel)]="genderId" name="genderId">
+          <option *ngFor="let item of genderList$ | async" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group mt-2">
+            <label for="dateofbirth" class="form-label">Date of birth</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="dateOfBirth"
+              name="dateOfBirth"
+              [max]="getToday()"
+              (change)="ageCalculation()"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group mt-2">
+            <label for="comments" class="form-label">Age</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="age"
+              name="age"
+              [value]="age"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-2">
+        <label for="address" class="form-label">Address</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="address"
+          name="address"
+          pattern="[a-zA-Z\s]+$"
+          minlength="3"
+          #Address="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(Address.touched || patientForm.submitted) && Address.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group mt-2">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          email
+          #Email="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(Email.touched || patientForm.submitted) && Email.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="form-group mt-2">
+        <label for="phone" class="form-label">Phone</label>
+        <input
+          type="tel"
+          class="form-control"
+          [(ngModel)]="phone"
+          name="phone"
+          pattern="[0-9]+"
+          minlength="10"
+          #Phone="ngModel"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(Phone.touched || patientForm.submitted) && Phone.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="form-group mt-2">
+        <label for="country" class="form-label">Country</label>
+        <select class="form-select" [(ngModel)]="countryId" name="countryId">
+          <option *ngFor="let item of countryList$ | async" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mt-2">
+        <label for="city" class="form-label">City</label>
+        <select class="form-select" [(ngModel)]="cityId" name="cityId">
+          <option *ngFor="let item of citiesList$ | async" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mt-2">
+        <label for="language" class="form-label">Language</label>
+        <select class="form-select" [(ngModel)]="languageId" name="languageId">
+          <option *ngFor="let item of languagesList$ | async" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mt-2">
+        <label for="maritalstatus" class="form-label">Marital Status</label>
+        <select
+          class="form-select"
+          [(ngModel)]="maritalStatusId"
+          name="maritalStatusId"
+        >
+          <option value="1">Single</option>
+          <option value="2">Married</option>
+          <option value="3">Widowed</option>
+          <option value="4">Divorced</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group mt-2">
+        <label for="comments" class="form-label">Blood Group</label>
+        <select
+          class="form-select"
+          [(ngModel)]="bloodGroupId"
+          name="bloodGroupId"
+        >
+          <option
+            *ngFor="let item of bloodGroupList$ | async"
+            [value]="item.id"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mt-2">
+        <label for="comments" class="form-label">Is decessed</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="is_decessed"
+          name="is_decessed"
+        />
+      </div>
+      <div class="form-group mt-2">
+        <label for="comments" class="form-label">Education level</label>
+        <select
+          class="form-select"
+          [(ngModel)]="educationLevelId"
+          name="educationLevelId"
+        >
+          <option
+            *ngFor="let item of educationLevelList$ | async"
+            [value]="item.id"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="form-group mt-2">
+          <label for="img-url" class="form-label">Image Url</label>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onSelect($event)"
+            class="form-control mb-3"
+            id="inputGroupFile02"
+          />
+        </div>
+        <div class="col-lg-6">
+          <webcam
+            [trigger]="invokeObservable"
+            (imageCapture)="captureImg($event)"
+            [height]="150"
+            [width]="150"
+          ></webcam>
+          <br />
+          <button
+            type="button"
+            class="btn btn-danger m-2"
+            (click)="getSnapshot()"
+          >
+            Take Image
+          </button>
+        </div>
+        <div class="col-lg-6">
+          <img
+            *ngIf="selectImageFromWebCam"
+            class="rounded-circle"
+            [src]="webcamImage!.imageAsDataUrl"
+            height="120px"
+            width="120px"
+          />
+          <img
+            *ngIf="selectImageFromFile"
+            class="rounded-circle"
+            title="Profile Picture"
+            [src]="url"
+            height="120px"
+            width="120px"
+          />
+          <br />
+          <button type="button" class="btn btn-success m-2" (click)="upload()">
+            Upload
+          </button>
+        </div>
+      </div>
+      <div class="float-end mt-4">
+        <button
+          (click)="addPatient()"
+          *ngIf="PatientList.id == 0"
+          class="btn btn-primary"
+          [disabled]="patientForm.invalid"
+        >
+          Save
+        </button>
+        <button
+          type="reset"
+          *ngIf="PatientList.id == 0"
+          class="btn btn-info ms-3"
+        >
+          Reset
+        </button>
+        <button
+          (click)="updatePatient()"
+          *ngIf="PatientList.id != 0"
+          class="btn btn-primary"
+        >
+          Update
+        </button>
+        <button
+          type="reset"
+          *ngIf="PatientList.id != 0"
+          class="btn btn-info ms-3"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

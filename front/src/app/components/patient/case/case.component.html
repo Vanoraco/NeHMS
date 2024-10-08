@@ -1,0 +1,115 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-2">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-2">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div class="col-4 mb-2">
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#case-modal"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong>
+      Case
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <!-- <th style="cursor: pointer" (click)="sort('id')">
+  Patient<i class="fa fa-fw fa-sort"></i>
+</th> -->
+      <th style="cursor: pointer" (click)="sort('id')">
+        Title<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Case Detail <i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Date<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of CaseList$
+      "
+    >
+      <td>{{ item.id }}</td>
+      <!-- <td>{{ patientListMap.get(item.patientId) }}</td> -->
+      <td>{{ item.title }}</td>
+      <td>{{ item.caseDetail }}</td>
+      <td>{{ item.date | date : "mediumDate" }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-bs-target="#case-modal"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="case-modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="case-modalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="case-modalLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="case-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-case-form [CaseList]="CaseList" *ngIf="activateCaseComponent">
+        </app-case-form>
+      </div>
+    </div>
+  </div>
+</div>

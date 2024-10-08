@@ -1,0 +1,142 @@
+<form #medHistForm="ngForm">
+  <div class="row g-3">
+    <div class="col-6">
+      <label for="patientId" class="form-label">Patient</label>
+      <select id="patientId" [(ngModel)]="patientId" name="patientId">
+        <option
+          *ngFor="let item of patientId$ | async as list"
+          value="{{ item.id }}"
+          >{{ item.firstName + " " + item.middleName }}</option
+        >
+      </select>
+    </div>
+    <div class="col-6">
+      <label for="symptom" class="form-label">Symptom</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="symptom"
+        name="symptom"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #Symptom="ngModel"
+      />
+      <span
+      class="text-danger"
+      *ngIf="(Symptom.touched ||  medHistForm.submitted) && Symptom.invalid"
+    >
+      Please enter a valid input
+    </span>
+    </div>
+    <div class="col-6">
+      <label for="postMedication" class="form-label">Post Medication</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="postMedication"
+        name="postMedication"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #PostMed="ngModel"
+      />
+      <span
+      class="text-danger"
+      *ngIf="(PostMed.touched ||  medHistForm.submitted) && PostMed.invalid"
+    >
+      Please enter a valid input
+    </span>
+    </div>
+    <div class="col-6">
+      <label for="recratioalDrug" class="form-label">Recrational Drug</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="recratioalDrug"
+        name="recratioalDrug"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #recDrug="ngModel"
+      />
+      <span
+      class="text-danger"
+      *ngIf="(recDrug.touched ||  medHistForm.submitted) && recDrug.invalid"
+    >
+      Please enter a valid input
+    </span>
+    </div>
+    <div class="col-6">
+      <label for="intravenousDrug" class="form-label">Intravenous Drug</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="intravenousDrug"
+        name="intravenousDrug"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #intDrug="ngModel"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(intDrug.touched ||  medHistForm.submitted) && intDrug.invalid"
+        >
+              Please enter a valid input
+      </span>
+    </div>
+    <div class="col-6">
+      <label for="otcDrug" class="form-label">OTC Drug</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="otcDrug"
+        name="otcDrug"
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #OTCDrug="ngModel"
+        required
+      />
+      <span
+      class="text-danger"
+      *ngIf="(OTCDrug.touched ||  medHistForm.submitted) && OTCDrug.invalid"
+      >
+            Please enter a valid input
+    </span>
+    </div>
+    <div class="text-center float-end justify-right">
+      <button
+        (click)="addMedicalHistoryDrug()"
+        *ngIf="medicalHistoryDrugList.id == 0"
+        class="btn btn-primary"
+        [disabled]="medHistForm.invalid"
+      >
+        Add
+      </button>
+      <button
+        type="reset"
+        *ngIf="medicalHistoryDrugList.id == 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+      <button
+        (click)="updateMedicalHistoryDrug()"
+        *ngIf="medicalHistoryDrugList.id != 0"
+        class="btn btn-primary"
+        [disabled]="medHistForm.invalid"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="medicalHistoryDrugList.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+  </form>
+  

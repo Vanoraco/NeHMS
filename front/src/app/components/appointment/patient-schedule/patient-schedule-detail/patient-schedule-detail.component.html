@@ -1,0 +1,265 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Patient Schedule</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item Active">Patient Schedule Detail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-body pt-3">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#admission-overview"
+                >
+                  Overview
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#bill-schedules"
+                >
+                  Bill Schedules
+                </button>
+              </li>
+              <!-- <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#prescription"
+                >
+                  Prescription
+                </button>
+              </li> -->
+            </ul>
+            <div class="tab-content pt-2">
+              <div
+                class="tab-pane fade show active profile-overview"
+                id="admission-overview"
+              >
+                <h5 class="card-title">Patient Schedule Details</h5>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="d-flex flex-column align-items-center">
+                      <img
+                        class="rounded-circle mb-1"
+                        [src]="url"
+                        height="150px"
+                        width="150px"
+                      />
+                      <h5>
+                        {{ patientMap.get(patientScheduleList.patientId) }}
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Admission Type</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          admissionTypeMap.get(
+                            patientScheduleList.admissionTypeId
+                          )
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Employee</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ employeeMap.get(patientScheduleList.employeeId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Room</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ roomMap.get(patientScheduleList.roomId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Is Paid</div>
+                      <div
+                        *ngIf="patientScheduleList.is_Payed"
+                        class="col-lg-7 col-md-7"
+                      >
+                        <span class="badge bg-success">Paid</span>
+                      </div>
+                      <div
+                        *ngIf="!patientScheduleList.is_Payed"
+                        class="col-lg-7 col-md-7"
+                      >
+                        <span class="badge bg-danger">UnPaid</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Is Dismissed</div>
+                      <div
+                        *ngIf="patientScheduleList.is_Dismissed"
+                        class="col-lg-7 col-md-7"
+                      >
+                        <span class="badge bg-success">Yes</span>
+                      </div>
+                      <div
+                        *ngIf="!patientScheduleList.is_Dismissed"
+                        class="col-lg-7 col-md-7"
+                      >
+                        <span class="badge bg-danger">No</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">TimeStamp</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          patientScheduleList.timeStamp | date : "mediumDate"
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Schedule Date</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          patientScheduleList.scheduleDate | date : "mediumDate"
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Schedule Time</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          patientScheduleList.scheduleTime | date : "mediumDate"
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Status</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ patientScheduleList.statues }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Schedule Status</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          scheduleStatusMap.get(
+                            patientScheduleList.scheduleStatusId
+                          )
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">
+                        Appointment Duration
+                      </div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          appointmentDurationMap.get(
+                            patientScheduleList.appointmentDurationId
+                          )
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade pt-3" id="bill-schedules">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title">Bill Schedules</h5>
+                  </div>
+                  <div class="col">
+                    <button
+                      type="button"
+                      class="btn btn-primary float-end"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      (click)="modalAdd()"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <th>id</th>
+                    <th>Employee</th>
+                    <th>Service Charge</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of billSchedulesOnePatient">
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeMap.get(item.employeeId) }}</td>
+                      <td>{{ item.serviceChargeId }}</td>
+                      <td>{{ item.date | date : "mediumDate" }}</td>
+                      <td>
+                        <i
+                          (click)="modalEdit(item)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                          class="bi bi-pencil-square icon-edit"
+                        ></i>
+                        <i
+                          (click)="delete(item)"
+                          class="bi bi-trash icon-delete"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div
+                  class="modal fade"
+                  id="staticBackdrop"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                          {{ modalTitle }}
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          (click)="modalClose()"
+                          id="modal-close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <app-addbillschedule-form
+                          [billSchedulesList]="billSchedulesList"
+                          *ngIf="activateBillSchedulesComponent"
+                        >
+                        </app-addbillschedule-form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade pt-3" id="prescription">
+                <app-prescription></app-prescription>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

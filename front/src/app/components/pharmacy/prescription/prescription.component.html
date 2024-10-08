@@ -1,0 +1,172 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-2">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-2">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div
+    *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+    class="col-4 mb-2"
+  >
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#prescription-modal"
+      (click)="modalAdd()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      Prescription
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <th>Id</th>
+    <th>Doctors</th>
+    <th>Medication</th>
+    <th>Pres. Subject</th>
+    <th>Pres. Detail</th>
+    <th>Order Date</th>
+    <th>Is Canceled</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of prescriptionList$
+         
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ employeeMap.get(item.employeeId) }}</td>
+      <td>{{ medicationMap.get(item.medicationId) }}</td>
+      <td>{{ item.prescriptionSubject }}</td>
+      <td>{{ item.prescriptionDetail }}</td>
+      <td>{{ item.orderDate | date : "mediumDate" }}</td>
+
+      <td>
+        <label *ngIf="item.is_Cancelled == true" class="px-3 text-four rounded"
+          >Cancelled
+        </label>
+        <label *ngIf="item.is_Cancelled == false" class="px-3 text-two rounded">
+          Not cancelled
+        </label>
+      </td>
+      <td>
+        <i
+          *ngIf="
+            employeeRole.name == 'Admin' ||
+            (employeeRole.name == 'Pharmacist' && item.is_Cancelled == false)
+          "
+          (click)="modalAddPharmaSales(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#pharmacy-sales-modal"
+          class="bi bi-bag-plus icon-edit"
+          title="Add Pharmacy Sales"
+        ></i>
+        <i
+          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#prescription-modal"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i
+          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          (click)="delete(item)"
+          class="bi bi-trash icon-delete"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="prescription-modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="prescription-modalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="prescription-modalLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="prescription-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-prescription-form
+          [prescriptionData]="prescriptions"
+          *ngIf="activatePrescriptionComponent"
+        >
+        </app-prescription-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="pharmacy-sales-modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="pharmacy-sales-modalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="pharmacy-sales-modalLabel">
+          {{ modalPharmaSalesTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="add-edit-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-pharmacy-sales-form
+          [prescriptionListOne]="prescriptions"
+          [pharmacySalesData]="pharmacySalesList"
+          *ngIf="activatePhaSalesComponent"
+        >
+        </app-pharmacy-sales-form>
+      </div>
+    </div>
+  </div>
+</div>

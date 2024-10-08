@@ -1,0 +1,29 @@
+<form  #medcatForm="ngForm">
+    <div class="mb-3">
+        <label for="name" class="form-label">Medicine Category</label>
+        <input 
+        type="text" 
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #MedCat="ngModel"
+        class="form-control"
+         [(ngModel)]="name"
+          name="name" />
+          <span
+          class="text-danger"
+          *ngIf="(MedCat.touched ||  medcatForm.submitted) && MedCat.invalid"
+        >
+          Please enter a valid input
+        </span>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description">
+    </div>
+    <button (click)="addMedicineCategory()" *ngIf="medicineCategory.id==0" class="btn btn-primary">
+        Add
+    </button>
+    <button (click)="updateMedicineCategory()" *ngIf="medicineCategory.id!=0" class="btn btn-primary">
+        Update
+    </button>
+</form>

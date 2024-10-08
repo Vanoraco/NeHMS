@@ -1,0 +1,10 @@
+.input-group-text {
+    background-color: white;
+    color: #0D6EFD;
+    cursor: pointer;
+}
+.input-group-text:hover {
+    background-color: #0D6EFD;
+    color: white;
+    cursor: pointer;
+}

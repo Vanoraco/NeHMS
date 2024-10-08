@@ -1,0 +1,166 @@
+<div class="row justify-content-between">
+  <div class="col-md-2 mb-2">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-md-6 mb-2">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div *ngIf="loggedInEmployeeRole.name == 'Admin'" class="col-md-4 mb-2">
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong>
+      Payroll
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Salary<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Net Salary<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Date<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Month<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Year<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th *ngIf="loggedInEmployeeRole.name == 'Admin'">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of payrollList$
+          
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>
+        {{
+          employeeSalaryListMap.get(item.employeeSalaryId) | currency : "ETB"
+        }}
+      </td>
+      <td>{{ item.baseSalary | currency : "ETB" }}</td>
+      <td>{{ item.date | date : "dd" }}</td>
+      <td>{{ item.month | date : "MMMM" }}</td>
+      <td>{{ item.year | date : "y" }}</td>
+      <td *ngIf="loggedInEmployeeRole.name == 'Admin'">
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i
+          (click)="modalAddAllowanceDeduction(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#allowanceDeduction"
+          title="Add allowance deduction"
+          class="bi bi-plus-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog rounded-1 border border-0 modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="add-edit-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-payroll-form
+          [payrollList]="payrollList"
+          *ngIf="activatePayrollComponent"
+        >
+        </app-payroll-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="allowanceDeduction"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="allowanceDeductionLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="allowanceDeductionLabel">
+          {{ modalAllowanceDeductionTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="allowance-deduction-modal-close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <app-modal-add-allowance-deduction
+          [allowanceDeductionList]="allowanceDeductionList"
+          *ngIf="activateAllowanceDeductionComponent"
+        >
+        </app-modal-add-allowance-deduction>
+      </div>
+    </div>
+  </div>
+</div>

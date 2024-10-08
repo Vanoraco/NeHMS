@@ -1,0 +1,83 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Medical Certificate</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Medical Certificate</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="card">
+      <div class="card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col" id="printData">
+              <table class="table mt-3">
+                <thead class="table-primary">
+                  <tr class="m-3 ps-3 text-bold">
+                    <th scope="col" colspan="2">Medical Certificate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">ID :</th>
+                    <td>{{ medicalCertificateData.id }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Doctor :</th>
+                    <td>
+                      {{ employeeName.firstName + " " + employeeName.lastName }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Start Date :</th>
+                    <td>
+                      {{ medicalCertificateData.startDate | date : "medium" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">End Date :</th>
+                    <td>
+                      {{ medicalCertificateData.endDate | date : "medium" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Timestamp :</th>
+                    <td>
+                      {{ medicalCertificateData.timeStamp | date : "medium" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Number Of Date :</th>
+                    <td>
+                      {{
+                        medicalCertificateData.numberOfDate | date : "medium"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Description :</th>
+                    <td>
+                      {{ medicalCertificateData.description }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="justify-right">
+            <button
+              type="button"
+              (click)="printPDF()"
+              class="btn btn-outline-primary"
+            >
+              <i class="bi bi-printer"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

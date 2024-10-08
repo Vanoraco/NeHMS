@@ -1,0 +1,105 @@
+<form class="row">
+  <div class="mb-3">
+    <label class="col-sm-5 col-form-label">Patient</label>
+    <div class="col-sm-12">
+      <select [(ngModel)]="patientId" name="patientId">
+        <option
+          *ngFor="let item of getPatientList$ | async"
+          [value]="item.id"
+          >{{ item.firstName + " " + item.firstName }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="col-sm-5 col-form-label">Allergy</label>
+    <div class="col-sm-12">
+      <select [(ngModel)]="allergyId" name="allergyId">
+        <option
+          *ngFor="let item of getAllergyList$ | async"
+          [value]="item.id"
+          >{{ item.name }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label for="throatSwelling" class="form-label">Throat Swelling</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="throatSwelling"
+        name="throatSwelling"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="puffFace" class="form-label">Puff Face</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="puffFace"
+        name="puffFace"
+      />
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label for="troubleBreathing" class="form-label">Trouble Breathing</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="troubleBreathing"
+        name="troubleBreathing"
+      />
+    </div>
+    <div class="mb-3">
+      <label for=" other" class="form-label">Other</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="other"
+        name="other"
+      />
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    ></textarea>
+  </div>
+
+  <div class="float-end">
+    <button
+      (click)="addMedicalInterviewList()"
+      *ngIf="medicalInterviewList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="medicalInterviewList.id == 0"
+      class="btn btn-info ms-2"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateMedicalInterviewList()"
+      *ngIf="medicalInterviewList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="medicalInterviewList.id != 0"
+      class="btn btn-info ms-2"
+    >
+      Reset
+    </button>
+  </div>
+</form>

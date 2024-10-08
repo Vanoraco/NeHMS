@@ -1,0 +1,143 @@
+<form [formGroup]="formData" class="row g-3" (ngSubmit)="savePharmacySales()">
+  <div class="col-6">
+    <label for="pharmacyMedStockId" class="form-label"
+      >Pharmacy Medicine Stock</label
+    ><span class="text-danger">*</span>
+    <select
+      id="pharmacyMedStockId"
+      formControlName="pharmacyMedStockId"
+      (change)="getQuantity()"
+      [ngClass]="{
+        'is-invalid': submitted && controls['pharmacyMedStockId'].errors
+      }"
+      name="pharmacyMedStockId"
+    >
+      <option
+        *ngFor="let item of pharmacyMedStockList"
+        value="{{ item.id }}"
+        >{{ item.name }}</option
+      >
+    </select>
+    <div
+      class="invalid-feedback"
+      *ngIf="submitted && controls['pharmacyMedStockId'].errors"
+    >
+      <div *ngIf="controls['pharmacyMedStockId'].errors['required']">
+        Pharmacy med stock is required
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <label for="employeeId" class="form-label">Pharmacist</label
+    ><span class="text-danger">*</span>
+    <select
+      id="employeeId"
+      formControlName="employeeId"
+      [ngClass]="{
+        'is-invalid': submitted && controls['employeeId'].errors
+      }"
+      name="employeeId"
+    >
+      <option
+        *ngFor="let item of employeeList"
+        selected
+        value="{{ item.id }}"
+        >{{
+          item.firstName + " " + item.lastName + " " + "(" + item.id + ")"
+        }}</option
+      >
+    </select>
+    <div
+      class="invalid-feedback"
+      *ngIf="submitted && controls['employeeId'].errors"
+    >
+      <div *ngIf="controls['employeeId'].errors['required']">
+        Employee is required
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <label for="amount" class="form-label">Amount</label
+    ><span class="text-danger">*</span>
+    <div class="input-group mb-3">
+      <input
+        type="number"
+        class="form-control"
+        formControlName="amount"
+        min="0"
+        (change)="priceCalculation()"
+        [ngClass]="{
+          'is-invalid': submitted && controls['amount'].errors
+        }"
+        name="amount"
+      />
+      <span class="input-group-text" id="basic-addon2"
+        >Ava Qty. = {{ avaQuantity }}</span
+      >
+    </div>
+    <div
+      class="invalid-feedback"
+      *ngIf="submitted && controls['amount'].errors"
+    >
+      <div *ngIf="controls['amount'].errors['required']">
+        Amount is required
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <label for="price" class="form-label">Price</label
+    ><span class="text-danger">*</span>
+    <div class="input-group mb-3">
+      <span class="input-group-text">ETB</span>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="price"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="col-6">
+    <label for="timeStamp" class="form-label">Timestamp</label
+    ><span class="text-danger">*</span>
+    <input
+      type="datetime-local"
+      class="form-control"
+      formControlName="timeStamp"
+    />
+  </div>
+  <div class="col-6">
+    <label for="description" class="form-label">Description</label>
+    <input type="text" class="form-control" formControlName="description" />
+  </div>
+  <div class="float-left">
+    <button
+      type="submit"
+      *ngIf="pharmacySalesData.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="pharmacySalesData.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      type="submit"
+      *ngIf="pharmacySalesData.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="pharmacySalesData.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

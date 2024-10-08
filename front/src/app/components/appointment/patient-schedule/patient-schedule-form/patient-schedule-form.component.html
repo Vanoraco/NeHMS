@@ -1,0 +1,210 @@
+<form class="g-3">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group mb-1">
+            <label for="patientId" class="form-label">Patient</label>
+            <select id="patientId" [(ngModel)]="patientId" name="patientId">
+              <option
+                *ngFor="let item of patientId$ | async as list"
+                [value]="item.id"
+                >{{ item.firstName + " " + item.lastName }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="admissionTypeId" class="form-label"
+              >Admission Type</label
+            >
+            <select
+              id="admissionTypeId"
+              [(ngModel)]="admissionTypeId"
+              name="admissionTypeId"
+            >
+              <option
+                *ngFor="let item of admissionTypeId$ | async as list"
+                [value]="item.id"
+                >{{ item.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="roomId" class="form-label">Room</label>
+            <select id="roomId" [(ngModel)]="roomId" name="roomId">
+              <option
+                *ngFor="let item of roomId$ | async as list"
+                [value]="item.id"
+                >{{ item.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="employeeId" class="form-label">Doctors</label>
+            <select
+              id="employeeId"
+              [(ngModel)]="employeeId"
+              name="employeeId"
+              (change)="getDoctorSchedule()"
+            >
+              <option *ngFor="let item of employeeId$" [value]="item.id">{{
+                item.firstName + " " + item.middleName
+              }}</option>
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="is_Payed" class="form-label">Is Payed</label>
+            <select
+              id="is_Payed"
+              class="form-select"
+              [(ngModel)]="is_Payed"
+              name="is_Payed"
+            >
+              <option [value]="true">True</option>
+              <option [value]="false">False</option>
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="is_Dismissed" class="form-label">Is Dismissed</label>
+            <select
+              id="is_Dismissed"
+              class="form-select"
+              [(ngModel)]="is_Dismissed"
+              name="is_Dismissed"
+            >
+              <option [value]="true">True</option>
+              <option [value]="false">False</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group mb-1">
+            <label for="timeStamp" class="form-label">TimeStamp</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="timeStamp"
+              name="timeStamp"
+              required
+            />
+          </div>
+          <div class="form-group mb-1">
+            <label for="scheduleDate" class="form-label">Schedule Date</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="scheduleDate"
+              name="scheduleDate"
+              required
+            />
+          </div>
+          <div class="form-group mb-1">
+            <label for="scheduleTime" class="form-label">Schedule Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="scheduleTime"
+              name="scheduleTime"
+              required
+            />
+          </div>
+          <div class="form-group mb-1">
+            <label for="statues" class="form-label">Status</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="statues"
+              name="statues"
+              required
+            />
+          </div>
+          <div class="form-group mb-1">
+            <label for="scheduleStatusId" class="form-label"
+              >Schedule Status</label
+            >
+            <select
+              id="scheduleStatusId"
+              [(ngModel)]="scheduleStatusId"
+              name="scheduleStatusId"
+            >
+              <option
+                *ngFor="let item of scheduleStatusId$ | async as list"
+                [value]="item.id"
+                >{{ item.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group mb-1">
+            <label for="appointmentDurationId" class="form-label"
+              >Appointment Duration</label
+            >
+            <select
+              id="appointmentDurationId"
+              [(ngModel)]="appointmentDurationId"
+              name="appointmentDurationId"
+            >
+              <option
+                *ngFor="let item of appointmentDurationId$ | async as list"
+                [value]="item.id"
+                >{{ item.name }}</option
+              >
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="row">
+        <h5>Doctor Schedule</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Week Day</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of doctorSchedule; let i = index">
+              <th>{{ i + 1 }}</th>
+              <td>{{ weekDayMap.get(item.weekdayId) }}</td>
+              <td>
+                {{ appointmentDurationMap.get(item.appointmentDurationId) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addPatientSchedule()"
+      *ngIf="patientScheduleList.id == 0"
+      class="btn btn-primary"
+    >
+      Add
+    </button>
+    <button
+      type="reset"
+      *ngIf="patientScheduleList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePatientSchedule()"
+      *ngIf="patientScheduleList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="patientScheduleList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

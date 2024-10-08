@@ -1,0 +1,53 @@
+<form>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" [(ngModel)]="name" name="name" />
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">ipd Category</label>
+    <select
+      id="ipdCatagoryId"
+      [(ngModel)]="ipdCatagoryId"
+      name="ipdCatagoryId"
+    >
+      <option
+        *ngFor="let item of ipdList$ | async as list"
+        selected
+        value="{{ item.id }}"
+        >{{ item.name }}</option
+      >
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="amount" class="form-label">Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="amount"
+      name="amount"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <button
+    (click)="addIpd()"
+    *ngIf="ipdListForm.id == 0"
+    class="btn btn-primary"
+  >
+    Add
+  </button>
+  <button
+    (click)="updateIpd()"
+    *ngIf="ipdListForm.id != 0"
+    class="btn btn-primary"
+  >
+    Update
+  </button>
+</form>

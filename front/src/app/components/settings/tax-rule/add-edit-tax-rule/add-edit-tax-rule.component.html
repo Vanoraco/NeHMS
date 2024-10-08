@@ -1,0 +1,60 @@
+<form>
+  <div class="mb-3">
+    <label for="fromSalary" class="form-label">From Salary</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="fromSalary"
+      name="fromSalary"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="toSalary" class="form-label">To Salary</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="toSalary"
+      name="toSalary"
+    />
+  </div>
+  <div class="mb-3">
+    <label for=" percentageAmount" class="form-label"> Percentage Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="percentageAmount"
+      name="percentageAmount"
+    />
+  </div>
+  <div class="mb-3">
+    <label for=" deduction" class="form-label">Deduction</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="deduction"
+      name="deduction"
+    />
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addTaxRules()"
+      *ngIf="taxRulesList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="taxRulesList.id == 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+    <button
+      (click)="updateTaxRules()"
+      *ngIf="taxRulesList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="taxRulesList.id != 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+  </div>
+</form>

@@ -1,0 +1,92 @@
+<form class="row">
+  <!-- <div class="mb-3">
+    <label for="employeeName" class="form-label">Employee</label>
+    <select id="employeeName" [(ngModel)]="employeeId" name="employeeId">
+      <option *ngFor="let item of employeeList$" [value]="item.id">{{
+        item.firstName + " " + item.lastName
+      }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="employeeSalaryId" class="form-label">Employee Salary</label>
+    <select
+      id="employeeSalaryId"
+      [(ngModel)]="employeeSalaryId"
+      name="employeeSalaryId"
+    >
+      <option *ngFor="let item of employeeSalaryList$" [value]="item.id">{{
+        item.salary
+      }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="baseSalary" class="form-label">Net Salary</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="baseSalary"
+      name="baseSalary"
+      readonly
+    />
+  </div> -->
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="month" class="form-label">Month</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="month"
+      name="month"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="year" class="form-label">Year</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="year"
+      name="year"
+      required
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="payrollCalculation()"
+      *ngIf="payrollReportList.id == 0"
+      class="btn btn-primary"
+    >
+      Calculate
+    </button>
+    <button
+      type="reset"
+      *ngIf="payrollReportList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePayrollReport()"
+      *ngIf="payrollReportList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="payrollReportList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

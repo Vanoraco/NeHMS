@@ -1,0 +1,503 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Patient</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item Active">Patient Detail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="profile-overview">
+              <h5 class="card-title">Patient Details</h5>
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="d-flex flex-column align-items-center">
+                    <img
+                      class="rounded-circle"
+                      [src]="createImgPath(patientList.imageUrl)"
+                      height="100px"
+                      width="100px"
+                    />
+                    <h5>
+                      {{ patientList.firstName + " " + patientList.lastName }}
+                    </h5>
+                    <h6>
+                      <a href="mailto:{{ patientList.email }}"
+                        ><i class="bi bi-envelope"></i>
+                        {{ patientList.email }}</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Age</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ patientList.age }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Address</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ patientList.address }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Phone</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ patientList.phone }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Gender</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ genderMap.get(patientList.genderId) }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Date of Birth</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ patientList.dateOfBirth | date : "mediumDate" }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Language</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ languageMap.get(patientList.languageId) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Blood Group</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ bloodGroupMap.get(patientList.bloodGroupId) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12">
+        <ul class="nav nav-tabs nav-tabs-bordered mb-2">
+          <li class="nav-item">
+            <button
+              class="nav-link active"
+              data-bs-toggle="tab"
+              data-bs-target="#case"
+            >
+              Case
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#prescription"
+            >
+              Prescription
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#appointments"
+            >
+              Appointments
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#medicalHistory"
+            >
+              Medical History
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#responsible-person"
+            >
+              Responsible Person
+            </button>
+          </li>
+          <li *ngIf="patientList.genderId == 2" class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#birth"
+            >
+              Birth
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#death"
+            >
+              Death
+            </button>
+          </li>
+        </ul>
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active pt-1" id="case">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Title</th>
+                      <th>Case Detail</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of caseList$
+                         
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.title }}</td>
+                      <td>{{ item.caseDetail }}</td>
+                      <td>{{ item.date | date : "medium" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+              <div class="tab-pane fade pt-1" id="prescription">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Doctors</th>
+                      <th>Medication</th>
+                      <th>Pres. Subject</th>
+                      <th>Pres. Detail</th>
+                      <th>Order Date</th>
+                      <th>Is Canceled</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of prescriptionList$
+                         
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeMap.get(item.employeeId) }}</td>
+                      <td>{{ medicationMap.get(item.medicationId) }}</td>
+                      <td>{{ item.prescriptionSubject }}</td>
+                      <td>{{ item.prescriptionDetail }}</td>
+                      <td>{{ item.orderDate | date : "mediumDate" }}</td>
+
+                      <td>
+                        <label
+                          *ngIf="item.is_Cancelled == true"
+                          class="px-3 text-true rounded"
+                          >Cancelled
+                        </label>
+                        <label
+                          *ngIf="item.is_Cancelled == false"
+                          class="px-3 text-false rounded"
+                        >
+                          Not cancelled
+                        </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+              <div class="tab-pane fade pt-1" id="medicalHistory">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Disease</th>
+                      <th>Treatment</th>
+                      <th>Risk Factor</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of medicalHistoryList$
+                         
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.disease }}</td>
+                      <td>{{ item.treatment }}</td>
+                      <td>{{ item.riskFactor }}</td>
+                      <td>{{ item.description }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+              <div class="tab-pane fade pt-1" id="appointments">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Employee</th>
+                      <th scope="col">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of admissionList$
+                        
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeMap.get(item.employeeId) }}</td>
+                      <td>{{ item.admissionDate | date : "medium" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+              <div class="tab-pane fade pt-1" id="responsible-person">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table" id="responsible-person-table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Full Name</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                      <th>Contry</th>
+                      <th>City</th>
+                      <th>Relationship</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of responsiblePersonList$
+                          
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.firstName + " " + item.lastName }}</td>
+                      <td>{{ item.phone }}</td>
+                      <td>{{ item.address }}</td>
+                      <td>{{ countryMap.get(item.countryId) }}</td>
+                      <td>{{ cityMap.get(item.cityId) }}</td>
+                      <td>{{ relationshipMap.get(item.relationshipId) }}</td>
+                      <!-- <td>
+                        <i
+                          (click)="modalEdit(item)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                          class="bi bi-pencil-square icon-edit"
+                        ></i>
+                        <i
+                          (click)="delete(item)"
+                          class="bi bi-trash icon-delete"
+                        ></i>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div>
+              <div class="tab-pane fade pt-1" id="birth">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Doctors</th>
+                      <th>Child Gender</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of birthList">
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeMap.get(item.employeeId) }}</td>
+                      <td>{{ genderMap.get(item.childGender) }}</td>
+                      <td>{{ item.date | date : "medium" }}</td>
+                      <td>{{ item.description }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade pt-1" id="death">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Doctors</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of deathList">
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeMap.get(item.employeeId) }}</td>
+                      <td>{{ item.date | date : "medium" }}</td>
+                      <td>{{ item.description }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

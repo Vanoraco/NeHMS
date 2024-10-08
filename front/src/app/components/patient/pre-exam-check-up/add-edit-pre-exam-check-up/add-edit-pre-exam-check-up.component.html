@@ -1,0 +1,81 @@
+<form class="row">
+  <div class="col-lg-6">
+    <div class="form-group mb-1">
+      <label for="height" class="form-label">Height</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="height"
+        name="height"
+      />
+    </div>
+    <div class="form-group mb-1">
+      <label for="weight" class="form-label">Weight</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="weight"
+        name="weight"
+      />
+    </div>
+    <div class="form-group mb-1">
+      <label for="pain" class="form-label">Pain</label>
+      <input type="text" class="form-control" [(ngModel)]="pain" name="pain" />
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="form-group mb-1">
+      <label for="bp" class="form-label">Blood Pressure</label>
+      <input type="text" class="form-control" [(ngModel)]="bp" name="bp" />
+    </div>
+    <div class="form-group mb-1">
+      <label for="symptom" class="form-label">Symptom</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="symptom"
+        name="symptom"
+      />
+    </div>
+    <div class="form-group mb-1">
+      <label for="severity" class="form-label">Severity</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="severity"
+        name="severity"
+      />
+    </div>
+  </div>
+
+  <div class="text-center float-end mt-2">
+    <button
+      (click)="addPreexamcheckup()"
+      *ngIf="preexamcheckupList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="preexamcheckupList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePreexamcheckup()"
+      *ngIf="preexamcheckupList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="preexamcheckupList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

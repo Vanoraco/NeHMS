@@ -1,0 +1,80 @@
+<form>
+  <div class="mb-3">
+    <label for="employeeName" class="form-label">Employee</label>
+    <select id="employeeName" [(ngModel)]="employeeId" name="employeeId">
+      <option *ngFor="let item of employeeList$ | async" [value]="item.id">{{
+        item.firstName + " " + item.lastName
+      }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="month" class="form-label">Month</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="month"
+      name="month"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="year" class="form-label">Year</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="year"
+      name="year"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="fixedAmount" class="form-label">Fixed Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="fixedAmount"
+      name="fixedAmount"
+    />
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Allowance Deduction Type</label>
+    <select
+      [(ngModel)]="allowanceDeductionTypeId"
+      name="allowanceDeductionTypeId"
+    >
+      <option
+        *ngFor="let item of getAllowanceDeductionTypeList$ | async"
+        [value]="item.id"
+        >{{ item.name }}</option
+      >
+    </select>
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addAllowanceDeduction()"
+      *ngIf="allowanceDeductionList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="allowanceDeductionList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateAllowanceDeduction()"
+      *ngIf="allowanceDeductionList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="allowanceDeductionList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

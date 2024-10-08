@@ -1,0 +1,81 @@
+<form #medForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Supplier Name</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #MedSupName="ngModel"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(MedSupName.touched || medForm.submitted) && MedSupName.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="address" class="form-label">Supplier Address</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #SAddress="ngModel"
+      class="form-control"
+      [(ngModel)]="address"
+      name="address"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(SAddress.touched || medForm.submitted) && SAddress.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="phoneNumber" class="form-label">Supplier Phone</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="phoneNumber"
+      name="phoneNumber"
+      pattern="[0-9]+"
+      minlength="10"
+      #Phone="ngModel"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(Phone.touched || medForm.submitted) && Phone.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addMedSupplier()"
+      *ngIf="medicineSupplierList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      (click)="updateMedSupplier()"
+      *ngIf="medicineSupplierList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+  </div>
+</form>

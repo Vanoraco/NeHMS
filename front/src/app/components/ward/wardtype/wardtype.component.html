@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h5 class="card-title">Ward Type</h5>
+    </div>
+    <div class="col">
+      <button
+              type="button"
+              class="btn btn-success float-end mt-3 ms-1"
+              (click)="exportToExcel()"
+            >
+              Export To Excel
+            </button>
+      <button
+        type="button"
+        class="btn btn-primary float-end mt-3"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+        (click)="modalAdd()"
+      >
+        Add Ward Type
+      </button>
+    </div>
+  </div>
+  <table class="table" id="wardtype-table">
+    <thead>
+      <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of wardTypeList$ | async">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price | currency : "USD" }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          <i
+            (click)="modalEdit(item)"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            class="bi bi-pencil-square icon-edit"
+          ></i>
+          <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="modalClose()"
+            id="add-edit-modal-close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-add-edit-wardtype
+            [wardType]="wardTypeList"
+            *ngIf="activateWardTypeComponent"
+          >
+          </app-add-edit-wardtype>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

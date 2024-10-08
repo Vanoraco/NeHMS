@@ -1,0 +1,287 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Patient Schedule</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Patient Schedule</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">Patient Schedule List</h5>
+              </div>
+
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <div
+                  *ngIf="
+                    employeeRole.name == 'Admin' ||
+                    employeeRole.name == 'Receptionist'
+                  "
+                >
+                  <button
+                    type="button"
+                    class="btn btn-primary float-end mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    (click)="modalAdd()"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                    Patient Schedule
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-between">
+              <div class="col-2 mb-3">
+                <select
+                  (change)="onTableSizeChange($event)"
+                  class="form-select mt-2"
+                  id="pagination"
+                >
+                  <option *ngFor="let size of tableSizes">{{ size }}</option>
+                </select>
+              </div>
+              <div class="col-4 mb-3">
+                <label for="total-laboratory-test" class="mt-3 h6"
+                  >Total Patient Schedule List
+                  <strong class="total-num">{{
+                    patientScheduleList$.length
+                  }}</strong></label
+                >
+              </div>
+              <div class="col-4 mb-3">
+                <input
+                  type="text"
+                  id="search"
+                  name="searchName"
+                  [(ngModel)]="searchName"
+                  class="form-control mt-2"
+                  (ngModelChange)="searchByName()"
+                  placeholder="Search here ..."
+                />
+              </div>
+            </div>
+            <table class="table" id="paid-patient-sch-table">
+              <thead>
+                <tr>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Id<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('firstName')">
+                    Patient<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Adm. Type<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('name')">
+                    Room<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('firstName')">
+                    Doctors<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Is Payed<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Is Dismissed<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Tiemstamp<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <!-- <th style="cursor: pointer" (click)="sort('id')">
+                    Schedule Date<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Schedule Time<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Status<i class="fa fa-fw fa-sort"></i>
+                  </th>-->
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Schedule Status<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <!--
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Appointment Duration<i class="fa fa-fw fa-sort"></i>
+                  </th> -->
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of patientScheduleList$
+                     
+                  "
+                >
+                  <td>{{ item.id }}</td>
+                  <td>
+                    <a [routerLink]="['/patient-details/', item.patientId]">{{
+                      item.patient.firstName + " " + item.patient.lastName
+                    }}</a>
+                  </td>
+                  <td>{{ item.admissionType.name }}</td>
+                  <td>{{ item.room.name }}</td>
+                  <td>
+                    <a [routerLink]="['/employee-details/', item.employeeId]">
+                      {{
+                        item.employee.firstName + " " + item.employee.lastName
+                      }}
+                    </a>
+                  </td>
+                  <td>
+                    <label
+                      *ngIf="item.is_Payed == true"
+                      class="px-3 text-two rounded"
+                      >Paid
+                    </label>
+                    <label
+                      *ngIf="item.is_Payed == false"
+                      class="px-3 text-four rounded"
+                    >
+                      Unpaid
+                    </label>
+                  </td>
+                  <td>
+                    <label
+                      *ngIf="item.is_Dismissed == true"
+                      class="px-3 text-two rounded"
+                      >Yes
+                    </label>
+                    <label
+                      *ngIf="item.is_Dismissed == false"
+                      class="px-3 text-four rounded"
+                    >
+                      No
+                    </label>
+                  </td>
+                  <td>{{ item.timeStamp | date : "mediumDate" }}</td>
+                  <!-- <td>{{ item.scheduleDate | date : "mediumDate"}}</td>
+                  <td>{{ item.scheduleTime | date : "mediumDate"}}</td>
+                  <td>{{ item.statues }}</td>
+                  <td>{{ item.appointmentDurationId }}</td> -->
+                  <td>
+                    <label
+                      *ngIf="item.scheduleStatusId == 1"
+                      class="px-3 text-one rounded"
+                    >
+                      {{ scheduleStatusListMap.get(item.scheduleStatusId) }}
+                    </label>
+                    <label
+                      *ngIf="item.scheduleStatusId == 2"
+                      class="px-3 text-two rounded"
+                    >
+                      {{ scheduleStatusListMap.get(item.scheduleStatusId) }}
+                    </label>
+                    <label
+                      *ngIf="item.scheduleStatusId == 3"
+                      class="px-3 text-three rounded"
+                    >
+                      {{ scheduleStatusListMap.get(item.scheduleStatusId) }}
+                    </label>
+                    <label
+                      *ngIf="item.scheduleStatusId == 4"
+                      class="px-3 text-four rounded"
+                    >
+                      {{ scheduleStatusListMap.get(item.scheduleStatusId) }}
+                    </label>
+                  </td>
+                  <td>
+                    <i
+                      *ngIf="
+                        employeeRole.name == 'Admin' ||
+                        employeeRole.name == 'Accountant'
+                      "
+                      [routerLink]="['/patient-schedule-details/', item.id]"
+                      class="bi bi-list icon-show"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Show"
+                    ></i>
+                    <i
+                      *ngIf="
+                        employeeRole.name == 'Admin' ||
+                        employeeRole.name == 'Reciptionist' ||
+                        employeeRole.name == 'Doctor'
+                      "
+                      (click)="modalEdit(item)"
+                      data-bs-toggle="modal"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Edit"
+                      data-bs-target="#staticBackdrop"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      *ngIf="
+                        employeeRole.name == 'Admin' ||
+                        employeeRole.name == 'Reciptionist'
+                      "
+                      (click)="delete(item)"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Delete"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="onTableDataChange($event)"
+            ></pagination-controls>
+
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog rounded-1 border border-0 modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-patient-schedule-form
+                      [patientScheduleList]="patientScheduleList"
+                      *ngIf="activatePatientScheduleComponent"
+                    >
+                    </app-patient-schedule-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,1218 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{ "dashboard" | translate }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/">{{ "home" | translate }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ "dashboard" | translate }}</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div *ngIf="employeeRole.name == 'Admin' && !isLoading" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div routerLink="/expenses" class="col-xxl-4 col-md-6">
+            <div class="card info-card expense-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalExpenseAmount }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "total_expenses" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div routerLink="/revenues" class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card green-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-coin"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalRevenueAmount }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "total_revenues" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card bule-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ doctorData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "doctors" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ nurseData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "nurses" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ accountantData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "accountants" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card green-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ pharmacistData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "pharmacists" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card yellow-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ laboratoristData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "laboratorists" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ receptionistData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "receptionists" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div routerLink="/new-patients" class="col-xxl-4 col-md-6">
+            <div class="card info-card patient-card red-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">
+                      {{ patientData$.length }}
+                    </h6>
+                    <span class="small pt-1 text-color">{{
+                      "total_patients" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div routerLink="/bed" class="col-xxl-4 col-md-6">
+            <div class="card info-card bed-card bule-gray200-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-bed"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ availableBedData$.length }}</h6>
+                    <span class="small pt-1 text-color">{{
+                      "available_beds" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card overflow-auto">
+              <div class="m-2">
+                <div style="display: block">
+                  <p-chart
+                    baseChart
+                    width="600"
+                    height="400"
+                    type="line"
+                    [data]="lineChartData"
+                    [options]="lineChartOptions"
+                  ></p-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+            <div class="activity">
+              <div class="activity-item d-flex">
+                <div class="activite-label">25</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-success align-self-start"
+                ></i>
+                <div class="activity-content">Patients hospitalized</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">26</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-danger align-self-start"
+                ></i>
+                <div class="activity-content">Out Patients</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">24</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-primary align-self-start"
+                ></i>
+                <div class="activity-content">Prescriptions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body pb-0">
+            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <div class="news">
+              <div *ngFor="let item of noticeList" class="post-item clearfix">
+                <img src="assets/img/news-1.jpg" alt="" />
+                <h4>
+                  <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                    item.noticeBoard
+                  }}</a>
+                </h4>
+                <p>
+                  {{ item.description }}<br />
+                  {{ item.date | date : "medium" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Pharmacist'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Medcines <span>| Today</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="ps-3">
+                    <h6>250</h6>
+
+                    <span class="text-muted small pt-2 ps-1">Medicines</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">
+                  Prescriptions <span>| This week</span>
+                </h5>
+                <div class="d-flex align-items-center">
+                  <div class="ps-3">
+                    <h6>64</h6>
+                    <span class="text-muted small pt-2 ps-1">Prescription</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body pb-0">
+            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <div class="news">
+              <div *ngFor="let item of noticeList" class="post-item clearfix">
+                <img src="assets/img/news-1.jpg" alt="" />
+                <h4>
+                  <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                    item.noticeBoard
+                  }}</a>
+                </h4>
+                <p>
+                  {{ item.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Laboratorist'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card expense-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalExpenseAmount }}</h6>
+                    <span class="small pt-1 text-color">Lab Expenses</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card green-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-coin"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalRevenueAmount }}</h6>
+                    <span class="small pt-1 text-color">Lab Revenues</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card yellow-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ laboratoristData$.length }}</h6>
+                    <span class="small pt-1 text-color">Laboratorists</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card patient-card red-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">
+                      {{ patientData$.length }}
+                    </h6>
+                    <span class="small pt-1 text-color">Total Patients</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Recent Patients</h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Phone</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of recentPatient$">
+                      <th scope="row">{{ item.id }}</th>
+                      <td>
+                        <a [routerLink]="['/patient-details/', item.id]">{{
+                          item.firstName + " " + item.lastName
+                        }}</a>
+                      </td>
+                      <td>
+                        {{ item.age }}
+                      </td>
+                      <td>
+                        {{ item.address }}
+                      </td>
+                      <td>{{ item.phone }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body pb-0">
+            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <div class="news">
+              <div *ngFor="let item of noticeList" class="post-item clearfix">
+                <img src="assets/img/news-1.jpg" alt="" />
+                <!-- <h3>{{item.name}}</h3> -->
+                <h4>
+                  <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                    item.noticeBoard
+                  }}</a>
+                </h4>
+                <p>
+                  {{ item.description }}<br />
+                  {{ item.date | date : "medium" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Accountant'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card expense-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalExpenseAmount }}</h6>
+                    <span class="small pt-1 text-color">Total Expenses</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card green-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-coin"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">${{ totalRevenueAmount }}</h6>
+                    <span class="small pt-1 text-color">Total Revenues</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ accountantData$.length }}</h6>
+                    <span class="small pt-1 text-color">Accountants</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card patient-card red-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">
+                      {{ patientData$.length }}
+                    </h6>
+                    <span class="small pt-1 text-color">Total Patients</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <h5 class="card-title">Recent Paid Lab Request</h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Test Category</th>
+                      <th scope="col">Priority</th>
+                      <th scope="col">Is Canceled</th>
+                      <th scope="col">Is Paid</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of piadLabRequests">
+                      <th scope="row">{{ item.id }}</th>
+                      <td>
+                        {{ testCategoryMap.get(item.laboratoryTestCategoryId) }}
+                      </td>
+                      <td>
+                        {{ item.priority }}
+                      </td>
+                      <td>
+                        <span *ngIf="item.isCancelled" class="badge bg-success"
+                          >Yes</span
+                        >
+                        <span *ngIf="!item.isCancelled" class="badge bg-danger"
+                          >No</span
+                        >
+                      </td>
+                      <td>
+                        <span *ngIf="item.isPaid" class="badge bg-success"
+                          >Paid</span
+                        >
+                        <span *ngIf="!item.isPaid" class="badge bg-danger"
+                          >UnPaid</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+            <div class="activity">
+              <div class="activity-item d-flex">
+                <div class="activite-label">25</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-success align-self-start"
+                ></i>
+                <div class="activity-content">Patients hospitalized</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">26</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-danger align-self-start"
+                ></i>
+                <div class="activity-content">Out Patients</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">24</div>
+                <i
+                  class="bi bi-circle-fill activity-badge text-primary align-self-start"
+                ></i>
+                <div class="activity-content">Prescriptions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body pb-0">
+            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <div class="news">
+              <div *ngFor="let item of noticeList" class="post-item clearfix">
+                <img src="assets/img/news-1.jpg" alt="" />
+                <!-- <h3>{{item.name}}</h3> -->
+                <h4>
+                  <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                    item.noticeBoard
+                  }}</a>
+                </h4>
+                <p>
+                  {{ item.description }}<br />
+                  {{ item.date | date : "medium" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Receptionist'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card expense-card bule-gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ patientData$.length }}</h6>
+                    <span class="small pt-1 text-color">All Patients</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card green-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ activePatientData.length }}</h6>
+                    <span class="small pt-1 text-color">Active Patients</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card patient-card red-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">
+                      {{ inActivePatientData.length }}
+                    </h6>
+                    <span class="small pt-1 text-color"
+                      >In-Active Patients</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Recent Patients</h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Phone</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of recentPatient$">
+                      <th scope="row">{{ item.id }}</th>
+                      <td>
+                        <a [routerLink]="['/patient-details/', item.id]">{{
+                          item.firstName + " " + item.lastName
+                        }}</a>
+                      </td>
+                      <td>
+                        {{ item.age }}
+                      </td>
+                      <td>
+                        {{ item.address }}
+                      </td>
+                      <td>{{ item.phone }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card-body pb-0">
+            <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+            <div class="news">
+              <div *ngFor="let item of noticeList" class="post-item clearfix">
+                <img src="assets/img/news-1.jpg" alt="" />
+                <!-- <h3>{{item.name}}</h3> -->
+                <h4>
+                  <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                    item.noticeBoard
+                  }}</a>
+                </h4>
+                <p>
+                  {{ item.description }}<br />
+                  {{ item.date | date : "medium" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Doctor'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card bule-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ doctorData$.length }}</h6>
+                    <span class="small pt-1 text-color">Total Doctors</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card employee-card gray-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">{{ nurseData$.length }}</h6>
+                    <span class="small pt-1 text-color">Total Nurses</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card patient-card red-bg-card">
+              <div class="card-body pt-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 style="color: white">
+                      {{ patientData$.length }}
+                    </h6>
+                    <span class="small pt-1 text-color">Total Patients</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <h5 class="card-title">Recent Admitted</h5>
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Admission Date</th>
+                      <th scope="col">Room</th>
+                      <th scope="col">Is Discharge</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of recentAdmittedPatient$">
+                      <th scope="row">{{ item.id }}</th>
+                      <td>
+                        <a
+                          [routerLink]="['/patient-details/', item.patientId]"
+                          >{{ patientMap.get(item.patientId) }}</a
+                        >
+                      </td>
+                      <td>
+                        {{ item.admissionDate | date : "medium" }}
+                      </td>
+                      <td>
+                        {{ roomMap.get(item.roomId) }}
+                      </td>
+                      <td>
+                        <span *ngIf="item.isDischarge" class="badge bg-success"
+                          >Yes</span
+                        >
+                        <span *ngIf="!item.isDischarge" class="badge bg-danger"
+                          >No</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"
+                ><i class="bi bi-three-dots"></i
+              ></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+            <div class="card-body pb-0">
+              <h5 class="card-title">
+                News &amp; Updates <span>| Today</span>
+              </h5>
+              <div class="news">
+                <div *ngFor="let item of noticeList" class="post-item clearfix">
+                  <img src="assets/img/news-1.jpg" alt="" />
+                  <!-- <h3>{{item.name}}</h3> -->
+                  <h4>
+                    <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                      item.noticeBoard
+                    }}</a>
+                  </h4>
+                  <p>
+                    {{ item.description }}<br />
+                    {{ item.date | date : "medium" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="employeeRole.name == 'Nurse'" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Patients <span>| Today</span></h5>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>50</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Employees <span>| This Month</span></h5>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>60</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Doctors <span>| This Year</span></h5>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>44</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"
+              ><i class="bi bi-three-dots"></i
+            ></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"
+                ><i class="bi bi-three-dots"></i
+              ></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+            <div class="card-body pb-0">
+              <h5 class="card-title">
+                News &amp; Updates <span>| Today</span>
+              </h5>
+              <div class="news">
+                <div *ngFor="let item of noticeList" class="post-item clearfix">
+                  <img src="assets/img/news-1.jpg" alt="" />
+                  <!-- <h3>{{item.name}}</h3> -->
+                  <h4>
+                    <a [routerLink]="['/view-notice-detail/', item.id]">{{
+                      item.noticeBoard
+                    }}</a>
+                  </h4>
+                  <p>
+                    {{ item.description }}<br />
+                    {{ item.date | date : "medium" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

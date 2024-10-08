@@ -1,0 +1,176 @@
+<form class="row">
+  <div class="col-md-3 ps-3">
+    <div class="mb-3">
+      <label for="laboratoryTestCategoryId" class="form-label"
+        >Laboratory Test Category</label
+      >
+      <select
+        class="form-select"
+        id="laboratoryTestTypeId"
+        [(ngModel)]="laboratoryTestCategoryId"
+        name="laboratoryTestTypeId"
+      >
+        <option
+          *ngFor="let item of labTestCategoryId$ | async"
+          [value]="item.id"
+        >
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="orderedDate" class="form-label">Order Date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="orderedDate"
+        name="orderedDate"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="remark" class="form-label">Remark</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="remark"
+        name="remark"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="priority" class="form-label">Priority</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="priority"
+        name="priority"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="isCancelled" class="form-label">Is Cancelled</label>
+      <select class="form-select" [(ngModel)]="isCancelled" name="isCancelled">
+        <option *ngIf="labRequestList.id != 0" selected value="true">
+          True
+        </option>
+        <option value="false">False</option>
+      </select>
+    </div>
+  </div>
+  <div
+    *ngIf="employeeRole.name == 'Laboratorist' || employeeRole.name == 'Doctor'"
+    class="labtestresult col-md-9"
+  >
+    <div class="row">
+      <div class="col-md-4">
+        <div class="mb-3">
+          <label class="form-label">Test Type</label>
+          <select
+            class="form-select"
+            id="laboratoryTestTypeId"
+            [(ngModel)]="laboratoryTestTypeId"
+            name="laboratoryTestTypeId"
+          >
+            <option
+              *ngFor="let item of labTesTypeList$ | async"
+              selected
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Test Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="name"
+            name="name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="result" class="form-label">Result</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="result"
+            name="result"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            type="text"
+            class="form-control"
+            [(ngModel)]="description"
+            name="description"
+          ></textarea>
+        </div>
+        <div class="float-end">
+          <button
+            (click)="addLabTestResult()"
+            class="btn btn-outline-primary btn-sm"
+          >
+            <i class="bi bi-plus-square"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <h5 class="text-center">Lab Test Result List</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Result</th>
+              <th>Test Type</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of labTestResultList$">
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.result }}</td>
+              <td>{{ labTestTypeMap.get(item.laboratoryTestTypeId) }}</td>
+              <td>{{ item.description }}</td>
+              <td>
+                <i (click)="delete(item)" class="bi bi-x-lg icon-delete"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="float-left mt-2">
+    <button
+      (click)="addLabRequest()"
+      *ngIf="labRequestList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="labRequestList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateLabRequest()"
+      *ngIf="labRequestList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="labRequestList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

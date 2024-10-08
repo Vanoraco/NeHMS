@@ -1,0 +1,45 @@
+<form>
+  <div class="mb-3">
+    <label for="comments" class="form-label">Name</label>
+    <input type="text" class="form-control" [(ngModel)]="name" name="name" />
+  </div>
+  <div class="mb-3">
+    <label for="comments" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addEducationLevel()"
+      *ngIf="educationlevel.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="educationlevel.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateEducationLevel()"
+      *ngIf="educationlevel.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="educationlevel.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

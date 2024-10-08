@@ -1,0 +1,32 @@
+<form #designationForm="ngForm">
+
+    
+    <div class="mb-3">
+        <label for="description" class="form-label">Name</label>
+        <input 
+        type="text"
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #Name="ngModel"
+        [ngClass]="{ 'is-invalid': Name.errors && Name.touched }"
+        required 
+        class="form-control" [(ngModel)]="name" name="name" 
+        />
+        <span
+        class="text-danger"
+        *ngIf="(Name.touched || designationForm.submitted) && Name.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description">
+    </div>
+    <button (click)="addDesignation()" [disabled]="designationForm.invalid"  *ngIf="designationList.id==0" class="btn btn-primary">
+        Add
+    </button>
+    <button (click)="updateDesignation()" [disabled]="designationForm.invalid"  *ngIf="designationList.id!=0" class="btn btn-primary">
+        Update
+    </button>
+</form>

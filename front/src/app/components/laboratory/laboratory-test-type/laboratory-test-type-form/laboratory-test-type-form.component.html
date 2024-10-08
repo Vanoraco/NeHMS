@@ -1,0 +1,88 @@
+<form  #ZForm="ngForm" >
+  <div class="row g-3">
+    <div class="col-12">
+      <label for="name" class="form-label">Name</label>
+      <input 
+      type="text"
+       class="form-control"
+        [(ngModel)]="name" 
+        name="name" 
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #LName="ngModel"
+        required
+        />
+        <span
+              class="text-danger"
+              *ngIf="(LName.touched ||  ZForm.submitted) && LName.invalid"
+            >
+              Please enter a valid input
+            </span>
+    </div>
+    <div class="col-12">
+      <label for="laboratoryTestCategoryId" class="form-label"
+        >Laboratory Test Category</label
+      >
+      <select
+        id="laboratoryTestCategoryId"
+        [(ngModel)]="laboratoryTestCategoryId"
+        name="laboratoryTestCategoryId"
+      >
+        <option
+          *ngFor="let item of labTestCategoryId$ | async as list"
+          value="{{ item.id }}"
+          >{{ item.name }}</option
+        >
+      </select>
+    </div>
+    <div class="col-12">
+      <label for="price" class="form-label">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="price"
+        name="price"
+      />
+    </div>
+    <div class="col-12">
+      <label for="description" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="description"
+        name="description"
+      />
+    </div>
+  
+    <div class="text-center float-end justify-right">
+      <button
+        (click)="addLaboratoryTestType()"
+        *ngIf="labTestTypeList.id == 0"
+        class="btn btn-primary"
+      >
+        Add
+      </button>
+      <button
+        type="reset"
+        *ngIf="labTestTypeList.id == 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+      <button
+        (click)="updateLaboratoryTestType()"
+        *ngIf="labTestTypeList.id != 0"
+        class="btn btn-primary"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="labTestTypeList.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+  </form>

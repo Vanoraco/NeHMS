@@ -1,0 +1,266 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Patient</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Patient</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row justify-content-between">
+              <div class="col">
+                <h5 class="card-title">Patient Detail</h5>
+              </div>
+              <div class="col justify-right">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger float-end ms-1 mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#emergenceyModal"
+                  (click)="modalAddEmergency()"
+                >
+                  <strong>+</strong> Emergency
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  (click)="modalAdd()"
+                >
+                  <strong>+</strong> New Patient
+                </button>
+              </div>
+            </div>
+            <p-table
+              #dt1
+              [value]="PatientList$"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+              [paginator]="true"
+              [rows]="10"
+              [loading]="loading"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[5, 10, 20]"
+              dataKey="id"
+              [globalFilterFields]="[
+                'firstName',
+                'lastName',
+                'id',
+                'phone',
+                'email',
+                'address',
+                'age'
+              ]"
+            >
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                  <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input
+                      pInputText
+                      type="text"
+                      class="p-inputtext-sm"
+                      (input)="
+                        dt1.filterGlobal($event.target.value, 'contains')
+                      "
+                      placeholder="Search keyword"
+                    />
+                  </span>
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file"
+                    (click)="modalAddEmergency()"
+                    class="mr-2"
+                    pTooltip="CSV"
+                    tooltipPosition="bottom"
+                  ></button>
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file-excel"
+                    (click)="exportToExcel()"
+                    class="p-button-success mr-2"
+                    pTooltip="XLS"
+                    tooltipPosition="bottom"
+                  ></button>
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file-pdf"
+                    (click)="modalAdd()"
+                    class="p-button-warning mr-2"
+                    pTooltip="PDF"
+                    tooltipPosition="bottom"
+                  ></button>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="id" style="width: 10%">
+                    Id<p-sortIcon field="id"></p-sortIcon>
+                  </th>
+                  <th style="width: 20%" pSortableColumn="firstName">
+                    Name<p-sortIcon field="firstName"></p-sortIcon>
+                  </th>
+                  <th style="width: 15%" pSortableColumn="phone">
+                    Phone<p-sortIcon field="phone"></p-sortIcon>
+                  </th>
+                  <th style="width: 10%" pSortableColumn="age">
+                    Age<p-sortIcon field="age"></p-sortIcon>
+                  </th>
+                  <th style="width: 20%" pSortableColumn="email">
+                    Email<p-sortIcon field="email"></p-sortIcon>
+                  </th>
+                  <th style="width: 15%" pSortableColumn="address">
+                    Address<p-sortIcon field="address"></p-sortIcon>
+                  </th>
+                  <th style="width: 10%">Action</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-patient>
+                <tr>
+                  <td>{{ patient.id }}</td>
+                  <td>
+                    <a [routerLink]="['/patient-details/', patient.id]">
+                      <img
+                        [src]="createImgPath(patient.imageUrl)"
+                        style="width: 30px; height: 30px; border-radius: 50%"
+                      />
+                      {{ patient.firstName + " " + patient.lastName }}
+                    </a>
+                  </td>
+                  <td>{{ patient.phone }}</td>
+                  <td>{{ patient.age }}</td>
+                  <td>{{ patient.email }}</td>
+                  <td>{{ patient.address }}</td>
+                  <td>
+                    <!-- <i
+                      [routerLink]="['/employee-profile/', item.id]"
+                      class="bi bi-list icon-show"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Show"
+                    ></i> -->
+                    <i
+                      (click)="modalEdit(patient)"
+                      data-bs-toggle="modal"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Edit"
+                      data-bs-target="#staticBackdrop"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      (click)="delete(patient)"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Delete"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="7">No patients found.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+            <!-- Regular Patient Modal Form -->
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div
+                class="modal-dialog modal-fullscreen modal-dialog-scrollable rounded-1 border border-0"
+              >
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-patient-form
+                      [PatientList]="Patient"
+                      *ngIf="activateAddEditPatientComponent"
+                    >
+                    </app-patient-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Emergencey Patient Modal Form -->
+            <div
+              class="modal fade"
+              id="emergenceyModal"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="emergenceyModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog rounded-1 border border-0">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="emergenceyModalLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="emergency-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-emergency-form
+                      [Patient]="Patient"
+                      *ngIf="activateAddEditPatientComponent"
+                    >
+                    </app-emergency-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,119 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-2">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-2">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div class="col-4 mb-2">
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#operation-modal"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong>
+      Operation
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer; width: 5%" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer; width: 15%" (click)="sort('id')">
+        Patient<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer; width: 15%" (click)="sort('id')">
+        Doctor<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer; width: 45%" (click)="sort('id')">
+        Description<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer; width: 15%" (click)="sort('id')">
+        Date<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="width: 5%">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of OperationList$
+         
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ PatientListMap.get(item.patientId) }}</td>
+      <td>{{ EmployeeListMap.get(item.employeeId) }}</td>
+      <td>{{ item.description }}</td>
+      <td>{{ item.date | date : "mediumDate" }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          data-bs-target="#operation-modal"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="operation-modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="operation-modalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="operation-modalLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="operation-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-operation-form
+          [operationList]="operationList"
+          *ngIf="activateOperationComponent"
+        >
+        </app-operation-form>
+      </div>
+    </div>
+  </div>
+</div>

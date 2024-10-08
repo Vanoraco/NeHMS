@@ -1,0 +1,60 @@
+<form #appForm="ngForm" (ngSubmit)="saveAppointmentDuration()" class="row g-3">
+  <div class="col-12">
+    <label for="name" class="form-label">Appointment Duration</label>
+    <input
+      type="time"
+      class="form-control"
+      [(ngModel)]="name"
+      #app_name="ngModel"
+      name="name"
+      [ngClass]="{ 'is-invalid': app_name.errors && app_name.touched }"
+      required
+    />
+    <span
+      class="text-danger"
+      *ngIf="(app_name.touched || appForm.submitted) && app_name.invalid"
+    >
+      Duration time is required
+    </span>
+  </div>
+  <div class="col-12">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+
+  <div class="text-center float-end justify-right">
+    <button
+      type="submit"
+      *ngIf="AppointmentDurationList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="AppointmentDurationList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      type="submit"
+      *ngIf="AppointmentDurationList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="AppointmentDurationList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

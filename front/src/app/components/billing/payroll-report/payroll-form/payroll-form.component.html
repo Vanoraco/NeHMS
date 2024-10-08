@@ -1,0 +1,85 @@
+<form class="row g-3">
+  <div class="col-12">
+    <label for="employeeSalaryId" class="form-label">Employee Salary</label>
+    <select
+      id="employeeSalaryId"
+      [(ngModel)]="employeeSalaryId"
+      name="employeeSalaryId"
+      (change)="salaryCalculation()"
+    >
+      <option *ngFor="let item of employeeSalaryList$" [value]="item.id">{{
+        item.salary
+      }}</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <label for="baseSalary" class="form-label">Net Salary</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="baseSalary"
+      name="baseSalary"
+      readonly
+    />
+  </div>
+  <div class="col-12">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="col-12">
+    <label for="month" class="form-label">Month</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="month"
+      name="month"
+      required
+    />
+  </div>
+  <div class="col-12">
+    <label for="year" class="form-label">Year</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="year"
+      name="year"
+      required
+    />
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addPayroll()"
+      *ngIf="payrollList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="payrollList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePayroll()"
+      *ngIf="payrollList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="payrollList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

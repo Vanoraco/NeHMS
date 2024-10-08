@@ -1,0 +1,86 @@
+<form class="row g-3">
+  <div class="col-6">
+    <label for="medicationId" class="form-label">Medication</label>
+    <select id="medicationId" [(ngModel)]="medicationId" name="medicationId">
+      <option
+        *ngFor="let item of medicationId$ | async as list"
+        selected
+        [value]="item.id"
+        >{{ item.name }}</option
+      >
+    </select>
+  </div>
+  <div class="col-6">
+    <label for="prescriptionSubject" class="form-label"
+      >Prescription Subject</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="prescriptionSubject"
+      name="prescriptionSubject"
+    />
+  </div>
+  <div class="col-6">
+    <label for="prescriptionDetail" class="form-label"
+      >Prescription Detail</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="prescriptionDetail"
+      name="prescriptionDetail"
+    />
+  </div>
+  <div class="col-6">
+    <label for="orderDate" class="form-label">Order Date</label>
+    <input
+      type="date"
+      class="form-control"
+      [(ngModel)]="orderDate"
+      name="orderDate"
+    />
+  </div>
+  <div class="col-6">
+    <label for="is_Cancelled" class="form-label">Is Canceled</label>
+    <select
+      id="is_Cancelled"
+      class="form-select"
+      [(ngModel)]="is_Cancelled"
+      name="is_Cancelled"
+    >
+      <option selected value="true">True</option>
+      <option value="false">False</option>
+    </select>
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addPrescription()"
+      *ngIf="prescriptionData.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="prescriptionData.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePrescription()"
+      *ngIf="prescriptionData.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="prescriptionData.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

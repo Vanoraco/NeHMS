@@ -1,0 +1,49 @@
+.bule-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #6571ff;
+}
+
+.bule-gray-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #0099fb;
+}
+
+.green-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #0ac074;
+}
+
+.yellow-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #ffb821;
+}
+
+.gray-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #adb5bd;
+}
+
+.red-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #f62947;
+}
+
+.bule-gray200-bg-card {
+  cursor: pointer;
+  animation: normal;
+  background-color: #6571ff;
+}
+
+.text-color {
+  color: white;
+}
+
+.spinner-border {
+  margin: auto;
+}

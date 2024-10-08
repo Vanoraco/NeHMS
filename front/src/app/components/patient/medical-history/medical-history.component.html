@@ -1,0 +1,136 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-3">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-3">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div class="col-4 mb-3">
+    <button
+      type="button"
+      class="btn btn-success float-end ms-1"
+      (click)="exportToExcel()"
+    >
+      Export To Excel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#modalMedicalHistory"
+      (click)="modalAdd()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      Medical History
+    </button>
+  </div>
+</div>
+<table class="table" id="medical-history-table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Patient<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Disease<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Treatment<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Risk Factor <i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Description <i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of medicalHistoryList$
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ patientListMap.get(item.patientId) }}</td>
+      <td>{{ item.disease }}</td>
+      <td>{{ item.treatment }}</td>
+      <td>{{ item.riskFactor }}</td>
+      <td>{{ item.description }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Edit"
+          data-bs-target="#modalMedicalHistory"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i
+          (click)="delete(item)"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Delete"
+          class="bi bi-trash icon-delete"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="modalMedicalHistory"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modalMedicalHistoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="modalMedicalHistoryLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="medical-history-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-medical-history-form
+          [medicalHistoryList]="medicalHistoryList"
+          *ngIf="activateMedicalHistoryComponent"
+        >
+        </app-medical-history-form>
+      </div>
+    </div>
+  </div>
+</div>

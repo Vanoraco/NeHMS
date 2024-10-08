@@ -1,0 +1,103 @@
+<form class="row">
+  <div class="mb-3">
+    <label class="col-sm-5 col-form-label">Employee</label>
+    <div class="col-sm-12">
+      <select [(ngModel)]="employeeId" name="employeeId">
+        <option
+          *ngFor="let item of getEmployeeList$ | async"
+          [value]="item.id"
+          >{{ item.firstName }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="mb-3">
+      <label for="startDate" class="form-label">Start date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="startDate"
+        name="startDate"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="endDate" class="form-label">End date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="endDate"
+        name="endDate"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="numberOfDate" class="form-label">Number of date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="numberOfDate"
+        name="numberOfDate"
+      />
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="mb-3">
+      <label for="timeStamp" class="form-label">TimeStamp</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="timeStamp"
+        name="timeStamp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label"> Date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="date"
+        name="date"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        [(ngModel)]="description"
+        name="description"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="text-center float-end">
+    <button
+      (click)="addmedicalCertificate()"
+      *ngIf="medicalCertificateList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="medicalCertificateList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatemedicalCertificate()"
+      *ngIf="medicalCertificateList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="medicalCertificateList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

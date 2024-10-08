@@ -1,0 +1,51 @@
+<form #BuildForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Building Name</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #BuildingName="ngModel"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+    />
+    <span
+      class="text-danger"
+      *ngIf="
+        (BuildingName.touched || BuildForm.submitted) && BuildingName.invalid
+      "
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="code" class="form-label">Building Code</label>
+    <input type="number" class="form-control" [(ngModel)]="code" name="code" />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <button
+    (click)="addBuilding()"
+    *ngIf="building.id == 0"
+    [disabled]="BuildForm.invalid"
+    class="btn btn-primary"
+  >
+    Add
+  </button>
+  <button
+    (click)="updateBuilding()"
+    *ngIf="building.id != 0"
+    class="btn btn-primary"
+    [disabled]="BuildForm.invalid"
+  >
+    Update
+  </button>
+</form>

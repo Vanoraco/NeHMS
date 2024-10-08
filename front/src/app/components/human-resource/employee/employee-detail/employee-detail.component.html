@@ -1,0 +1,381 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Employee</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item Active">Employee Detail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="profile-overview">
+              <h5 class="card-title">Employee Details</h5>
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="d-flex flex-column align-items-center">
+                    <img
+                      class="rounded-circle"
+                      [src]="url"
+                      height="100px"
+                      width="100px"
+                    />
+                    <h5>
+                      {{ employeeList.firstName + " " + employeeList.lastName }}
+                    </h5>
+                    <h6>
+                      <a href="mailto:{{ employeeList.emailAddress }}"
+                        ><i class="bi bi-envelope"></i>
+                        {{ employeeList.emailAddress }}</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Age</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ employeeList.age }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Address</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ employeeList.address }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Phone</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ employeeList.phone }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Gender</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ genderMap.get(employeeList.genderId) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Role</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ employeeRoleMap.get(employeeList.employeeRoleId) }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Date of Birth</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ employeeList.dateOfBirth | date : "mediumDate" }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Language</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ languageMap.get(employeeList.languageId) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Country</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ countryMap.get(employeeList.countryId) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Specialization</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ specializationMap.get(employeeList.specializationId) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 label">Designation</div>
+                    <div class="col-lg-7 col-md-7">
+                      {{ designationMap.get(employeeList.designationId) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12">
+        <ul class="nav nav-tabs nav-tabs-bordered mb-2">
+          <!-- <li class="nav-item">
+            <button
+              class="nav-link active"
+              data-bs-toggle="tab"
+              data-bs-target="#patient"
+            >
+              Patients
+            </button>
+          </li> -->
+          <li class="nav-item">
+            <button
+              class="nav-link active"
+              data-bs-toggle="tab"
+              data-bs-target="#appointments"
+            >
+              Appointments
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#schedules"
+            >
+              Schedules
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#payrolls"
+            >
+              Payrolls
+            </button>
+          </li>
+          <li *ngIf="loggedInEmployeeRole.name == 'Admin'" class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#overtime"
+            >
+              Overtime
+            </button>
+          </li>
+          <li *ngIf="loggedInEmployeeRole.name == 'Admin'" class="nav-item">
+            <button
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#holiday"
+            >
+              Holiday
+            </button>
+          </li>
+        </ul>
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="tab-content pt-2">
+              <!-- <div class="tab-pane fade show active pt-1" id="patient">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Doctors</th>
+                      <th>Medication</th>
+                      <th>Pres. Subject</th>
+                      <th>Pres. Detail</th>
+                      <th>Order Date</th>
+                      <th>Is Canceled</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of patientList$
+                         
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ employeeListMap.get(item.employeeId) }}</td>
+                      <td>{{ medicationMap.get(item.medicationId) }}</td>
+                      <td>{{ item.prescriptionSubject }}</td>
+                      <td>{{ item.prescriptionDetail }}</td>
+                      <td>{{ item.orderDate | date : "mediumDate" }}</td>
+
+                      <td>
+                        <label
+                          *ngIf="item.is_Cancelled == true"
+                          class="px-3 text-true rounded"
+                          >Cancelled
+                        </label>
+                        <label
+                          *ngIf="item.is_Cancelled == false"
+                          class="px-3 text-false rounded"
+                        >
+                          Not cancelled
+                        </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="onTableDataChange($event)"
+                ></pagination-controls>
+              </div> -->
+              <div class="tab-pane fade show active pt-1" id="appointments">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Patient Name</th>
+                      <th>Doctor Name</th>
+                      <th>Doctor Dept</th>
+                      <th>OPD Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of admissionList$
+                         
+                      "
+                    >
+                      <td>{{ patientListMap.get(item.patientId) }}</td>
+                      <td>{{ employeeListMap.get(item.employeeId) }}</td>
+                      <td>
+                        {{
+                          medicalDepartmentListMap.get(
+                            employeeList.medicalDepartmentId
+                          )
+                        }}
+                      </td>
+                      <td>{{ item.admissionDate | date : "medium" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade pt-1" id="schedules">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Available On</th>
+                      <th scope="col">Available From</th>
+                      <th scope="col">Available To</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of scheduleList$">
+                      <td>{{ weekDayMap.get(item.weekdayId) }}</td>
+                      <td>{{ item.startingTime | date : "shortTime" }}</td>
+                      <td>{{ item.finishingTime | date : "shortTime" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade pt-1" id="payrolls">
+                <div class="row justify-content-between">
+                  <div class="col-2 mb-2">
+                    <select
+                      (change)="onTableSizeChange($event)"
+                      class="form-select"
+                      id="pagination"
+                    >
+                      <option *ngFor="let size of tableSizes">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <input
+                      type="text"
+                      id="search"
+                      name="searchName"
+                      [(ngModel)]="searchName"
+                      class="form-control"
+                      (ngModelChange)="searchByName()"
+                      placeholder="Search here ..."
+                    />
+                  </div>
+                </div>
+                <table class="table" id="excel-table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Date</th>
+                      <th>Month</th>
+                      <th>Year</th>
+                      <th>Base Salary</th>
+                      <th>Net Salary</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of payrollList$
+                         
+                      "
+                    >
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.date | date : "dd" }}</td>
+                      <td>{{ item.month | date : "MMMM" }}</td>
+                      <td>{{ item.year | date : "y" }}</td>
+                      <td>
+                        {{
+                          salaryListMap.get(item.employeeSalaryId)
+                            | currency : "ETB"
+                        }}
+                      </td>
+                      <td>{{ item.baseSalary | currency : "ETB" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane fade pt-3" id="overtime">
+                <app-overtime></app-overtime>
+              </div>
+              <div class="tab-pane fade pt-3" id="holiday">
+                <app-holiday></app-holiday>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

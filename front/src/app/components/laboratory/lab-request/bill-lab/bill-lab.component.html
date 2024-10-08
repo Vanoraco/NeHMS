@@ -1,0 +1,70 @@
+<form class="row g-3">
+  <div class="col-12">
+    <label for="employeeId" class="form-label">Employee</label>
+    <select id="employeeId" [(ngModel)]="employeeId" name="employeeId">
+      <option *ngFor="let item of employeeList$" [value]="item.id">{{
+        item.firstName + " " + item.middleName
+      }}</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <label for="serviceChargeId" class="form-label">Service Charge</label>
+    <select
+      id="serviceChargeId"
+      [(ngModel)]="serviceChargeId"
+      name="serviceChargeId"
+    >
+      <option
+        *ngFor="let item of serviceChargeList$ | async as list"
+        [value]="item.id"
+        >{{ item.name + " : " + item.price }}</option
+      >
+    </select>
+  </div>
+  <div class="col-12">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="date"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="col-12">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+      required
+    >
+    </textarea>
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addBillLab()"
+      *ngIf="billLabList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="billLabList.id == 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+    <!-- <button
+        (click)="updateBillLab()"
+        *ngIf="billLabList.id != 0"
+        class="btn btn-primary"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="billLabList.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button> -->
+  </div>
+</form>

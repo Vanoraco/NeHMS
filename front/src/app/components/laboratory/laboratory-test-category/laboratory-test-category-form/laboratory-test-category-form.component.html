@@ -1,0 +1,65 @@
+<form #labTForm="ngForm">
+  <div class="row g-3">
+    <div class="col-12">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="name"
+        name="name"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #Name="ngModel"
+      />
+      <span
+          class="text-danger"
+          *ngIf="(Name.touched || labTForm.submitted) && Name.invalid"
+      >
+      Enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="description" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="description"
+        name="description"
+        required
+      />
+    </div>
+  
+    <div class="text-center float-end justify-right">
+      <button
+        (click)="addLaboratoryTestCategory()"
+        *ngIf="labTestCategoryList.id == 0"
+        class="btn btn-primary"
+      >
+        Add
+      </button>
+      <button
+        type="reset"
+        *ngIf="labTestCategoryList.id == 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+      <button
+        (click)="updateLaboratoryTestCategory()"
+        *ngIf="labTestCategoryList.id != 0"
+        class="btn btn-primary"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="labTestCategoryList.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+  </form>
+  

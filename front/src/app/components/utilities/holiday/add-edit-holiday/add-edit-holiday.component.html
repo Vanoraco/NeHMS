@@ -1,0 +1,42 @@
+<form>
+  <div class="mb-3">
+    <label for="startDate" class="form-label">Start Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="startDate"
+      name="startDate"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="endDate" class="form-label">End Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="endDate"
+      name="endDate"
+    />
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addHoliday()"
+      *ngIf="holidayList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="holidayList.id == 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+    <button
+      (click)="updateHoliday()"
+      *ngIf="holidayList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="holidayList.id != 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+  </div>
+</form>

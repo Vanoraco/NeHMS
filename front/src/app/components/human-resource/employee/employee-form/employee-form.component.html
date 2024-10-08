@@ -1,0 +1,366 @@
+<form #TheForm="ngForm">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="row mb-3">
+        <label for="inputText" class="col-sm-5 col-form-label"
+          >First Name</label
+        >
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="firstName"
+            pattern="[a-zA-Z\s]+$"
+            minlength="2"
+            name="firstName"
+            type="text"
+            #fName="ngModel"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': fName.errors && fName.touched }"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="(fName.touched || TheForm.submitted) && fName.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputText" class="col-sm-5 col-form-label">Last Name</label>
+        <div class="col-sm-7">
+          <input
+            pattern="[a-zA-Z\s]+$"
+            minlength="2"
+            #LName="ngModel"
+            [(ngModel)]="lastName"
+            name="lastName"
+            type="text"
+            class="form-control"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="(LName.touched || TheForm.submitted) && LName.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputNumber" class="col-sm-5 col-form-label">Age</label>
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="age"
+            name="age"
+            type="number"
+            class="form-control"
+            maxlength="65"
+            minlength="18"
+            [value]="age"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="inputText" class="col-sm-5 col-form-label">Phone</label>
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="phone"
+            name="phone"
+            type="text"
+            pattern="[0-9]+"
+            minlength="9"
+            #Phone="ngModel"
+            class="form-control"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="(Phone.touched || TheForm.submitted) && Phone.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="inputText" class="col-sm-5 col-form-label">Address</label>
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="address"
+            name="address"
+            type="text"
+            class="form-control"
+            required
+            pattern="[a-zA-Z\s]+$"
+            minlength="3"
+            #Address="ngModel"
+          />
+          <span
+            class="text-danger"
+            *ngIf="(Address.touched || TheForm.submitted) && Address.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Country</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="countryId"
+            name="countryId"
+            required
+          >
+            <option *ngFor="let item of countryList$ | async" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Marital Status</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="maritalStatusId"
+            name="maritalStatusId"
+            required
+          >
+            <option
+              *ngFor="let item of maritalStatusList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Role</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="employeeRoleId"
+            name="employeeRoleId"
+            required
+          >
+            <option
+              *ngFor="let item of employeeRoleList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Designations</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="designationId"
+            name="designationId"
+            required
+          >
+            <option
+              *ngFor="let item of designationsList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row mb-3">
+        <label for="inputText" class="col-sm-5 col-form-label"
+          >Middle Name</label
+        >
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="middleName"
+            name="middleName"
+            type="text"
+            class="form-control"
+            required
+            minlength="2"
+            #MName="ngModel"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="(MName.touched || TheForm.submitted) && MName.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputDate" class="col-sm-5 col-form-label"
+          >Date of Birth</label
+        >
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="dateOfBirth"
+            name="dateOfBirth"
+            type="datetime-local"
+            class="form-control"
+            (change)="ageCalculation()"
+            required
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Gender</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="genderId"
+            name="genderId"
+            required
+          >
+            <option *ngFor="let item of genderList$ | async" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputEmail" class="col-sm-5 col-form-label">Email</label>
+        <div class="col-sm-7">
+          <input
+            [(ngModel)]="emailAddress"
+            name="emailAddress"
+            type="text"
+            email
+            #Email="ngModel"
+            class="form-control"
+            required
+          />
+          <span
+            class="text-danger"
+            *ngIf="(Email.touched || TheForm.submitted) && Email.invalid"
+          >
+            Please enter a valid input
+          </span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Language</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="languageId"
+            name="languageId"
+            required
+          >
+            <option
+              *ngFor="let item of languageList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">City</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="cityId"
+            name="cityId"
+            required
+          >
+            <option *ngFor="let item of cityList$ | async" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Medical Department</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="medicalDepartmentId"
+            name="medicalDepartmentId"
+            required
+          >
+            <option
+              *ngFor="let item of medicalDepartmentsList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Education Level</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="educationLevelId"
+            name="educationLevelId"
+            required
+          >
+            <option
+              *ngFor="let item of educationLevelList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-5 col-form-label">Specializations</label>
+        <div class="col-sm-7">
+          <select
+            class="form-select"
+            [(ngModel)]="specializationId"
+            name="specializationId"
+            required
+          >
+            <option
+              *ngFor="let item of specializationsList$ | async"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center float-end">
+    <button
+      [disabled]="TheForm.invalid"
+      (click)="addEmployee()"
+      *ngIf="employeeList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="employeeList.id == 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+    <button
+      [disabled]="TheForm.invalid"
+      (click)="updateEmployee()"
+      *ngIf="employeeList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="employeeList.id != 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+  </div>
+</form>

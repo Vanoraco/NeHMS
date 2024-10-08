@@ -1,0 +1,212 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-3">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-3">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div
+    *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+    class="col-4 mb-3"
+  >
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#labRequest"
+      (click)="modalAdd()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      Lab Request
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Order Date<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Test Category<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Doctors<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Remark<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Priority<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Is Cancelled<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Is Paid<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of labRequestList$
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ item.orderedDate | date : "mediumDate" }}</td>
+      <td>{{ labTestCategoryMap.get(item.laboratoryTestCategoryId) }}</td>
+      <td>{{ employeeMap.get(item.employeeId) }}</td>
+      <td>{{ item.remark }}</td>
+      <td>{{ item.priority }}</td>
+      <td>
+        <label *ngIf="item.isCancelled == true" class="px-3 text-two rounded"
+          >Cancelled
+        </label>
+        <label *ngIf="item.isCancelled == false" class="px-3 text-four rounded">
+          Not cancelled
+        </label>
+      </td>
+      <td>
+        <label *ngIf="item.isPaid == true" class="px-3 text-two rounded"
+          >Paid
+        </label>
+        <label *ngIf="item.isPaid == false" class="px-3 text-four rounded">
+          Unpaid
+        </label>
+      </td>
+      <td>
+        <i
+          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#labRequest"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i
+          *ngIf="employeeRole.name == 'Laboratorist' && item.isPaid == true"
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#labRequest"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i
+          *ngIf="
+            employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'
+          "
+          class="bi bi-cash icon-edit"
+          (click)="modalBillLabAdd(item.id)"
+          data-bs-toggle="modal"
+          data-bs-target="#billLab"
+          title="Add bill Lab"
+        ></i>
+        <!-- <i
+          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Laboratorist'"
+          class="bi bi-plus-circle icon-edit"
+          (click)="modalLabTestResultAdd(item.id)"
+          data-bs-toggle="modal"
+          data-bs-target="#labTest"
+          title="Add Lab Test Result"
+        ></i> -->
+        <i
+          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          (click)="delete(item)"
+          class="bi bi-trash icon-delete"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+
+<div
+  class="modal fade"
+  id="labRequest"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="labRequestLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-fullscreen rounded-1 border border-0 modal-dialog-scrollable"
+  >
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="labRequestLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-lab-request-form
+          [labRequestList]="labRequestList"
+          *ngIf="activateLabRequestComponent"
+        >
+        </app-lab-request-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="billLab"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="billLabLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="billLabLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="add-edit-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-bill-lab
+          [billLabList]="billLabList"
+          *ngIf="activateBillLabComponent"
+        >
+        </app-bill-lab>
+      </div>
+    </div>
+  </div>
+</div>

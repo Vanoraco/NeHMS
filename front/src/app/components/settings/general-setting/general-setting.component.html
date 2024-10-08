@@ -1,0 +1,107 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Settings</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item">Settings</li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings'"
+        >
+          General Setting
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/designations'"
+        >
+          Designation
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/specializations'"
+        >
+          Specialization
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/permissions'"
+        >
+          Permission
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/employee-roles'"
+        >
+          Employee Role
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/education-level'"
+        >
+          Education Level
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/general-settings/medical-departments'"
+        >
+          Medical Department
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <a routerLink="/general-settings/specializations">
+              <h5 class="pt-3">Specialization</h5>
+            </a>
+            <hr />
+            <a routerLink="/general-settings/designations">
+              <h5 class="">Designation</h5>
+            </a>
+            <hr />
+            <a routerLink="/general-settings/permissions">
+              <h5 class="">Permission</h5>
+            </a>
+            <hr />
+            <a routerLink="/general-settings/employee-roles">
+              <h5 class="">Employee Role</h5>
+            </a>
+            <hr />
+            <a routerLink="/general-settings/education-level">
+              <h5 class="">Education Level</h5>
+            </a>
+            <hr />
+            <a routerLink="/general-settings/medical-departments">
+              <h5 class="">Medical Department</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="card">
+          <div class="card-body">
+            <router-outlet></router-outlet>
+            <div class="container" *ngIf="router.url == '/general-settings'">
+              <h5 class="card-title">My Chat Room</h5>
+              <div *ngFor="let message of messageList">
+                <li>
+                    {{message}}
+                </li>
+              </div>
+
+              <input
+                [(ngModel)]="newMessage"
+                (keyup)="$event.keyCode == 13 && sendMessage()"
+              />
+              <button (click)="sendMessage()">Send Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

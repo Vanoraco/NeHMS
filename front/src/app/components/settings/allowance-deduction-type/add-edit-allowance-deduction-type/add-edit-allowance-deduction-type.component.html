@@ -1,0 +1,55 @@
+<form #allowanceDeductionForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+      pattern="[a-zA-Z\s]+$"
+      minlength="3"
+      #Name="ngModel"
+      [ngClass]="{ 'is-invalid': Name.errors && Name.touched }"
+      required
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(Name.touched || allowanceDeductionForm.submitted) && Name.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="type" class="form-label">Type</label>
+    <input type="text" class="form-control" [(ngModel)]="type" name="type" />
+  </div>
+
+  <button
+    (click)="addAllowanceDeduction()"
+    [disabled]="allowanceDeductionForm.invalid"
+    *ngIf="allowanceDeductionTypeList.id == 0"
+    class="btn btn-primary"
+  >
+    Save
+  </button>
+  <button
+    (click)="updateAllowanceDeduction()"
+    [disabled]="allowanceDeductionForm.invalid"
+    *ngIf="allowanceDeductionTypeList.id != 0"
+    class="btn btn-primary"
+  >
+    Update
+  </button>
+</form>

@@ -1,0 +1,228 @@
+<form  #INForm="ngForm" >
+  <div class="row g-3">
+      <div class="col-12">
+        <label for="patientId" class="form-label">Patient</label>
+        <select id="patientId" [(ngModel)]="patientId" name="patientId">
+          <option
+            *ngFor="let item of patientId$ | async as list"
+            value="{{ item.id }}"
+            >{{ item.firstName + " " + item.middleName }}</option
+          >
+        </select>
+      </div>
+      <div class="col-6">
+        <label for="painOnSetSide" class="form-label">Pain On Set Side</label>
+        <input
+          type="text"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainSetSide="ngModel"
+          class="form-control"
+          [(ngModel)]="painOnSetSide"
+          name="painOnSetSide"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(PainSetSide.touched ||  INForm.submitted) && PainSetSide.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="col-6">
+        <label for="painOnSetSuddenGradual" class="form-label">Pain On Set Sudden Gradual</label>
+        <input
+          type="text"
+          class="form-control"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainSudden="ngModel"
+          [(ngModel)]="painOnSetSuddenGradual"
+          name="painOnSetSuddenGradual"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(PainSudden.touched ||  INForm.submitted) && PainSudden.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="col-6">
+        <label for="painOnSetProgressiveRgressive" class="form-label">Pain On Set Progressive Rgressive</label>
+        <input
+          type="text"
+          class="form-control"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainProg="ngModel"
+          [(ngModel)]="painOnSetProgressiveRgressive"
+          name="painOnSetProgressiveRgressive"
+          required
+        />
+        <span
+          class="text-danger"
+          *ngIf="(PainProg.touched ||  INForm.submitted) && PainProg.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="col-6">
+        <label for="painOnSetSideDuration" class="form-label">Pain On Set Side Duration</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="painOnSetSideDuration"
+          name="painOnSetSideDuration"
+          required
+        />
+        
+      </div>
+      <div class="col-6">
+        <label for="painCharacteristics" class="form-label">Pain Characteristics</label>
+        <input
+          type="text"
+          class="form-control"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainChar="ngModel"
+          [(ngModel)]="painCharacteristics"
+          name="painCharacteristics"
+         
+        />
+        <span
+          class="text-danger"
+          *ngIf="(PainChar.touched ||  INForm.submitted) && PainChar.invalid"
+        >
+          Please enter a valid input
+        </span>
+      </div>
+      <div class="col-6">
+        <label for="painRadiation" class="form-label">Pain Radiation</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="painRadiation"
+          name="painRadiation"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainRad="ngModel"
+          required
+        />
+        <span
+        class="text-danger"
+        *ngIf="(PainRad.touched ||  INForm.submitted) && PainRad.invalid"
+      >
+        Please enter a valid input
+      </span>
+      </div>
+      <div class="col-6">
+        <label for="painAssociation" class="form-label">Pain Association</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="painAssociation"
+          name="painAssociation"
+          required
+          minlength="2"
+          #PainAssociation="ngModel"
+          required
+        />
+        <span
+        class="text-danger"
+        *ngIf="(PainAssociation.touched ||  INForm.submitted) && PainAssociation.invalid"
+      >
+        Please enter a valid input
+      </span>
+      </div>
+      <div class="col-6">
+        <label for="painTimeCourse" class="form-label">Pain Time Course</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="painTimeCourse"
+          name="painTimeCourse"
+          #PainTimeCourse="ngModel"
+          required
+        />
+        <span
+        class="text-danger"
+        *ngIf="(PainTimeCourse.touched ||  INForm.submitted) && PainTimeCourse.invalid"
+      >
+        Please enter a valid input
+      </span>
+      </div>
+      <div class="col-6">
+        <label for="painExacerbatingRelivingFactor" class="form-label">Pain Exacerbating Reliving Factor</label>
+        <input
+          type="text"
+          class="form-control"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainEx="ngModel"
+          [(ngModel)]="painExacerbatingRelivingFactor"
+          name="painExacerbatingRelivingFactor"
+          required
+        />
+        <span
+        class="text-danger"
+        *ngIf="(PainEx.touched ||  INForm.submitted) && PainEx.invalid"
+      >
+        Please enter a valid input
+      </span>
+      </div>
+      <div class="col-6">
+        <label for="painSeverity" class="form-label">Pain Severity</label>
+        <input
+          type="text"
+          pattern="[a-zA-Z\s]+$"
+          minlength="2"
+          #PainSeverity="ngModel"
+          class="form-control"
+          [(ngModel)]="painSeverity"
+          name="painSeverity"
+          required
+        />
+        <span
+        class="text-danger"
+        *ngIf="(PainSeverity.touched ||  INForm.submitted) && PainSeverity.invalid"
+      >
+        Please enter a valid input
+      </span>
+      </div>
+      <div class="text-center float-end justify-right">
+        <button
+          (click)="addMedicalInterviewSocrates()"
+          *ngIf="medicalInterviewSocratesList.id == 0"
+          class="btn btn-primary"
+          [disabled]="INForm.invalid"
+        >
+          Add
+        </button>
+        <button
+          type="reset"
+          *ngIf="medicalInterviewSocratesList.id == 0"
+          class="btn btn-info ms-3"
+          
+        >
+          Reset
+        </button>
+        <button
+          (click)="updateMedicalInterviewSocrates()"
+          *ngIf="medicalInterviewSocratesList.id != 0"
+          class="btn btn-primary"
+          [disabled]="INForm.invalid"
+        >
+          Update
+        </button>
+        <button
+          type="reset"
+          *ngIf="medicalInterviewSocratesList.id != 0"
+          class="btn btn-info ms-3"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+    </form>
+    

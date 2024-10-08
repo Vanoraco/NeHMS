@@ -1,0 +1,210 @@
+<form #donorForm="ngForm" class="row">
+  <div class="col-md-4 mb-3">
+    <label for="comments" class="form-label">First Name</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #FName="ngModel"
+      [ngClass]="{ 'is-invalid': FName.errors && FName.touched }"
+      required
+      class="form-control"
+      [(ngModel)]="firstName"
+      name="firstName"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(FName.touched || donorForm.submitted) && FName.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="col-md-4 mb-3">
+    <label for="comments" class="form-label">Middle Name</label>
+    <input
+      type="text"
+      class="form-control"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #MName="ngModel"
+      [ngClass]="{ 'is-invalid': MName.errors && MName.touched }"
+      required
+      [(ngModel)]="middleName"
+      name="middleName"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(MName.touched || donorForm.submitted) && MName.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="col-md-4 mb-3">
+    <label for="comments" class="form-label">Last Name</label>
+    <input
+      type="text"
+      pattern="[a-zA-Z\s]+$"
+      minlength="2"
+      #LName="ngModel"
+      [ngClass]="{ 'is-invalid': LName.errors && LName.touched }"
+      required
+      class="form-control"
+      [(ngModel)]="lastName"
+      name="lastName"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(LName.touched || donorForm.submitted) && LName.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label for="comments" class="form-label">Gender</label>
+      <select class="form-select" [(ngModel)]="genderId" name="genderId">
+        <option *ngFor="let item of genderList$ | async" value="{{ item.id }}">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input
+        pattern="[0-9]+"
+        minlength="10"
+        #Phone="ngModel"
+        type="text"
+        class="form-control"
+        [(ngModel)]="phoneNumber"
+        name="phoneNumber"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Phone.touched || donorForm.submitted) && Phone.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="mb-3">
+      <label for="unit" class="form-label">Unit</label>
+      <input
+        #Unit="ngModel"
+        type="number"
+        class="form-control"
+        [(ngModel)]="unit"
+        name="unit"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Unit.touched || donorForm.submitted) && Unit.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Address</label>
+      <input
+        name="address"
+        pattern="[a-zA-Z\s]+$"
+        minlength="5"
+        #Address="ngModel"
+        type="text"
+        class="form-control"
+        [(ngModel)]="address"
+        name="address"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Address.touched || donorForm.submitted) && Address.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label for="comments" class="form-label">Email</label>
+      <input
+        type="text"
+        email
+        #Email="ngModel"
+        required
+        class="form-control"
+        [(ngModel)]="emailAddress"
+        name="emailAddress"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Email.touched || donorForm.submitted) && Email.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Age</label>
+      <input
+        type="text"
+        pattern="[0-9]+"
+        minlength="1"
+        maxlength="3"
+        #Age="ngModel"
+        class="form-control"
+        [(ngModel)]="age"
+        name="age"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Age.touched || donorForm.submitted) && Age.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="mb-3">
+      <label for="lastDonated" class="form-label">Last Donated</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="lastDonated"
+        name="lastDonated"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="bloodGroupID" class="form-label">Blood Group</label>
+      <select
+        class="form-select"
+        [(ngModel)]="bloodGroupID"
+        name="bloodGroupID"
+      >
+        <option *ngFor="let item of bloodGroupList$ | async" [value]="item.id">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addDonor()"
+      *ngIf="donorsList.id == 0"
+      [disabled]="donorForm.invalid"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="donorsList.id == 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+    <button
+      (click)="updateDonor()"
+      *ngIf="donorsList.id != 0"
+      [disabled]="donorForm.invalid"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="donorsList.id != 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+  </div>
+</form>

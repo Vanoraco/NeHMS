@@ -1,0 +1,32 @@
+<form #patientForm="ngForm">
+  <div class="row">
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="phone"
+        name="phone"
+        pattern="[0-9]+"
+        minlength="10"
+        #Phone="ngModel"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Phone.touched || patientForm.submitted) && Phone.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addEmegenceyPatient()"
+      [disabled]="patientForm.invalid"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" class="btn btn-info ms-3">Reset</button>
+  </div>
+</form>

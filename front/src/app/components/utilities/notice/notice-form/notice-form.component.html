@@ -1,0 +1,65 @@
+<form>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      id="name"
+      type="text"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      id="description"
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+      cols="4"
+    ></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="noticeBoard" class="form-label">Notice Board</label>
+    <input
+      type="text"
+      id="noticeBoard"
+      class="form-control"
+      [(ngModel)]="noticeBoard"
+      name="noticeBoard"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input
+      id="date"
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+    />
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addNotice()"
+      *ngIf="notice.id == 0"
+      class="btn btn-primary"
+    >
+      Add
+    </button>
+    <button type="reset" *ngIf="notice.id == 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+    <button
+      (click)="updateNotice()"
+      *ngIf="notice.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="notice.id != 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+  </div>
+</form>

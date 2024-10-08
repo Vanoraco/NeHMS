@@ -1,0 +1,112 @@
+<form #medHistForm="ngForm">
+  <div class="row g-3">
+    <!-- <div class="col-12">
+        <label for="patientId" class="form-label">Patient</label>
+        <select id="patientId" [(ngModel)]="patientId" name="patientId">
+          <option
+            *ngFor="let item of patientId$ | async as list"
+            value="{{ item.id }}"
+            >{{ item.firstName + " " + item.lastName }}</option
+          >
+        </select>
+      </div> -->
+    <div class="col-12">
+      <label for="disease" class="form-label">Disease</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="disease"
+        name="disease"
+        required
+        pattern="[a-zA-Z\s]+$"
+        minlength="3"
+        #Dieases="ngModel"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Dieases.touched || medHistForm.submitted) && Dieases.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="treatment" class="form-label">Treatment</label>
+      <input
+        type="text"
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #Treat="ngModel"
+        class="form-control"
+        [(ngModel)]="treatment"
+        name="treatment"
+        required
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Treat.touched || medHistForm.submitted) && Treat.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="riskFactor" class="form-label">Risk Factor</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="riskFactor"
+        name="riskFactor"
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #RiskFac="ngModel"
+        required
+      />
+      <span
+        class="text-danger"
+        *ngIf="(RiskFac.touched || medHistForm.submitted) && RiskFac.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-12">
+      <label for="description" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="description"
+        name="description"
+      />
+    </div>
+    <div class="float-left">
+      <button
+        (click)="addMedicalHistory()"
+        *ngIf="medicalHistoryList.id == 0"
+        class="btn btn-primary"
+        [disabled]="medHistForm.invalid"
+      >
+        Save
+      </button>
+      <button
+        type="reset"
+        *ngIf="medicalHistoryList.id == 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+      <button
+        (click)="updateMedicalHistory()"
+        *ngIf="medicalHistoryList.id != 0"
+        class="btn btn-primary"
+        [disabled]="medHistForm.invalid"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="medicalHistoryList.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

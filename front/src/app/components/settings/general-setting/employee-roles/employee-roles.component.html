@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col">
+    <h5 class="card-title">Employee Role</h5>
+  </div>
+  <div class="col">
+    <button
+      type="button"
+      class="btn btn-success float-end mt-3 ms-1"
+      (click)="exportToExcel()"
+    >
+      Export To Excel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary float-end mt-3"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong> Employee Role
+    </button>
+  </div>
+</div>
+<table class="table table-striped" id="emp-role-table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Permission</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeRolesList$">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.permission }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog rounded-1 border border-0">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
+        <button
+          type="button"
+          class="btn bg-white rounded-circle btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-add-edit-employee-roles
+          [employeeRolesList]="employeeRolesList"
+          *ngIf="activateEmployeeRolesComponent"
+        >
+        </app-add-edit-employee-roles>
+      </div>
+    </div>
+  </div>
+</div>

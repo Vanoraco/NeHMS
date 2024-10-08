@@ -1,0 +1,41 @@
+<form>
+  <div class="mb-3">
+    <label for="Salary" class="form-label">Salary</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="salary"
+      name="salary"
+    />
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addEmployeeSalary()"
+      *ngIf="employeeSalaryList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="employeeSalaryList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateEmployeeSalary()"
+      *ngIf="employeeSalaryList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="employeeSalaryList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

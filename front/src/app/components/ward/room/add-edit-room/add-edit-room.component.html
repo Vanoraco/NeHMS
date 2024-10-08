@@ -1,0 +1,55 @@
+<form #roomForm="ngForm" >
+    <div class="mb-3">
+        <label for="name" class="form-label">Room Name</label>
+        <input 
+         type="text" 
+         class="form-control"  
+         pattern="[a-zA-Z\s]+$"
+         minlength="2"
+         #Name="ngModel"
+        required
+         [(ngModel)]="name" name="name" 
+         />
+         <span
+            class="text-danger"
+            *ngIf="(Name.touched ||  roomForm.submitted) && Name.invalid"
+          >
+            Please enter a valid input
+          </span>
+    </div>
+    <div class="mb-3">
+        <label for="code" class="form-label">Room Code</label>
+        <input type="number"
+         class="form-control" 
+         [(ngModel)]="code"
+          name="code">
+          
+    </div>
+    <div class="mb-3">
+        <label class="col-sm-5 col-form-label">Building ID</label>
+        <div class="col-sm-12">
+            <select [(ngModel)]="buildingId" name="buildingId">
+                <option *ngFor="let item of bulidingName$|async" [value]="item.id">{{item.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="code" class="form-label">Floor Number</label>
+        <input type="number"
+        
+         class="form-control" 
+         [(ngModel)]="floorNumber" 
+         name="floorNumber">
+         
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description">
+    </div>
+    <button (click)="addRoom()" *ngIf="roomList.id==0" class="btn btn-primary">
+        Add
+    </button>
+    <button (click)="updateRoom()" *ngIf="roomList.id!=0" class="btn btn-primary">
+        Update
+    </button>
+</form>

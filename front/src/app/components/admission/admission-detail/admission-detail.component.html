@@ -1,0 +1,225 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Admission</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item Active">Admission Detail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card overflow-auto">
+          <div class="card-body pt-1">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#admission-overview"
+                >
+                  Overview
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Doctor' ||
+                  employeeRole.name == 'Accountant' ||
+                  employeeRole.name == 'Laboratorist'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#lab-request"
+                >
+                  Lab Request
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Doctor' ||
+                  employeeRole.name == 'Accountant' ||
+                  employeeRole.name == 'Pharmacist'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#prescription"
+                >
+                  Prescription
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Nurse' ||
+                  employeeRole.name == 'Doctor'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#pre-exam-checkup"
+                >
+                  Pre Exam Checkup
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Nurse' ||
+                  employeeRole.name == 'Doctor'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#case"
+                >
+                  Case
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Nurse' ||
+                  employeeRole.name == 'Doctor'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#medicalHistory"
+                >
+                  Medical History
+                </button>
+              </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Nurse' ||
+                  employeeRole.name == 'Doctor'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#operation"
+                >
+                  Operation
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div
+                class="tab-pane fade show active profile-overview"
+                id="admission-overview"
+              >
+                <h5 class="card-title">Admission Details</h5>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="d-flex flex-column align-items-center">
+                      <img
+                        class="rounded-circle mb-1"
+                        [src]="createImgPath(pateintImageList.imageUrl)"
+                        height="130px"
+                        width="130px"
+                      />
+                      <h5>
+                        {{ patientMap.get(admissionList.patientId) }}
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-5">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Admission Type</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{
+                          admissionTypeMap.get(admissionList.admissionTypeId)
+                        }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Employee</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ employeeMap.get(admissionList.employeeId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Room</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ roomMap.get(admissionList.roomId) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Ward</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ wardMap.get(admissionList.wardId) }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Admission Time</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ admissionList.admissionTime | date : "mediumDate" }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Admission Date</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ admissionList.admissionDate | date : "mediumDate" }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Discharge Date</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ admissionList.dischargeDate | date : "mediumDate" }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-5 label">Is Discharge</div>
+                      <div class="col-lg-7 col-md-7">
+                        {{ admissionList.isDischarge }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade pt-1" id="lab-request">
+                <app-lab-request></app-lab-request>
+              </div>
+              <div class="tab-pane fade pt-1" id="prescription">
+                <app-prescription></app-prescription>
+              </div>
+              <div class="tab-pane fade pt-1" id="pre-exam-checkup">
+                <app-pre-exam-check-up></app-pre-exam-check-up>
+              </div>
+              <div class="tab-pane fade pt-1" id="case">
+                <app-case></app-case>
+              </div>
+              <div class="tab-pane fade pt-1" id="medicalHistory">
+                <app-medical-history></app-medical-history>
+              </div>
+              <div class="tab-pane fade pt-1" id="operation">
+                <app-operation></app-operation>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

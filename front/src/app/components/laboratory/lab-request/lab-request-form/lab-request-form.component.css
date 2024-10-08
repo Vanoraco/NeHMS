@@ -1,0 +1,11 @@
+.labtestresult {
+  border: 1px solid;
+  border-color: rgb(201, 206, 211);
+  padding: 10px;
+  border-radius: 5px;
+}
+.icon-delete {
+  padding: 2px;
+  color: rgb(202, 37, 37);
+  cursor: pointer;
+}

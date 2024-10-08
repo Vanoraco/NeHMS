@@ -1,0 +1,160 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Schedule</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Schedule</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">Schedule</h5>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#schedule-modal"
+                  (click)="modalAdd()"
+                >
+                  <i class="fa fa-plus"></i>
+                  Schedule
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-between">
+              <div class="col-2 mb-3">
+                <select
+                  (change)="onTableSizeChange($event)"
+                  class="form-select mt-2"
+                  id="pagination"
+                >
+                  <option *ngFor="let size of tableSizes">{{ size }}</option>
+                </select>
+              </div>
+              <div class="col-4 mb-3">
+                <label for="total-revenue" class="mt-3 h6"
+                  >Total Schedule List
+                  <strong class="total-num">{{
+                    scheduleList$.length
+                  }}</strong></label
+                >
+              </div>
+              <div class="col-4 mb-3">
+                <input
+                  type="text"
+                  id="search"
+                  name="searchName"
+                  [(ngModel)]="searchName"
+                  class="form-control mt-2"
+                  (ngModelChange)="searchByName()"
+                  placeholder="Search here ..."
+                />
+              </div>
+            </div>
+            <table class="table table-hover" id="schedule-table">
+              <thead class="">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Starting Time</th>
+                  <th scope="col">Finishing Time</th>
+                  <th scope="col">Doctors</th>
+                  <th scope="col">Week Day</th>
+                  <th scope="col">Appointment Duration</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- | orderBy : key : reverse
+                | filter : searchName -->
+                <tr
+                  *ngFor="
+                    let item of scheduleList$
+                     
+                  "
+                >
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.startingTime | date : "shortTime" }}</td>
+                  <td>{{ item.finishingTime | date : "shortTime" }}</td>
+                  <td>{{ employeeNameMap.get(item.employeeId) }}</td>
+                  <td>{{ weekDayMap.get(item.weekdayId) }}</td>
+                  <td>
+                    {{ appointmentDurationMap.get(item.appointmentDurationId) }}
+                  </td>
+                  <td>
+                    <i
+                      (click)="modalEdit(item)"
+                      data-bs-toggle="modal"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Edit"
+                      data-bs-target="#schedule-modal"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      (click)="delete(item)"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Delete"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="onTableDataChange($event)"
+            ></pagination-controls>
+            <div
+              class="modal fade"
+              id="schedule-modal"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="schedule-modalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog rounded-1 border border-0">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">{{ modalTitle }}</h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-schedule-form
+                      [scheduleList]="schedules"
+                      *ngIf="activateScheduleComponent"
+                    >
+                    </app-schedule-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

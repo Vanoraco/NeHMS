@@ -1,0 +1,107 @@
+<div class="row justify-content-between">
+  <div class="col-md-2 mb-2">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-md-6 mb-2">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div class="col-md-4 mb-2">
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#employeeSalary"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong>
+      Salary
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Id<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Employee<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer" (click)="sort('id')">
+        Salary<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of employeeSalaryList$
+         
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ employeeNameMap.get(item.employeeId) }}</td>
+      <td>{{ item.salary }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#employeeSalary"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+<div
+  class="modal fade"
+  id="employeeSalary"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="employeeSalaryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeSalaryLabel">{{ modalTitle }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="modal-close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <app-add-edit-employee-salary
+          [employeeSalaryList]="employeeSalaryList"
+          *ngIf="activateEmployeeSalaryComponent"
+        >
+        </app-add-edit-employee-salary>
+      </div>
+    </div>
+  </div>
+</div>

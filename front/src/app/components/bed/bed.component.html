@@ -1,0 +1,157 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Bed</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active" *ngIf="router.url == '/bed'">Bed</li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/bed/bed-allotment'"
+        >
+          Bed Allotment
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/bed/bed-type'"
+        >
+          Bed Type
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/bed/available'"
+        >
+          Available
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <a routerLink="/bed/bed-allotment">
+              <h5 class="pt-3">Bed Allotment</h5>
+            </a>
+            <hr />
+            <a routerLink="/bed">
+              <h5 class="">Bed</h5>
+            </a>
+            <hr />
+            <a routerLink="/bed/bed-type">
+              <h5 class="">Bed Type</h5>
+            </a>
+            <hr />
+            <a routerLink="/bed/available">
+              <h5 class="">Available</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <!-- For Other Children Component UI -->
+            <router-outlet></router-outlet>
+            <!-- For Bed Component UI only seen where url == '/bed' -->
+            <div *ngIf="router.url == '/bed'">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title">Bed</h5>
+                </div>
+                <div class="col">
+                  <button
+                    type="button"
+                    class="btn btn-success float-end mt-3 ms-1"
+                    (click)="exportToExcel()"
+                  >
+                    Export To Excel
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary float-end mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    (click)="modalAdd()"
+                  >
+                    Add Bed
+                  </button>
+                </div>
+              </div>
+              <table class="table" id="bed-table">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Bed Type</th>
+                    <th>Ward</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of bedList$ | async">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>
+                      {{ bedTypeMap.get(item.bedTypeId) }}
+                    </td>
+                    <td>{{ wardMap.get(item.wardId) }}</td>
+                    <td>{{ availableMap.get(item.availableId) }}</td>
+                    <td>
+                      <i
+                        (click)="modalEdit(item)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        class="bi bi-pencil-square icon-edit"
+                      ></i>
+                      <i
+                        (click)="delete(item)"
+                        class="bi bi-trash icon-delete"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog rounded-1 border border-0">
+                  <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                      <h5 class="modal-title">{{ modalTitle }}</h5>
+                      <button
+                        type="button"
+                        class="btn bg-white rounded-circle btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="modalClose()"
+                        id="add-edit-modal-close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <app-add-edit-bed
+                        [bedList]="bedList"
+                        *ngIf="activateBedComponent"
+                      >
+                      </app-add-edit-bed>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

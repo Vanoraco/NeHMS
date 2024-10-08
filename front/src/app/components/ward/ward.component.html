@@ -1,0 +1,156 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Ward</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active" *ngIf="router.url == '/ward'">
+          Ward
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/ward/ward-type'"
+        >
+          Ward Type
+        </li>
+        <li class="breadcrumb-item active" *ngIf="router.url == '/ward/room'">
+          Room
+        </li>
+        <li
+          class="breadcrumb-item active"
+          *ngIf="router.url == '/ward/building'"
+        >
+          Building
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <a routerLink="/ward/room">
+              <h5 class="pt-3">Room</h5>
+            </a>
+            <hr />
+            <a routerLink="/ward/ward-type">
+              <h5 class="">Ward Type</h5>
+            </a>
+            <hr />
+            <a routerLink="/ward">
+              <h5 class="">Ward</h5>
+            </a>
+            <hr />
+            <a routerLink="/ward/building">
+              <h5 class="">Building</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <!-- For Other Children Component UI -->
+            <router-outlet></router-outlet>
+            <!-- For Ward Component UI only seen where url == '/ward' -->
+            <div *ngIf="router.url == '/ward'" class="container">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title">Ward</h5>
+                </div>
+                <div class="col">
+                  <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary float-end mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    (click)="modalAdd()"
+                  >
+                    Add Ward
+                  </button>
+                </div>
+              </div>
+              <table class="table" id="ward-table">
+                <thead>
+                  <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Building</th>
+                  <th>Floor No.</th>
+                  <th>Ward Type</th>
+                  <th>Code</th>
+                  <th>Is Private</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of wardList$ | async">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.buildingId }}</td>
+                    <td>{{ item.floorNumber }}</td>
+                    <td>{{ item.wardTypeId }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.isprivate }}</td>
+                    <td>
+                      <i
+                        (click)="modalEdit(item)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        class="bi bi-pencil-square icon-edit"
+                      ></i>
+                      <i
+                        (click)="delete(item)"
+                        class="bi bi-trash icon-delete"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">
+                        {{ modalTitle }}
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="modalClose()"
+                        id="add-edit-modal-close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <app-add-edit-ward>
+                        [wardList]="wardList" *ngIf="activateWardComponent" >
+                      </app-add-edit-ward>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

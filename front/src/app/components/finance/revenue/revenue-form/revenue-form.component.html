@@ -1,0 +1,67 @@
+<form class="row g-3">
+  <div class="col-12">
+    <label for="revenueCategoryId" class="form-label">Revenue Category</label>
+    <select
+      id="revenueCategoryId"
+      [(ngModel)]="revenueCategoryId"
+      name="revenueCategoryId"
+    >
+      <option
+        *ngFor="let item of revenueCategoryId$ | async as list"
+        [value]="item.id"
+        >{{ item.name }}</option
+      >
+    </select>
+  </div>
+  <div class="col-12">
+    <label for="amount" class="form-label">Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="amount"
+      name="amount"
+    />
+  </div>
+  <div class="col-12">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="col-12">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addRevenue()"
+      *ngIf="revenueList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="revenueList.id == 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+    <button
+      (click)="updateRevenue()"
+      *ngIf="revenueList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="revenueList.id != 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+  </div>
+</form>

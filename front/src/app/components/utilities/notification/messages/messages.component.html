@@ -1,0 +1,60 @@
+<!-- <main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Settings</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item">Settings</li>
+        <li class="breadcrumb-item active">Messages</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card overflow-auto">
+            <div class="card-body"> 
+              <div class="ud-header">
+                <h2 class="text-center">Public Chat</h2>
+              </div>
+              <div class="ud-body">
+                <div class="msg-box">
+                  <ul>
+                    <li
+                      *ngFor="let mObj of msgInboxArray"
+                      [ngClass]="
+                        mObj.user === msgDto.user ? 'in-msg' : 'ex-msg'
+                      "
+                    >
+                      {{ mObj.user }} :<br /><span class="msg-italic-style">{{
+                        mObj.msgText
+                      }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="ud-flex-row">
+                  <input
+                    type="text"
+                    placeholder="Type message here"
+                    class="msg-input"
+                    [(ngModel)]="msgDto.msgText"
+                  />
+                  <button class="send-btn" (click)="send()">
+                    <i class="fa fa-paper-plane"></i>
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  class="name-box"
+                  [(ngModel)]="msgDto.user"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main> -->

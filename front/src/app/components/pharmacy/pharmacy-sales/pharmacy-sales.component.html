@@ -1,0 +1,163 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Pharmacy</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Pharmacy</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">Pharmacy Sales</h5>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#pharmacy-sales-modal"
+                  (click)="modalAdd()"
+                >
+                  <i class="bi bi-plus-lg"></i>
+                  Pharmacy Sale
+                </button>
+              </div>
+            </div>
+            <table class="table table-hover" id="excel-table">
+              <thead class="">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Medicine Stock</th>
+                  <th scope="col">Pharmacist</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Timestamp</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of pharmacySalesList$">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.pharmacyMedStock.name }}</td>
+                  <td>
+                    {{ item.employee.firstName + " " + item.employee.lastName }}
+                  </td>
+                  <td>{{ item.amount }}</td>
+                  <td>{{ item.price }}</td>
+                  <td>
+                    <!-- <label class="txt-color text-center fs-6 rounded px-3"
+                      >{{ item.timeStamp | date : "shortTime" }} <br />
+                      {{ item.timeStamp | date : "mediumDate" }}</label
+                    > -->
+                    {{ item.timeStamp | date : "medium" }}
+                  </td>
+                  <td>
+                    <i
+                      (click)="modalEdit(item.id)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#pharmacy-sales-modal"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      (click)="delete(item)"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                    <i
+                      (click)="modalPrint(item)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#pharmacy-sales-print-modal"
+                      class="bi bi-printer icon-edit"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div
+              class="modal fade"
+              id="pharmacy-sales-modal"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="pharmacy-sales-modalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg rounded-1 border border-0">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-pharmacy-sales-form
+                      [pharmacySalesData]="pharmacySalesList"
+                      *ngIf="activatePhaSalesComponent"
+                    >
+                    </app-pharmacy-sales-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="modal fade"
+              id="pharmacy-sales-print-modal"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="pharmacy-sales-print-modalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg rounded-1 border border-0">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn bg-white rounded-circle btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-print-modal
+                      [PrintModalList]="pharmacySalesList"
+                      *ngIf="activatePhaSalesComponent"
+                    >
+                    </app-print-modal>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

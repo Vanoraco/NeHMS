@@ -1,0 +1,218 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Admission</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Admission</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">Admission Detail</h5>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <div
+                  *ngIf="
+                    employeeRole.name == 'Admin' ||
+                    employeeRole.name == 'Receptionist'
+                  "
+                >
+                  <button
+                    type="button"
+                    class="btn btn-primary float-end mt-3"
+                    data-bs-toggle="modal"
+                    (click)="modalAdd()"
+                    data-bs-target="#admissionModal"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                    Add Admission
+                  </button>
+                </div>
+              </div>
+              <div class="row justify-content-between">
+                <div class="col-2 mb-3">
+                  <select
+                    (change)="onTableSizeChange($event)"
+                    class="form-select mt-2"
+                    id="pagination"
+                  >
+                    <option *ngFor="let size of tableSizes">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="total-laboratory-test" class="mt-3 h6"
+                    >Total Admitted Patient
+                    <strong class="total-num">{{
+                      admissionList$.length
+                    }}</strong></label
+                  >
+                </div>
+
+                <div class="col-4 mb-3">
+                  <input
+                    type="text"
+                    id="search"
+                    name="searchName"
+                    [(ngModel)]="searchName"
+                    class="form-control mt-2"
+                    (ngModelChange)="searchByName()"
+                    placeholder="Search here ..."
+                  />
+                </div>
+              </div>
+              <table class="table" id="admission-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th style="cursor: pointer" (click)="sort('id')">
+                      ID<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th style="cursor: pointer" (click)="sort('type')">
+                      Adm. Type<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th style="cursor: pointer" (click)="sort('patientId')">
+                      Patient<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th style="cursor: pointer" (click)="sort('employeeId')">
+                      Doctors<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th style="cursor: pointer" (click)="sort('date')">
+                      Adm. Date<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th style="cursor: pointer" (click)="sort('isDismissed')">
+                      Is Discharged<i class="fa fa-fw fa-sort"></i>
+                    </th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of admissionList$">
+                    <td>{{ item.id }}</td>
+                    <td>{{ admissionTypeMap.get(item.admissionTypeId) }}</td>
+                    <td>
+                      <a [routerLink]="['/patient-details/', item.patientId]">{{
+                        patientListMap.get(item.patientId) +
+                          "(" +
+                          item.patientId +
+                          ")"
+                      }}</a>
+                    </td>
+                    <td>
+                      <a
+                        [routerLink]="['/employee-details/', item.employeeId]"
+                        >{{
+                          employeeMap.get(item.employeeId) +
+                            "(" +
+                            item.employeeId +
+                            ")"
+                        }}</a
+                      >
+                    </td>
+                    <td>
+                      {{ item.admissionDate | date : "medium" }}
+                    </td>
+                    <td>
+                      <label
+                        *ngIf="item.isDischarge == true"
+                        class="px-3 text-true rounded"
+                        >Yes
+                      </label>
+                      <label
+                        *ngIf="item.isDischarge == false"
+                        class="px-3 text-false rounded"
+                      >
+                        No
+                      </label>
+                    </td>
+                    <td>
+                      <i
+                        [routerLink]="['/admission-details/', item.id]"
+                        class="bi bi-list icon-show"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Show"
+                      ></i>
+                      <i
+                        *ngIf="
+                          employeeRole.name == 'Admin' ||
+                          employeeRole.name == 'Receptionist'
+                        "
+                        (click)="modalEdit(item)"
+                        data-bs-toggle="modal"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Edit"
+                        data-bs-target="#admissionModal"
+                        class="bi bi-pencil-square icon-edit"
+                      ></i>
+                      <i
+                        *ngIf="
+                          employeeRole.name == 'Admin' ||
+                          employeeRole.name == 'Receptionist'
+                        "
+                        (click)="delete(item)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Delete"
+                        class="bi bi-trash icon-delete"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls
+                (pageChange)="onTableDataChange($event)"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          id="admissionModal"
+          tabindex="-1"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+        >
+          <div class="modal-dialog rounded-1 border border-0 modal-xl">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">{{ modalTitle }}</h5>
+                <button
+                  type="button"
+                  class="btn bg-white rounded-circle btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="modalClose()"
+                  id="modal-close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <app-admission-form
+                  [admissionList]="admissionList"
+                  *ngIf="activateAdmissionComponent"
+                >
+                </app-admission-form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,158 @@
+<form #ZForm="ngForm">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="name"
+        name="name"
+        pattern="[a-zA-Z\s]+$"
+        minlength="2"
+        #ZName="ngModel"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(ZName.touched || ZForm.submitted) && ZName.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-md-4">
+      <label for="price" class="form-label">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="quantity"
+        name="quantity"
+      />
+    </div>
+    <div class="col-md-4">
+      <label for="price" class="form-label">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="price"
+        name="price"
+      />
+    </div>
+    <div class="col-md-4">
+      <label for="medicationId" class="form-label">Medication</label>
+      <select
+        id="medicationId"
+        [(ngModel)]="medicationId"
+        name="medicationId"
+      >
+        <option
+          *ngFor="let item of medicationId$ | async as list"
+          selected
+          [value]="item.id"
+          >{{ item.name }}</option
+        >
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="employeeId" class="form-label">Pharmacist</label>
+      <select id="employeeId" [(ngModel)]="employeeId" name="employeeId">
+        <option
+          *ngFor="let item of employeeId$"
+          selected
+          [value]="item.id"
+          >{{
+            item.firstName + " " + item.lastName + " " + "(" + item.id + ")"
+          }}</option
+        >
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="medSupplierId" class="form-label">Supplier</label>
+      <select
+        id="medSupplierId"
+        [(ngModel)]="medSupplierId"
+        name="medSupplierId"
+      >
+        <option
+          *ngFor="let item of supplierId$ | async as list"
+          selected
+          [value]="item.id"
+          >{{ item.name }}</option
+        >
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="expirationDate" class="form-label">Expiration Date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="expirationDate"
+        name="expirationDate"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="timeStamp" class="form-label">Timestamp</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        [(ngModel)]="timeStamp"
+        name="timeStamp"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="batchNumber" class="form-label">Batch Number</label>
+      <input
+        type="text"
+        pattern="[0-9]+"
+        #Batch="ngModel"
+        class="form-control"
+        [(ngModel)]="batchNumber"
+        name="batchNumber"
+      />
+      <span
+        class="text-danger"
+        *ngIf="(Batch.touched || ZForm.submitted) && Batch.invalid"
+      >
+        Please enter a valid input
+      </span>
+    </div>
+    <div class="col-md-6">
+      <label for="description" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="description"
+        name="description"
+      />
+    </div>
+
+    <div class="text-center float-end justify-right">
+      <button
+        (click)="addPharmacyMedStock()"
+        *ngIf="pharmacyMedStock.id == 0"
+        class="btn btn-primary"
+      >
+        Add
+      </button>
+      <button
+        type="reset"
+        *ngIf="pharmacyMedStock.id == 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+      <button
+        (click)="updatePharmacyMedStock()"
+        *ngIf="pharmacyMedStock.id != 0"
+        class="btn btn-primary"
+      >
+        Update
+      </button>
+      <button
+        type="reset"
+        *ngIf="pharmacyMedStock.id != 0"
+        class="btn btn-info ms-3"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+</form>

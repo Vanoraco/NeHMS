@@ -1,0 +1,65 @@
+<form>
+  <div class="mb-3">
+    <label class="col-sm-5 col-form-label">Employee</label>
+    <div class="col-sm-12">
+      <select id="employeeId" [(ngModel)]="employeeId" name="employeeId">
+        <option
+          *ngFor="let item of getEmployeeList$ | async as list"
+          value="{{ item.id }}"
+          >{{ item.firstName + " " + item.middleName }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="col-sm-5 col-form-label">Patient</label>
+    <div class="col-sm-12">
+      <select id="patientId" [(ngModel)]="patientId" name="patientId">
+        <option
+          *ngFor="let item of getPatientList$ | async as list"
+          value="{{ item.id }}"
+          >{{ item.firstName + " " + item.middleName }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addRecommendations()"
+      *ngIf="recommendationsList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="recommendationsList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateRecommendations()"
+      *ngIf="recommendationsList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="recommendationsList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

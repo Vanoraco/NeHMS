@@ -1,0 +1,50 @@
+.total-num {
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  border: 2px solid;
+  border-color: rgb(0, 38, 255);
+  padding: 2px 10px 2px 10px;
+}
+
+.icon-show {
+  margin: 2px;
+  color: rgb(5, 1, 255);
+  cursor: pointer;
+}
+
+.icon-show.icon-edit.icon-delete:hover {
+  border-radius: 50%;
+  color: aqua;
+}
+
+.icon-edit {
+  padding: 2px;
+  color: rgb(32, 32, 209);
+  cursor: pointer;
+}
+
+.icon-delete {
+  padding: 2px;
+  color: rgb(202, 37, 37);
+  cursor: pointer;
+}
+
+.text-one {
+  color: #7DB0FF;
+  background-color: #E0E3FF;
+}
+
+.text-two {
+  color: #6FC086;
+  background-color: #CEF2E3;
+}
+
+.text-three {
+  color: #FFB871;
+  background-color: #FFF1D3;
+}
+
+.text-four {
+  color: #F7514C;
+  background-color: #FDD4DA;
+}

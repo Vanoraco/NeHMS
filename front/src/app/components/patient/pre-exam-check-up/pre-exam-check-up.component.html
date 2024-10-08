@@ -1,0 +1,130 @@
+<div class="row justify-content-between">
+  <div class="col-2 mb-3">
+    <select
+      (change)="onTableSizeChange($event)"
+      class="form-select mt-2"
+      id="pagination"
+    >
+      <option *ngFor="let size of tableSizes">{{ size }}</option>
+    </select>
+  </div>
+  <div class="col-4 mb-3">
+    <input
+      type="text"
+      id="search"
+      name="searchName"
+      [(ngModel)]="searchName"
+      class="form-control mt-2"
+      (ngModelChange)="searchByName()"
+      placeholder="Search here ..."
+    />
+  </div>
+  <div class="col-4 mb-3">
+    <button
+      type="button"
+      class="btn btn-primary float-end"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      (click)="modalAdd()"
+    >
+      <strong>+</strong>
+      Add
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Id<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <!--
+      
+    -->
+    <th style="cursor: pointer" (click)="sort('id')">
+      Employee<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Symptom<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Height<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Weight<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Pain<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      BP<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      Severity<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let item of preexamcheckupList$
+        
+      "
+    >
+      <td>{{ item.id }}</td>
+      <td>{{ employeeNameMap.get(item.employeeId) }}</td>
+      <td>{{ item.symptom }}</td>
+      <td>{{ item.height }}</td>
+      <td>{{ item.weight }}</td>
+      <td>{{ item.pain }}</td>
+      <td>{{ item.bp }}</td>
+      <td>{{ item.severity }}</td>
+      <td>
+        <i
+          (click)="modalEdit(item)"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          class="bi bi-pencil-square icon-edit"
+        ></i>
+        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls
+  (pageChange)="onTableDataChange($event)"
+></pagination-controls>
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          {{ modalTitle }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="pre-modal-close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <app-add-edit-pre-exam-check-up
+          [preexamcheckupList]="preexamcheckupList"
+          *ngIf="activatepreexamcheckupComponent"
+        >
+        </app-add-edit-pre-exam-check-up>
+      </div>
+    </div>
+  </div>
+</div>

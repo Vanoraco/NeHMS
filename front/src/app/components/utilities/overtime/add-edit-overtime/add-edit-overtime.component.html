@@ -1,0 +1,46 @@
+<form>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input type="datetime-local" class="form-control" [(ngModel)]="date" name="date" />
+  </div>
+  <div class="mb-3">
+    <label for="hours" class="form-label">Hours</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="hours"
+      name="hours"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="fixedAmount" class="form-label">Fixed Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="fixedAmount"
+      name="fixedAmount"
+    />
+  </div>
+  <div class="text-center float-end">
+    <button
+      (click)="addOvertime()"
+      *ngIf="overtimeList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="overtimeList.id == 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+    <button
+      (click)="updateOvertime()"
+      *ngIf="overtimeList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="overtimeList.id != 0" class="btn btn-info ms-3">
+      Reset
+    </button>
+  </div>
+</form>

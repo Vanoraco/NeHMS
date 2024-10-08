@@ -1,0 +1,86 @@
+<form #exForm="ngForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+      pattern="[a-zA-Z\s]+$"
+      minlength="3"
+      #Name="ngModel"
+    />
+    <span
+      class="text-danger"
+      *ngIf="(Name.touched || exForm.submitted) && Name.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Expense Category</label>
+    <select
+      id="expenseCatagoryId"
+      [(ngModel)]="expenseCatagoryId"
+      name="expenseCatagoryId"
+    >
+      <option
+        *ngFor="let item of expenseCategoryId$ | async as list"
+        selected
+        [value]="item.id"
+        >{{ item.name }}</option
+      >
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="amount" class="form-label">Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="amount"
+      name="amount"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+    ></textarea>
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addExpense()"
+      *ngIf="expenseList.id == 0"
+      class="btn btn-primary"
+      [disabled]="exForm.invalid"
+    >
+      Save
+    </button>
+    <button type="reset" *ngIf="expenseList.id == 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+    <button
+      (click)="updateExpense()"
+      *ngIf="expenseList.id != 0"
+      class="btn btn-primary"
+      [disabled]="exForm.invalid"
+    >
+      Update
+    </button>
+    <button type="reset" *ngIf="expenseList.id != 0" class="btn btn-info ms-2">
+      Reset
+    </button>
+  </div>
+</form>

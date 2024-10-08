@@ -1,0 +1,53 @@
+<form>
+  <div class="mb-3">
+    <label for="name" class="form-label">Permission Name</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="name"
+      name="name"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+      required
+    />
+  </div>
+
+  <div class="text-center float-end">
+    <button
+      (click)="addPermission()"
+      *ngIf="permissionList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="permissionList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updatePermission()"
+      *ngIf="permissionList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="permissionList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

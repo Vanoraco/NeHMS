@@ -1,0 +1,104 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Pharmacy</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">
+          Pharmacy
+        </li>
+
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card overflow-auto">
+          <div class="card-body">
+            <div *ngIf="router.url == '/pharmacy'" class="container">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title">Pharmacy Bill</h5>
+                </div>
+                <div class="col">
+                  <button
+                    type="button"
+                    class="btn btn-primary float-end mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    (click)="modalAdd()"
+                  >
+                    <i class="fa fa-plus me-2 ms-1"></i>
+                    Generate Bill
+                  </button>
+                </div>
+              </div>
+              <hr class="mt-0" />
+              <table class="table">
+                <thead>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Building-ID</th>
+                  <th>Floor-Number</th>
+                  <th>Bed Type ID</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of pharmacyList$ | async">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.buildingNumberId }}</td>
+                    <td>{{ item.floorNumber }}</td>
+                    <td>{{ item.wardTypeId }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                      <i
+                        (click)="modalEdit(item)"
+                        data-bs-toggle="modal"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Edit"
+                        data-bs-target="#staticBackdrop"
+                        class="bi bi-pencil-square icon-edit"
+                      ></i>
+                      <i
+                        (click)="delete(item)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Delete"
+                        class="bi bi-trash icon-delete"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-fullscreen">
+                  <div class="modal-content">
+                    <app-generate-bill-form
+                      [generateBillList]="pharmacyList"
+                      *ngIf="activatePhaComponent"
+                    >
+                    </app-generate-bill-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

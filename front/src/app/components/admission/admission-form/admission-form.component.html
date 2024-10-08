@@ -1,0 +1,172 @@
+<form class="row g-3">
+  <div class="col-md-6">
+    <label for="patientName" class="form-label">Patient</label>
+
+    <div class="card flex justify-content-center">
+      <p-dropdown
+        [options]="patientSchedule$"
+        [(ngModel)]="patientId"
+        optionLabel="name"
+        [showClear]="true"
+        placeholder="Select a Patient"
+        [ngModelOptions]="{ standalone: true }"
+      ></p-dropdown>
+    </div>
+    <!-- <div class="card flex justify-content-center">
+      <p-dropdown
+        [options]="patientSchedule$"
+        [(ngModel)]="patientId"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Select a Patient"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="patientId">
+            <div>{{ patientId.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-patient pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{ patient.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div> -->
+    <select
+      class="form-select"
+      (change)="getEmployee()"
+      id="patientName"
+      [(ngModel)]="patientId"
+      name="patientId"
+    >
+      <option *ngFor="let item of patientSchedule$" [value]="item.patient.id">
+        {{ item.patient.firstName + " " + item.patient.lastName }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="admissionType" class="form-label">Admission Type</label>
+    <select
+      class="form-select"
+      id="admissionType"
+      [(ngModel)]="admissionTypeId"
+      name="admissionTypeId"
+    >
+      <option
+        *ngFor="let item of admissionTypeId$"
+        selected
+        [value]="item.admissionType.id"
+      >
+        {{ item.admissionType.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label for="employeeName" class="form-label">Employee</label>
+    <select
+      class="form-select"
+      id="employeeName"
+      [(ngModel)]="employeeId"
+      name="employeeId"
+    >
+      <option
+        *ngFor="let item of employeeId$"
+        selected
+        [value]="item.employee.id"
+      >
+        {{ item.employee.firstName + " " + item.employee.lastName }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label for="room" class="form-label">Room</label>
+    <select class="form-select" id="room" [(ngModel)]="roomId" name="roomId">
+      <option *ngFor="let item of roomId$" selected [value]="item.room.id">
+        {{ item.room.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label for="ward" class="form-label">Ward</label>
+    <select class="form-select" id="ward" [(ngModel)]="wardId" name="wardId">
+      <option *ngFor="let item of wardId$ | async" selected [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="adm-time" class="form-label">Admission Time</label>
+    <input
+      [(ngModel)]="admissionTime"
+      name="admissionTime"
+      type="datetime-local"
+      class="form-control"
+      id="adm-time"
+    />
+  </div>
+  <div class="col-md-3">
+    <label for="adm-date" class="form-label">Admission Date</label>
+    <input
+      [(ngModel)]="admissionDate"
+      name="admissionDate"
+      type="datetime-local"
+      class="form-control"
+      id="adm-date"
+    />
+  </div>
+  <div class="col-md-3">
+    <label for="discarge-date" class="form-label">Discharge Date</label>
+    <input
+      [(ngModel)]="dischargeDate"
+      name="dischargeDate"
+      type="datetime-local"
+      class="form-control"
+      id="discarge-date"
+    />
+  </div>
+  <div class="col-md-3">
+    <label for="is-discharge" class="form-label">Is Discharge</label>
+    <select
+      class="form-select"
+      [(ngModel)]="isDischarge"
+      name="isDischarge"
+      id="is-discharge"
+      class="form-select"
+    >
+      <option selected>True</option>
+      <option>False</option>
+    </select>
+  </div>
+  <div class="text-center float-end justify-right">
+    <button
+      (click)="addAdmission()"
+      *ngIf="admissionList.id == 0"
+      class="btn btn-primary"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="admissionList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateAdmission()"
+      *ngIf="admissionList.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="admissionList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

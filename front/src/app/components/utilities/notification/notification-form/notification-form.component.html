@@ -1,0 +1,81 @@
+<form #NotificationForm="ngForm">
+  <div class="mb-2">
+    <label for="title" class="form-label">Notification Title</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="title"
+      name="title"
+      id="title"
+      pattern="[a-zA-Z\s]+$"
+      #Title="ngModel"
+      required
+    />
+    <span
+      class="text-danger"
+      *ngIf="(Title.touched || NotificationForm.submitted) && Title.invalid"
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-2">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      type="text"
+      class="form-control"
+      [(ngModel)]="description"
+      name="description"
+      id="description"
+    >
+    </textarea>
+  </div>
+  <div class="mb-2">
+    <label for="status" class="form-label">Status</label>
+    <select class="form-select" [(ngModel)]="status" name="status" id="status">
+      <option [value]="true">True</option>
+      <option [value]="false">False</option>
+    </select>
+  </div>
+  <div class="mb-2">
+    <label for="date" class="form-label">Date</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="date"
+      name="date"
+      required
+    />
+  </div>
+  <div class="float-end">
+    <button
+      (click)="addNotification()"
+      *ngIf="notificationList.id == 0"
+      class="btn btn-primary"
+      [disabled]="NotificationForm.invalid"
+    >
+      Save
+    </button>
+    <button
+      type="reset"
+      *ngIf="notificationList.id == 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+    <button
+      (click)="updateNotification()"
+      *ngIf="notificationList.id != 0"
+      class="btn btn-primary"
+      [disabled]="NotificationForm.invalid"
+    >
+      Update
+    </button>
+    <button
+      type="reset"
+      *ngIf="notificationList.id != 0"
+      class="btn btn-info ms-3"
+    >
+      Reset
+    </button>
+  </div>
+</form>

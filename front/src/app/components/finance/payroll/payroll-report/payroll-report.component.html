@@ -1,0 +1,179 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Payroll Report</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Payroll Report</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">Payroll Report List</h5>
+              </div>
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-success float-end mt-3 ms-1"
+                  (click)="exportToExcel()"
+                >
+                  Export To Excel
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary float-end mt-3"
+                  data-bs-toggle="modal"
+                  (click)="modalAdd()"
+                  data-bs-target="#staticBackdrop"
+                >
+                  Payroll Report
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-between">
+              <div class="col-2 mb-3">
+                <select
+                  (change)="onTableSizeChange($event)"
+                  class="form-select mt-2"
+                  id="pagination"
+                >
+                  <option *ngFor="let size of tableSizes">{{ size }}</option>
+                </select>
+              </div>
+              <div class="col-4 mb-3">
+                <label for="total-laboratory-test" class="mt-3 h6"
+                  >Total Report
+                  <strong class="total-num">{{
+                    payrollReportList$.length
+                  }}</strong></label
+                >
+              </div>
+              <div class="col-4 mb-3">
+                <input
+                  type="text"
+                  id="search"
+                  name="searchName"
+                  [(ngModel)]="searchName"
+                  class="form-control mt-2"
+                  (ngModelChange)="searchByName()"
+                  placeholder="Search here ..."
+                />
+              </div>
+            </div>
+            <table class="table" id="excel-table">
+              <thead>
+                <tr>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Id<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('employeeId')">
+                    Employee<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('salary')">
+                    Salary<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('baseSalary')">
+                    Net Salary<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Date<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Month<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th style="cursor: pointer" (click)="sort('id')">
+                    Year<i class="fa fa-fw fa-sort"></i>
+                  </th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of payrollReportList$
+                  "
+                >
+                  <td>{{ item.id }}</td>
+                  <td>
+                    <a [routerLink]="['/employee-details/', item.employeeId]">{{
+                      employeeListMap.get(item.employeeId) +
+                        " (" +
+                        item.employeeId +
+                        ")"
+                    }}</a>
+                  </td>
+                  <td>
+                    {{
+                      employeeSalaryListMap.get(item.employeeSalaryId)
+                        | currency : "ETB"
+                    }}
+                  </td>
+                  <td>{{ item.baseSalary | currency : "ETB" }}</td>
+                  <td>{{ item.date | date : "dd" }}</td>
+                  <td>{{ item.month | date : "MMMM" }}</td>
+                  <td>{{ item.year | date : "y" }}</td>
+                  <td>
+                    <i
+                      (click)="modalEdit(item)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      class="bi bi-pencil-square icon-edit"
+                    ></i>
+                    <i
+                      (click)="delete(item)"
+                      class="bi bi-trash icon-delete"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="onTableDataChange($event)"
+            ></pagination-controls>
+
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      {{ modalTitle }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      (click)="modalClose()"
+                      id="add-edit-modal-close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <app-payroll-report-form
+                      [payrollReportList]="payrollReportList"
+                      *ngIf="activatePayrollReportComponent"
+                    >
+                    </app-payroll-report-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
