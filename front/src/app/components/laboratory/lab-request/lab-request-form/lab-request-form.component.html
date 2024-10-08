@@ -1,6 +1,6 @@
 <form class="row">
-  <div class="col-md-3 ps-3">
-    <div class="mb-3">
+  <div class="col-md-3 ps-3" *ngIf="employeeRole.name == 'Doctor'">
+    <div class="mb-3" >
       <label for="laboratoryTestCategoryId" class="form-label"
         >Laboratory Test Category</label
       >
@@ -87,7 +87,7 @@
             name="name"
           />
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="employeeRole.name == 'Laboratorist'">
           <label for="result" class="form-label">Result</label>
           <input
             type="text"
@@ -136,7 +136,12 @@
               <td>{{ item.description }}</td>
               <td>
                 <i (click)="delete(item)" class="bi bi-x-lg icon-delete"></i>
+                <i
+                  (click)="edit(item)"
+                  class="bi bi-pencil-square icon-edit"
+                ></i>
               </td>
+              
             </tr>
           </tbody>
         </table>

@@ -97,7 +97,16 @@ export class LabRequestFormComponent implements OnInit {
     this.employeeService.getEmployeeByIdApi(id).subscribe((data) => {
       this.employee = data;
       this.getEmployeeRole(this.employee.employeeRoleId);
+      this.resetResultBasedOnRole();
     });
+  }
+
+  resetResultBasedOnRole() {
+    if (this.employeeRole.name === 'Doctor') {
+      this.result = ''; // Set result to an empty string for Doctors
+    } else {
+      this.result = this.labRequestList.result || ''; // Default to previous result for other roles
+    }
   }
 
   getEmployeeRole(id: string | number) {
