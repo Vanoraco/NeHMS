@@ -30,6 +30,7 @@ export enum ApiPaths {
   LabRequestEndpoint = '/LabRequests',
   LabTestCategoryEndpoint = '/LaboratoryTestCategories',
   LabTestResultEndpoint = '/LabTestResults',
+  EditLabTestResultEndpoint = '/LabTestResults/edit',
   LabTestTypeEndpoint = '/LaboratoryTestTypes',
   MedicalHistoryDrugEndpoint = '/MedicalHistoryDrugs',
   MedicalHistoryEndpoint = '/MedicalHistories',

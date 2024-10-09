@@ -35,13 +35,9 @@ namespace WebAPICheck.Controllers
         }
 
         // GET: api/LabTestResults/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<LabTestResult>> GetLabTestResults(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<LabTestResult>> GetLabTestResult(int id)
         {
-            if (_context.LabTestResults == null)
-            {
-                return NotFound();
-            }
             var labTestResult = await _context.LabTestResults.FindAsync(id);
 
             if (labTestResult == null)
@@ -53,15 +49,11 @@ namespace WebAPICheck.Controllers
         }
 
         // PUT: api/LabTestResults/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLabTestResults(int id, LabTestResult labTestResult)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateLabTestResult(int id, LabTestResult labTestResult)
         {
-            if (id != labTestResult.Id)
-            {
-                return BadRequest();
-            }
-
+            Console.WriteLine($"Received Id: {id}, LabTestResult: {labTestResult.Id}");
+            
             _context.Entry(labTestResult).State = EntityState.Modified;
 
             try
@@ -84,35 +76,31 @@ namespace WebAPICheck.Controllers
         }
 
         // POST: api/LabTestResults
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<LabTestResult>> PostLabTestResults(LabTestResult labTestResult)
+        public async Task<ActionResult<LabTestResult>> PostLabTestResult(LabTestResult labTestResult)
         {
             if (_context.LabTestResults == null)
             {
-                return Problem("Entity set 'DatabaseContext.LabTestResults'  is null.");
+                return Problem("Entity set 'DatabaseContext.LabTestResults' is null.");
             }
+
             _context.LabTestResults.Add(labTestResult);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLabTestResults", new { id = labTestResult.Id }, labTestResult);
+            return CreatedAtAction(nameof(GetLabTestResult), new { id = labTestResult.Id }, labTestResult);
         }
 
         // DELETE: api/LabTestResults/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLabTestResults(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteLabTestResult(int id)
         {
-            if (_context.LabTestResults == null)
-            {
-                return NotFound();
-            }
-            var student = await _context.LabTestResults.FindAsync(id);
-            if (student == null)
+            var labTestResult = await _context.LabTestResults.FindAsync(id);
+            if (labTestResult == null)
             {
                 return NotFound();
             }
 
-            _context.LabTestResults.Remove(student);
+            _context.LabTestResults.Remove(labTestResult);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -120,7 +108,7 @@ namespace WebAPICheck.Controllers
 
         private bool LabTestResultExists(int id)
         {
-            return (_context.LabTestResults?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _context.LabTestResults.Any(e => e.Id == id);
         }
     }
 }
