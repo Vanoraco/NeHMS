@@ -60,7 +60,7 @@
     class="labtestresult col-md-9"
   >
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="employeeRole.name == 'Laboratorist' && activateTestComponent">
         <div class="mb-3">
           <label class="form-label">Test Type</label>
           <select
@@ -107,7 +107,7 @@
         </div>
         <div class="float-end">
           <button
-            (click)="addLabTestResult()"
+            (click)="editLabTestResult(item)"
             class="btn btn-outline-primary btn-sm"
           >
             <i class="bi bi-plus-square"></i>
@@ -135,10 +135,11 @@
               <td>{{ labTestTypeMap.get(item.laboratoryTestTypeId) }}</td>
               <td>{{ item.description }}</td>
               <td>
-                <i (click)="delete(item)" class="bi bi-x-lg icon-delete"></i>
+                <i (click)="delete(item)" class="bi bi-x-lg icon-delete" *ngIf="employeeRole.name == 'Doctor'"></i>
                 <i
                   (click)="edit(item)"
-                  class="bi bi-pencil-square icon-edit"
+                  class="bi bi-pencil-square icon-edit bix-lg"
+                  *ngIf="employeeRole.name == 'Laboratorist'"
                 ></i>
               </td>
               

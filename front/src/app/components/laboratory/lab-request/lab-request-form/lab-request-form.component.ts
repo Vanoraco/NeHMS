@@ -30,6 +30,9 @@ export class LabRequestFormComponent implements OnInit {
 
   //Map to display data associate with foreign keys
   labTestTypeMap: Map<number, string> = new Map();
+  modalTitle: string;
+  activateTestComponent: boolean;
+  selectedLabTestResult: any;
 
   constructor(
     private labRequestService: LaboratoryService,
@@ -41,7 +44,7 @@ export class LabRequestFormComponent implements OnInit {
 
   @Input() labRequestList: any;
 
-  id: number = 0;
+  id: number = 2025;
   employeeId: number = 0;
   admissionId: number = 0;
   laboratoryTestCategoryId: number = 0;
@@ -53,6 +56,7 @@ export class LabRequestFormComponent implements OnInit {
 
   // Lab Test Result Variables
   labTestResultId: number = 0;
+  labTestRequestId: number = 0;
   name: string = '';
   result: string = '';
   laboratoryTestTypeId: number = 0;
@@ -141,6 +145,7 @@ export class LabRequestFormComponent implements OnInit {
           duration: 4000,
         });
         this.getLabTestResult();
+        this.activateTestComponent = false;
       },
       (err) => {
         this.toast.error({
@@ -150,6 +155,65 @@ export class LabRequestFormComponent implements OnInit {
         });
       }
     );
+  }
+
+  editLabTestResult(item: any) {
+    console.log(item);
+    if (this.selectedLabTestResult) {
+      // Update logic
+      const index = this.labTestResultList$.findIndex(i => i.id === this.selectedLabTestResult.id);
+      if (index !== -1) {
+        this.labTestResultList$[index] = {
+          labTestRequestId: this.labTestRequestId,
+          id: this.selectedLabTestResult.id,
+          laboratoryTestTypeId: this.laboratoryTestTypeId,
+          name: this.name,
+          result: this.result,
+          description: this.description
+        };
+      }
+      var labRequestList = {
+        labTestRequestId: this.labTestRequestId,
+        id: this.selectedLabTestResult.id,
+        laboratoryTestTypeId: this.laboratoryTestTypeId,
+        name: this.name,
+        result: this.result,
+        description: this.description
+      };
+      // Clear the selected item after updating'
+      this.clearForm();
+    } else {
+      // Logic to add a new lab test result if needed
+    }
+    var id: number = this.selectedLabTestResult.id;
+    console.log(labRequestList);
+    console.log(id);
+    this.labRequestService.updateLabTestResultApi(id,labRequestList).subscribe(
+      (res) => {
+        this.toast.success({
+          detail: 'SUCCESS',
+          summary: 'Sucessfully Added!',
+          duration: 4000,
+        });
+        this.getLabTestResult();
+        this.activateTestComponent = false;
+      },
+      (err) => {
+        this.toast.error({
+          detail: 'ERROR',
+          summary: 'Something went wrong!',
+          duration: 4000,
+        });
+      }
+    );
+  }
+
+  clearForm() {
+    // Clear the form fields and selected item
+    this.laboratoryTestTypeId = null;
+    this.name = '';
+    this.result = '';
+    this.description = '';
   }
 
   getLabTestTypeMap() {
@@ -168,6 +232,19 @@ export class LabRequestFormComponent implements OnInit {
     this.labRequestService.deleteLabTestResultApi(item.id).subscribe((res) => {
       this.getLabTestResult();
     });
+  }
+
+  edit(item: any) {
+    this.labRequestList = item;
+    this.labTestRequestId = item.labRequestId;
+    console.log(item);
+    this.modalTitle = 'Edit Test Request';
+    this.activateTestComponent = true;
+      this.selectedLabTestResult = item; // Store the selected item
+      this.laboratoryTestTypeId = item.laboratoryTestTypeId;
+      this.name = item.name;
+      this.result = item.result;
+      this.description = item.description;
   }
 
   addLabRequest() {

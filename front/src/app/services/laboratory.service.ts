@@ -79,6 +79,12 @@ export class LaboratoryService {
       .post(this.BASE_URL + ApiPaths.LabTestResultEndpoint, LabTestResult)
       .pipe(catchError(this.errorHandler));
   }
+
+  editLabTestResultApi(LabTestResult: any): Observable<any> {
+    return this.httpClient
+      .post(this.BASE_URL + ApiPaths.EditLabTestResultEndpoint, LabTestResult)
+      .pipe(catchError(this.errorHandler));
+  }
   //View list of LabTestResult
   getLabTestResultApi(): Observable<any> {
     return this.httpClient
