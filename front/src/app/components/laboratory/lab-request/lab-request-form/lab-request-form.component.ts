@@ -33,6 +33,7 @@ export class LabRequestFormComponent implements OnInit {
   modalTitle: string;
   activateTestComponent: boolean;
   selectedLabTestResult: any;
+  filteredLabTestTypes$: any[] = [];
 
   constructor(
     private labRequestService: LaboratoryService,
@@ -112,6 +113,22 @@ export class LabRequestFormComponent implements OnInit {
       this.result = this.labRequestList.result || ''; // Default to previous result for other roles
     }
   }
+  
+   onCategoryChange(): void {
+    console.log('Selected Category ID:', this.laboratoryTestCategoryId);
+    this.labRequestService.getLabTestTypeApi().subscribe(
+      (labTestTypes: any[]) => {
+        console.log('Lab Test Types:', labTestTypes); // Log all test types
+        this.filteredLabTestTypes$ = labTestTypes.filter(
+          (type: any) => type.laboratoryTestCategoryId === Number(this.laboratoryTestCategoryId) // Ensure the property name matches
+        );
+        console.log('Filtered Lab Test Types:', this.filteredLabTestTypes$); // Log filtered types
+      },
+      (error) => {
+        console.error('Error fetching lab test types:', error);
+      }
+    );
+  }
 
   getEmployeeRole(id: string | number) {
     this.employeeService.getEmployeeRoleByIdApi(id).subscribe((data) => {
@@ -173,7 +190,7 @@ export class LabRequestFormComponent implements OnInit {
         };
       }
       var labRequestList = {
-        labTestRequestId: this.labTestRequestId,
+        labRequestId: this.labTestRequestId,
         id: this.selectedLabTestResult.id,
         laboratoryTestTypeId: this.laboratoryTestTypeId,
         name: this.name,

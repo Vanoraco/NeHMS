@@ -8,13 +8,14 @@
         class="form-select"
         id="laboratoryTestTypeId"
         [(ngModel)]="laboratoryTestCategoryId"
+        (change)="onCategoryChange()"
         name="laboratoryTestTypeId"
       >
         <option
-          *ngFor="let item of labTestCategoryId$ | async"
+          *ngFor="let item of (labTestCategoryId$ | async)"
           [value]="item.id"
         >
-          {{ item.name }}
+          {{ item.name}}
         </option>
       </select>
     </div>
@@ -60,7 +61,7 @@
     class="labtestresult col-md-9"
   >
     <div class="row">
-      <div class="col-md-4" *ngIf="employeeRole.name == 'Laboratorist' && activateTestComponent">
+      <div class="col-md-4" *ngIf="employeeRole.name == 'Doctor'">
         <div class="mb-3">
           <label class="form-label">Test Type</label>
           <select
@@ -68,6 +69,66 @@
             id="laboratoryTestTypeId"
             [(ngModel)]="laboratoryTestTypeId"
             name="laboratoryTestTypeId"
+            
+          >
+            <option
+              *ngFor="let item of filteredLabTestTypes$"
+              selected
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Test Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="name"
+            name="name"
+            
+          />
+        </div>
+        <div class="mb-3">
+          <label for="result" class="form-label">Result</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="result"
+            name="result"
+            [disabled]="employeeRole.name === 'Doctor'"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            type="text"
+            class="form-control"
+            [(ngModel)]="description"
+            name="description"
+            [disabled]="employeeRole.name === 'Laboratorist'"
+          ></textarea>
+        </div>
+        <div class="float-end">
+          <button
+            (click)="addLabTestResult()"
+            class="btn btn-outline-primary btn-sm"
+          >
+            <i class="bi bi-plus-square"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4" *ngIf="activateTestComponent">
+        <div class="mb-3">
+          <label class="form-label">Test Type</label>
+          <select
+            class="form-select"
+            id="laboratoryTestTypeId"
+            [(ngModel)]="laboratoryTestTypeId"
+            name="laboratoryTestTypeId"
+            [disabled]="employeeRole.name === 'Laboratorist'"
           >
             <option
               *ngFor="let item of labTesTypeList$ | async"
@@ -85,6 +146,7 @@
             class="form-control"
             [(ngModel)]="name"
             name="name"
+            [disabled]="employeeRole.name === 'Laboratorist'"
           />
         </div>
         <div class="mb-3" *ngIf="employeeRole.name == 'Laboratorist'">
@@ -103,6 +165,7 @@
             class="form-control"
             [(ngModel)]="description"
             name="description"
+            [disabled]="employeeRole.name === 'laboratorist'"
           ></textarea>
         </div>
         <div class="float-end">
