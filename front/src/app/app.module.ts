@@ -1,10 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
   HttpClient,
 } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
@@ -396,8 +398,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgToastModule,
     ScheduleModule,
     RecurrenceEditorModule,
+    BrowserAnimationsModule,
     WebcamModule,
     BedModule,
+    ToastrModule.forRoot(),
     PrimeNgModule,    
     TranslateModule.forRoot({
       loader: {

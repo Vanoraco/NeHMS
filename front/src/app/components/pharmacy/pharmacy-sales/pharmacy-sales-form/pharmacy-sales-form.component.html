@@ -1,6 +1,18 @@
 <form [formGroup]="formData" class="row g-3" (ngSubmit)="savePharmacySales()">
   <div class="col-6">
     <label for="pharmacyMedStockId" class="form-label"
+      >Medication</label
+    ><span class="text-danger">*</span>
+    <select
+      name="pharmacyMed"
+    >
+      <option
+      [selected]="pharmacySalesData.medicationData"
+        disabled
+        >{{ pharmacySalesData.medicationData }}</option
+      >
+    </select>
+    <label for="pharmacyMedStockId" class="form-label"
       >Pharmacy Medicine Stock</label
     ><span class="text-danger">*</span>
     <select
@@ -13,7 +25,7 @@
       name="pharmacyMedStockId"
     >
       <option
-        *ngFor="let item of pharmacyMedStockList"
+        *ngFor="let item of filteredStock"
         value="{{ item.id }}"
         >{{ item.name }}</option
       >
@@ -39,11 +51,12 @@
       name="employeeId"
     >
       <option
-        *ngFor="let item of employeeList"
-        selected
-        value="{{ item.id }}"
+        [selected]="oneEmployee[0].id"
+        disabled
+        value="{{ oneEmployee[0].id }}"
+        
         >{{
-          item.firstName + " " + item.lastName + " " + "(" + item.id + ")"
+          oneEmployee[0].firstName + " " + oneEmployee[0].lastName + " " + "(" + oneEmployee[0].id + ")"
         }}</option
       >
     </select>
