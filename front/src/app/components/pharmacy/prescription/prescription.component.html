@@ -74,7 +74,7 @@
             employeeRole.name == 'Admin' ||
             (employeeRole.name == 'Pharmacist' && item.is_Cancelled == false)
           "
-          (click)="modalAddPharmaSales(item)"
+          (click)="modalAddPharmaSales(item, medicationMap.get(item.medicationId), item.medicationId)"
           data-bs-toggle="modal"
           data-bs-target="#pharmacy-sales-modal"
           class="bi bi-bag-plus icon-edit"

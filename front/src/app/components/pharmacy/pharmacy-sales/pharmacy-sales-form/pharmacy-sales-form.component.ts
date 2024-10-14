@@ -1,9 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { PharmacyService } from 'src/app/services/pharmacy.service';
+
 
 @Component({
   selector: 'app-pharmacy-sales-form',
@@ -29,11 +31,18 @@ export class PharmacySalesFormComponent implements OnInit {
   employeeId: number = 0;
   timeStamp: string = '';
   descrption: string = '';
+  medicatioList$: any;
+
+  medicationMap: Map<number, string> = new Map();
+  filteredStock: any;
+  oneEmployee: any;
   constructor(
     private phaSalesService: PharmacyService,
+    private pharmacyService: PharmacyService,
     private employeeService: EmployeeService,
     private builder: FormBuilder,
-    private toast: NgToastService
+    private toastr: NgToastService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +57,7 @@ export class PharmacySalesFormComponent implements OnInit {
     this.getPharmacySalesData();
     this.getPharmacyStockData();
     this.getEmployeeData();
+    this.getMedicationMap();
   }
 
   formData = this.builder.group({
@@ -68,6 +78,11 @@ export class PharmacySalesFormComponent implements OnInit {
   getPharmacyStockData() {
     this.phaSalesService.getPharmacyMedStockApi().subscribe((res) => {
       this.pharmacyMedStockList = res;
+      this.filteredStock = this.pharmacyMedStockList.filter(stock => stock.medicationId === this.pharmacySalesData.medicationId);
+
+    
+    console.log('Filtered Stock:', this.filteredStock);
+      console.log(this.pharmacyMedStockList);
     });
   }
 
@@ -76,6 +91,13 @@ export class PharmacySalesFormComponent implements OnInit {
       this.employeeList = res.filter(
         (employee: { employeeRoleId: number }) => employee.employeeRoleId == 4
       );
+      
+      this.oneEmployee = this.employeeList
+
+      if (this.oneEmployee.length > 0) {
+        this.formData.get('employeeId')?.setValue(this.oneEmployee[0].id); // Set the default to the first employee
+      }
+      console.log(this.oneEmployee)
     });
   }
 
@@ -91,15 +113,33 @@ export class PharmacySalesFormComponent implements OnInit {
         }
       },
       (err) => {
-        this.toast.error({
-          detail: 'Error',
-          summary: 'Please select medicine stock list!',
-          duration: 4000,
-        });
+        this.toast.error(
+           'Please select medicine stock list!',
+      
+        );
       }
     );
   }
   stockItem: any = [];
+
+  getMedicationMap() {
+    this.pharmacyService.getMedicationApi().subscribe((data) => {
+      this.medicatioList$ = data;
+      for (let i = 0; i < data.length; i++) {
+        this.medicationMap.set(
+          this.medicatioList$[i].id,
+          this.medicatioList$[i].name
+        );
+      }
+      console.log(this.pharmacyMedStockList)
+    });
+    console.log(this.medicationMap);
+    console.log(this.pharmacySalesData.medicationId)
+  }
+
+  filterMedication(id: number){
+     
+  }
 
   priceCalculation() {
     let stockId = this.formData.get('pharmacyMedStockId')?.value;
@@ -119,11 +159,10 @@ export class PharmacySalesFormComponent implements OnInit {
         }
       },
       (err) => {
-        this.toast.error({
-          detail: 'Error',
-          summary: 'Please select medicine stock list!',
-          duration: 4000,
-        });
+        this.toast.error(
+           'Please select medicine stock list!',
+         
+        );
       }
     );
   }
@@ -154,11 +193,9 @@ export class PharmacySalesFormComponent implements OnInit {
     this.phaSalesService
       .updatePharmacyMedStockApi(this.stockItem.id, medStockItem)
       .subscribe((res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Medicine Stock Quantity Updated : ' + medStockItem.quantity,
-          duration: 4000,
-        });
+        this.toast.success(
+           'Medicine Stock Quantity Updated : ' + medStockItem.quantity,
+          );
         console.log(res);
       });
   }
@@ -180,50 +217,54 @@ export class PharmacySalesFormComponent implements OnInit {
 
     this.phaSalesService.updatePrescriptionApi(id, prescriptionList).subscribe(
       (res) => {
-        this.toast.success({
-          detail: 'Success',
-          summary: 'Sucessfully Updated!',
-          duration: 4000,
-        });
+        this.toast.success( 'Sucessfully Updated!',
+          );
         this.prescriptionList$ = this.phaSalesService.getPrescriptionApi();
       },
       (err) => {
-        this.toast.error({
-          detail: 'Error',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
+        this.toast.error( 'Something went wrong!',
+         );
       }
     );
   }
 
   addPharmacySales() {
     this.submitted = true;
-    this.phaSalesService.addPharmacySaleApi(this.formData.value).subscribe(
-      (res) => {
-        console.log(this.formData.value);
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Sucessfully Added!',
-          duration: 4000,
-        });
-        this.updateMedStockQuantity();
-        this.updatePrescription();
-        var closeModalBtn = document.getElementById('add-edit-modal-close');
-        if (closeModalBtn) {
-          closeModalBtn.click();
+    
+    // Call the service to add the pharmacy sale
+    this.phaSalesService.addPharmacySaleApi(this.formData.value).subscribe({
+        next: (res) => {
+            console.log(this.formData.value); // Log the form data
+            this.toast.success(
+                
+                 'Successfully Added!',
+                
+            );
+            this.updateMedStockQuantity(); // Update the medication stock quantity
+            this.updatePrescription(); // Update the prescription
+
+            // Close the modal if it exists
+            const closeModalBtn = document.getElementById('add-edit-modal-close');
+            if (closeModalBtn) {
+                closeModalBtn.click();
+            }
+
+            // Refresh the pharmacy sales data
+            this.getPharmacySalesData();
+        },
+        error: (err) => {
+            console.error('Error adding pharmacy sale:', err); // Log the error for debugging
+            this.toast.error(
+                 'Something went wrong!',
+                
+            );
+        },
+        complete: () => {
+            console.log('Pharmacy sale addition completed'); // Optional: Log when the call is complete
         }
-        this.getPharmacySalesData();
-      },
-      (err) => {
-        this.toast.error({
-          detail: 'Error',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
-      }
-    );
-  }
+    });
+}
+
 
   get controls() {
     return this.formData.controls;
@@ -250,11 +291,8 @@ export class PharmacySalesFormComponent implements OnInit {
       .updatePharmacySaleApi(id, this.formData.value)
       .subscribe(
         (res) => {
-          this.toast.success({
-            detail: 'SUCCESS',
-            summary: 'Sucessfully Updated!',
-            duration: 4000,
-          });
+          this.toast.success( 'Sucessfully Updated!',
+            );
           var closeModalBtn = document.getElementById('add-edit-modal-close');
           if (closeModalBtn) {
             closeModalBtn.click();
@@ -262,11 +300,8 @@ export class PharmacySalesFormComponent implements OnInit {
           this.getPharmacySalesData();
         },
         (err) => {
-          this.toast.error({
-            detail: 'Error',
-            summary: 'Something went wrong!',
-            duration: 4000,
-          });
+          this.toast.error('Something went wrong!',
+           );
         }
       );
   }

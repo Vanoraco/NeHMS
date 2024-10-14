@@ -28,6 +28,7 @@
     "json-server": "^0.17.2",
     "jspdf": "^2.5.1",
     "ng-angular-popup": "^0.5.2",
+    "ngx-toastr": "^19.0.0",
     "ngx-webcam": "^0.4.1",
     "normalize-path": "^3.0.0",
     "primeicons": "^6.0.1",

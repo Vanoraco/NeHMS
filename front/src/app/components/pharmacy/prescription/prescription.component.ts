@@ -128,6 +128,8 @@ export class PrescriptionComponent implements OnInit {
           this.medicatioList$[i].name
         );
       }
+      console.log(this.prescriptionList$ + 'prescription')
+      console.log(Array.from(this.medicationMap.keys()) + 'medication')
     });
   }
 
@@ -183,7 +185,7 @@ export class PrescriptionComponent implements OnInit {
   activatePhaSalesComponent: boolean = false;
   pharmacySalesList: any;
 
-  modalAddPharmaSales(item: any) {
+  modalAddPharmaSales(item: any, medicationData: any, medicationId: any) {
     this.prescriptions = item;
     this.pharmacySalesList = {
       id: 0,
@@ -193,6 +195,8 @@ export class PrescriptionComponent implements OnInit {
       employeeId: null,
       timeStamp: null,
       descrption: null,
+      medicationData: medicationData,
+      medicationId: medicationId
     };
     this.modalPharmaSalesTitle = 'Add Pharmacy Sales';
     this.activatePhaSalesComponent = true;
