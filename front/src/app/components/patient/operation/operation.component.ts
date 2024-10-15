@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { AdmissionService } from 'src/app/services/admission.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { PatientService } from 'src/app/services/patient.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-operation',
@@ -42,27 +43,44 @@ export class OperationComponent implements OnInit {
     private employeeService: EmployeeService,
     private admissionService: AdmissionService,
     private route: ActivatedRoute,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.AdmissionId = this.route.snapshot.params['admissionId'];
-    this.admissionService
-      .getAdmissionByIdApi(this.AdmissionId)
-      .subscribe((res) => {
-        this.admissionList = res;
-      });
-    this.getOperationList();
+    
+    this.fetchAdmissionData()
     this.getEmployeeNameMap();
     this.getPatientNameMap();
   }
 
+  fetchAdmissionData(): void {
+    this.admissionService.getAdmissionByIdApi(this.AdmissionId).subscribe(
+        (res) => {
+            this.admissionList = res;
+            console.log('Admission data:', this.admissionList);
+            
+            // Now that admissionList is populated, call getOperationList
+            this.getOperationList(); // Fetch operations after admission data is ready
+
+           
+        },
+        (error) => {
+            console.error('Error fetching admission:', error);
+        }
+    );
+}
   getOperationList() {
     this.operationService.getOperationApi().subscribe((response) => {
+      console.log(response)
+      console.log(this.admissionList)
       this.OperationList$ = response.filter(
         (patientOperation: { patientId: number }) =>
           patientOperation.patientId == this.admissionList.patientId
       );
+      console.log(this.OperationList$)
+      console.log(this.admissionList)
     });
   }
 
@@ -101,6 +119,7 @@ export class OperationComponent implements OnInit {
       date: null,
       patientId: null,
       title: null,
+      status: null,
       OperationDetail: null,
     };
     this.modalTitle = 'Add Patient Operation';
@@ -119,11 +138,7 @@ export class OperationComponent implements OnInit {
       confirm(`Are you sure you want to delete patient Operation ${item.id}`)
     ) {
       this.operationService.deleteOperationApi(item.id).subscribe((res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Sucessfully Deleted!',
-          duration: 4000,
-        });
+        this.toastr.success('Sucessfully Deleted!');
         this.getOperationList();
       });
     }
