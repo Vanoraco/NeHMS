@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AdmissionService } from 'src/app/services/admission.service';
 import { PatientService } from 'src/app/services/patient.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-operation-form',
@@ -12,23 +13,31 @@ import { PatientService } from 'src/app/services/patient.service';
 export class OperationFormComponent implements OnInit {
   admissionList: any = [];
   admissionId: number = 0;
+  isSaving: boolean = false;
+  saveBut: string = 'Save';
+  isUpdating: boolean = false;
+  butUpdate: string = 'Update';
 
   constructor(
     private operationService: PatientService,
     private route: ActivatedRoute,
     private admissionService: AdmissionService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private toastr: ToastrService
   ) {}
 
   @Input() operationList: any;
   id: number = 0;
   date: string = '';
   description: string = '';
+  status: string= '';
 
   ngOnInit(): void {
     this.id = this.operationList.id;
     this.description = this.operationList.description;
     this.date = this.operationList.date;
+    this.status = this.operationList.status;
+
 
     this.admissionId = this.route.snapshot.params['admissionId'];
     this.admissionService
@@ -38,62 +47,59 @@ export class OperationFormComponent implements OnInit {
       });
   }
   addOperation() {
+    this.isSaving = true;
+    this.saveBut  = 'Saving';
     var operationList = {
       date: this.date,
       employeeId: +this.admissionList.employeeId,
       patientId: +this.admissionList.patientId,
       description: this.description,
+      status: this.status
     };
+
     this.operationService.addOperationApi(operationList).subscribe(
       (res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Sucessfully Added!',
-          duration: 4000,
-        });
+        this.toastr.success('Sucessfully Added!'
+          );
+        
+        this.isSaving = false;
         var closeModalBtn = document.getElementById('operation-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
         }
       },
       (err) => {
-        this.toast.error({
-          detail: 'ERROR',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
+        this.toastr.error( 'Something went wrong!');
+        this.isSaving = false;
       }
     );
   }
   updateOperation() {
+    this.isUpdating = true
+    this.butUpdate = 'Updating'
     var operationList = {
       id: this.id,
       employeeId: +this.admissionList.employeeId,
       patientId: +this.admissionList.patientId,
       date: this.date,
       description: this.description,
+      status: this.status
     };
     var id: number = this.id;
     console.log(operationList);
 
     this.operationService.updateOperationApi(id, operationList).subscribe(
       (res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Sucessfully Updated!',
-          duration: 4000,
-        });
+        this.toastr.success('Sucessfully Updated!');
         var closeModalBtn = document.getElementById('operation-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
         }
+        this.isUpdating = true
       },
       (err) => {
-        this.toast.error({
-          detail: 'ERROR',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
+        this.toastr.error('Something went wrong!');
+        this.isUpdating = true
       }
     );
   }

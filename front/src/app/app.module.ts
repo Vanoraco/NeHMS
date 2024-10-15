@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
@@ -401,7 +402,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     WebcamModule,
     BedModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(
+      {
+        timeOut: 6000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+      }
+    ),
     PrimeNgModule,    
     TranslateModule.forRoot({
       loader: {

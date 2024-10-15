@@ -20,6 +20,26 @@
     </span>
   </div>
   <div class="mb-3">
+    <label for="description" class="form-label">Status</label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="status"
+      name="status"
+      cols="4"
+      required
+      minlength="3"
+      #Status="ngModel"
+    ></textarea>
+    <span
+      class="text-danger"
+      *ngIf="
+        (Status.touched || OperationForm.submitted) && Status.invalid
+      "
+    >
+      Please enter a valid input
+    </span>
+  </div>
+  <div class="mb-3">
     <label for="date" class="form-label">Date</label>
     <input
       type="datetime-local"
@@ -34,9 +54,9 @@
       (click)="addOperation()"
       *ngIf="operationList.id == 0"
       class="btn btn-primary"
-      [disabled]="OperationForm.invalid"
+      [disabled]="OperationForm.invalid || isSaving"
     >
-      Save
+      {{ saveBut }}
     </button>
     <button
       type="reset"
@@ -49,9 +69,9 @@
       (click)="updateOperation()"
       *ngIf="operationList.id != 0"
       class="btn btn-primary"
-      [disabled]="OperationForm.invalid"
+      [disabled]="OperationForm.invalid || isUpdating"
     >
-      Update
+      {{ butUpdate }}
     </button>
     <button
       type="reset"

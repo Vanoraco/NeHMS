@@ -44,10 +44,13 @@
       <th style="cursor: pointer; width: 15%" (click)="sort('id')">
         Doctor<i class="fa fa-fw fa-sort"></i>
       </th>
-      <th style="cursor: pointer; width: 45%" (click)="sort('id')">
+      <th style="cursor: pointer; width: 30%" (click)="sort('id')">
         Description<i class="fa fa-fw fa-sort"></i>
       </th>
       <th style="cursor: pointer; width: 15%" (click)="sort('id')">
+        Status<i class="fa fa-fw fa-sort"></i>
+      </th>
+      <th style="cursor: pointer; width: 25%" (click)="sort('id')">
         Date<i class="fa fa-fw fa-sort"></i>
       </th>
       <th style="width: 5%">Action</th>
@@ -64,6 +67,7 @@
       <td>{{ PatientListMap.get(item.patientId) }}</td>
       <td>{{ EmployeeListMap.get(item.employeeId) }}</td>
       <td>{{ item.description }}</td>
+      <td>{{ item.status }}</td>
       <td>{{ item.date | date : "mediumDate" }}</td>
       <td>
         <i

@@ -6,6 +6,7 @@ namespace HospitalManagementSystem.API.Models
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public string Status { get; set; }
         public Employee Employee { get; set; }
         public int EmployeeId { get; set; }
         public Patient Patient { get; set; }
