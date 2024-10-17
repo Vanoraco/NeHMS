@@ -41,7 +41,7 @@
       
     -->
     <th style="cursor: pointer" (click)="sort('id')">
-      Employee<i class="fa fa-fw fa-sort"></i>
+      Emp<i class="fa fa-fw fa-sort"></i>
     </th>
     <th style="cursor: pointer" (click)="sort('id')">
       Symptom<i class="fa fa-fw fa-sort"></i>
@@ -61,6 +61,12 @@
     <th style="cursor: pointer" (click)="sort('id')">
       Severity<i class="fa fa-fw fa-sort"></i>
     </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      VA<i class="fa fa-fw fa-sort"></i>
+    </th>
+    <th style="cursor: pointer" (click)="sort('id')">
+      IC P<i class="fa fa-fw fa-sort"></i>
+    </th>
     <th>Action</th>
   </thead>
   <tbody>
@@ -78,6 +84,8 @@
       <td>{{ item.pain }}</td>
       <td>{{ item.bp }}</td>
       <td>{{ item.severity }}</td>
+      <td>{{ item.visualAcuity }}</td>
+      <td>{{ item.intraocularPressure }}</td>
       <td>
         <i
           (click)="modalEdit(item)"

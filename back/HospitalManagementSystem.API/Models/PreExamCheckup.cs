@@ -16,5 +16,8 @@ namespace HospitalManagementSystem.API.Models
         public string Severity { get; set; }
         public string BP { get; set; }
 
+        // New properties added
+        public string VisualAcuity { get; set; } // e.g., "20/20", "20/40"
+        public float IntraocularPressure { get; set; } // e.g., in mmHg
     }
 }
