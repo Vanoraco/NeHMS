@@ -121,6 +121,24 @@
                   Operation
                 </button>
               </li>
+              <li
+                *ngIf="
+                  employeeRole.name == 'Admin' ||
+                  employeeRole.name == 'Doctor' ||
+                  employeeRole.name == 'Accountant' ||
+                  employeeRole.name == 'Nurse' ||
+                  employeeRole.name == 'Pharmacist'
+                "
+                class="nav-item"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#eyeWear"
+                >
+                  Eye Wear
+                </button>
+              </li>
             </ul>
             <div class="tab-content pt-2">
               <div
@@ -215,6 +233,9 @@
               </div>
               <div class="tab-pane fade pt-1" id="operation">
                 <app-operation></app-operation>
+              </div>
+              <div class="tab-pane fade pt-1" id="eyeWear">
+                <app-eyewear-prescription></app-eyewear-prescription>
               </div>
             </div>
           </div>

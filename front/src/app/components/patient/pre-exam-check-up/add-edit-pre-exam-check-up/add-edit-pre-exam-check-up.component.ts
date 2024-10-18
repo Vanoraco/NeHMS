@@ -37,6 +37,8 @@ export class AddEditPreExamCheckUpComponent implements OnInit {
   bp: string = '';
   symptom: string = '';
   severity: string = '';
+  visualAcuity: string = ''; 
+  intraocularPressure: number = 0;
 
   ngOnInit(): void {
     this.AdmissionId = this.route.snapshot.params['admissionId'];
@@ -54,6 +56,8 @@ export class AddEditPreExamCheckUpComponent implements OnInit {
     this.bp = this.preexamcheckupList.bp;
     this.symptom = this.preexamcheckupList.symptom;
     this.severity = this.preexamcheckupList.severity;
+    this.intraocularPressure = this.preexamcheckupList.intraocularPressure;
+    this.visualAcuity = this.preexamcheckupList.visualAcuity;
 
     this.email = this.authService.getEmailFromToken();
     this.employeeService.getEmployeeApi().subscribe((data) => {
@@ -80,6 +84,8 @@ export class AddEditPreExamCheckUpComponent implements OnInit {
       bp: this.bp,
       symptom: this.symptom,
       severity: this.severity,
+      visualAcuity: this.visualAcuity, 
+      intraocularPressure: this.intraocularPressure
     };
     console.log(preexamcheckupList);
     this.preExamcheckupService
@@ -113,6 +119,8 @@ export class AddEditPreExamCheckUpComponent implements OnInit {
       bp: this.bp,
       symptom: this.symptom,
       severity: this.severity,
+      visualAcuity:this.visualAcuity,
+      intraocularPressure:this.intraocularPressure
     };
     var id: number = this.id;
     this.preExamcheckupService

@@ -85,6 +85,8 @@ import { BuildingComponent } from './components/ward/building/building.component
 import { RoomComponent } from './components/ward/room/room.component';
 import { WardComponent } from './components/ward/ward.component';
 import { WardtypeComponent } from './components/ward/wardtype/wardtype.component';
+import { EyewearPrescriptionComponent } from './components/pharmacy/eye-wear/eye-wear.component';
+import { EyewearFormPrescriptionComponent } from './components/pharmacy/eye-wear/eye-wear-form/eye-wear-form/eye-wear-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -512,6 +514,16 @@ const routes: Routes = [
   {
     path: 'allowance-deduction-types',
     component: AllowanceDeductionTypeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'eye-wear-pres',
+    component: EyewearPrescriptionComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'eye-wear-form',
+    component: EyewearFormPrescriptionComponent,
     canActivate: [AuthGuard],
   },
   { path: '404', component: Error404Component },

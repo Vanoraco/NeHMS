@@ -76,6 +76,8 @@ export class PreExamCheckUpComponent implements OnInit {
       bp: null,
       symptom: null,
       severity: null,
+      visualAcuity: null,// e.g., "20/20"
+      intraocularPressure: 0
     };
     this.modalTitle = 'Add Pre Exam Checkup';
     this.activatepreexamcheckupComponent = true;

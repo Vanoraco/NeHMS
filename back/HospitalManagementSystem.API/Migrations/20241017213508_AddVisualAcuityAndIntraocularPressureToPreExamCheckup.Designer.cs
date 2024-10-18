@@ -4,6 +4,7 @@ using HospitalManagementSystem.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagementSystem.API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241017213508_AddVisualAcuityAndIntraocularPressureToPreExamCheckup")]
+    partial class AddVisualAcuityAndIntraocularPressureToPreExamCheckup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1096,124 +1098,6 @@ namespace HospitalManagementSystem.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExpenseCatagories");
-                });
-
-            modelBuilder.Entity("HospitalManagementSystem.API.Models.EyewearPrescription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdmissionId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Bifocal")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Far")
-                        .HasColumnType("real");
-
-                    b.Property<bool>("GlareFree")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("HiIndex")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsCancelled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("LeftEyeAxisClose")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LeftEyeAxisDistant")
-                        .HasColumnType("int");
-
-                    b.Property<float>("LeftEyeCylClose")
-                        .HasColumnType("real");
-
-                    b.Property<float>("LeftEyeCylDistant")
-                        .HasColumnType("real");
-
-                    b.Property<float>("LeftEyeSphClose")
-                        .HasColumnType("real");
-
-                    b.Property<float>("LeftEyeSphDistant")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Near")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PatientId1")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("PhotoSolar")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("Progressive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("ResinPlastic")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("RightEyeAxisClose")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RightEyeAxisDistant")
-                        .HasColumnType("int");
-
-                    b.Property<float>("RightEyeCylClose")
-                        .HasColumnType("real");
-
-                    b.Property<float>("RightEyeCylDistant")
-                        .HasColumnType("real");
-
-                    b.Property<float>("RightEyeSphClose")
-                        .HasColumnType("real");
-
-                    b.Property<float>("RightEyeSphDistant")
-                        .HasColumnType("real");
-
-                    b.Property<bool>("ScratchResistant")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdmissionId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("PatientId1");
-
-                    b.ToTable("EyewearPrescriptions");
                 });
 
             modelBuilder.Entity("HospitalManagementSystem.API.Models.Gender", b =>
@@ -3713,37 +3597,6 @@ namespace HospitalManagementSystem.API.Migrations
                     b.Navigation("ExpenseCatagory");
                 });
 
-            modelBuilder.Entity("HospitalManagementSystem.API.Models.EyewearPrescription", b =>
-                {
-                    b.HasOne("HospitalManagementSystem.API.Models.Admission", "Admission")
-                        .WithMany()
-                        .HasForeignKey("AdmissionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("HospitalManagementSystem.API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("HospitalManagementSystem.API.Models.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("HospitalManagementSystem.API.Models.Patient", null)
-                        .WithMany("EyewearPrescriptions")
-                        .HasForeignKey("PatientId1");
-
-                    b.Navigation("Admission");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("HospitalManagementSystem.API.Models.Holiday", b =>
                 {
                     b.HasOne("HospitalManagementSystem.API.Models.Employee", "Employee")
@@ -4687,8 +4540,6 @@ namespace HospitalManagementSystem.API.Migrations
                     b.Navigation("Cases");
 
                     b.Navigation("Death");
-
-                    b.Navigation("EyewearPrescriptions");
 
                     b.Navigation("MedicalHistoryDrugs");
 
