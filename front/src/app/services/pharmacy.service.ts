@@ -260,6 +260,30 @@ export class PharmacyService {
       .pipe(catchError(this.errorHandler));
   }
 
+  getEyewearPrescriptions(): Observable<any> {
+    return this.httpClient
+        .get(this.BASE_URL + ApiPaths.EyewearPrescriptionEndpoint)
+        .pipe(catchError(this.errorHandler));
+  }
+
+  deleteEyewearPrescription(id: number): Observable<any> {
+    return this.httpClient
+             .delete(this.BASE_URL + ApiPaths.EyewearPrescriptionEndpoint +  `/${id}`)
+             .pipe(catchError(this.errorHandler));
+  }
+
+  addEyewearPrescription(prescriptionData: any): Observable<any> {
+    return this.httpClient
+      .post(this.BASE_URL + ApiPaths.EyewearPrescriptionEndpoint, prescriptionData)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  updateEyewearPrescription(id: number, prescriptionData: any): Observable<any> {
+    return this.httpClient
+      .put(this.BASE_URL + ApiPaths.EyewearPrescriptionEndpoint + `/${id}`, prescriptionData)
+      .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

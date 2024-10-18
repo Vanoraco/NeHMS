@@ -1,0 +1,110 @@
+<div class="row justify-content-between mb-4">
+    <div class="col-4">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filterPrescriptions()"
+        class="form-control"
+        placeholder="Search prescriptions..."
+      />
+    </div>
+    <div class="col-4">
+      <button
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+        class="btn btn-primary float-end"
+        (click)="openAddModal()"
+      >
+        <i class="bi bi-plus-lg"></i> Add Prescription
+      </button>
+    </div>
+  </div>
+  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Right Eye (Distant)</th>
+        <th>Left Eye (Distant)</th>
+        <th>Right Eye (Close)</th>
+        <th>Left Eye (Close)</th>
+        <th>Far</th> <!-- New Field -->
+        <th>Near</th> <!-- New Field -->
+        <th>PhotoSolar</th> <!-- New Field -->
+        <th>Bifocal</th> <!-- New Field -->
+        <th>Progressive</th> <!-- New Field -->
+        <th>Scratch Resistant</th> <!-- New Field -->
+        <th>Resin Plastic</th> <!-- New Field -->
+        <th>Glare Free</th> <!-- New Field -->
+        <th>Hi-Index</th> <!-- New Field -->
+        <th>Order Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prescription of filteredPrescriptions">
+        <td>{{ prescription.id }}</td>
+        <td>{{ employeeNameMap.get(prescription.employeeId) }}</td>
+        <td>{{ prescription.rightEyeSphDistant }} Sph, {{ prescription.rightEyeCylDistant }} Cyl, Axis {{ prescription.rightEyeAxisDistant }}</td>
+        <td>{{ prescription.leftEyeSphDistant }} Sph, {{ prescription.leftEyeCylDistant }} Cyl, Axis {{ prescription.leftEyeAxisDistant }}</td>
+        <td>{{ prescription.rightEyeSphClose }} Sph, {{ prescription.rightEyeCylClose }} Cyl, Axis {{ prescription.rightEyeAxisClose }}</td>
+        <td>{{ prescription.leftEyeSphClose }} Sph, {{ prescription.leftEyeCylClose }} Cyl, Axis {{ prescription.leftEyeAxisClose }}</td>
+        <td>{{ prescription.far }}</td> <!-- Displaying Far -->
+        <td>{{ prescription.near }}</td> <!-- Displaying Near -->
+        <td>{{ prescription.photoSolar ? 'Yes' : 'No' }}</td> <!-- Displaying PhotoSolar -->
+        <td>{{ prescription.bifocal ? 'Yes' : 'No' }}</td> <!-- Displaying Bifocal -->
+        <td>{{ prescription.progressive ? 'Yes' : 'No' }}</td> <!-- Displaying Progressive -->
+        <td>{{ prescription.scratchResistant ? 'Yes' : 'No' }}</td> <!-- Displaying Scratch Resistant -->
+        <td>{{ prescription.resinPlastic ? 'Yes' : 'No' }}</td> <!-- Displaying Resin Plastic -->
+        <td>{{ prescription.glareFree ? 'Yes' : 'No' }}</td> <!-- Displaying Glare Free -->
+        <td>{{ prescription.hiIndex ? 'Yes' : 'No' }}</td> <!-- Displaying Hi-Index -->
+        <td>{{ prescription.orderDate | date: 'short' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" (click)="openEditModal(prescription)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deletePrescription(prescription.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Pagination controls -->
+  <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+  
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">
+            {{ modalTitle }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="modalClose()"
+            id="pre-modal-close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <app-eye-wear-form
+            [prescription]="eyewearcheckupList"
+            *ngIf="activateyewearformComponent"
+          >
+          </app-eye-wear-form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

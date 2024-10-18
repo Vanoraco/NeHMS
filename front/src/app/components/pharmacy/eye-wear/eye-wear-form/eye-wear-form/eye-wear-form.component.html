@@ -1,0 +1,172 @@
+<form class="row">
+    <div class="col-lg-6">
+      <div class="form-group mb-1">
+        <label for="rightEyeSphDistant" class="form-label">Right Eye Sph (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeSphDistant"
+          name="rightEyeSphDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="rightEyeCylDistant" class="form-label">Right Eye Cyl (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeCylDistant"
+          name="rightEyeCylDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="rightEyeAxisDistant" class="form-label">Right Eye Axis (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeAxisDistant"
+          name="rightEyeAxisDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="rightEyeSphClose" class="form-label">Right Eye Sph (Close)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeSphClose"
+          name="rightEyeSphClose"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="leftEyeSphDistant" class="form-label">Left Eye Sph (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeSphDistant"
+          name="leftEyeSphDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="leftEyeCylDistant" class="form-label">Left Eye Cyl (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeCylDistant"
+          name="leftEyeCylDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="leftEyeAxisDistant" class="form-label">Left Eye Axis (Distant)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeAxisDistant"
+          name="leftEyeAxisDistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="far" class="form-label">Far</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="far"
+          name="far"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="near" class="form-label">Near</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="near"
+          name="near"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="orderDate" class="form-label">Order Date</label>
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="orderDate"
+          name="orderDate"
+        />
+      </div>
+    </div>
+  
+    <div class="col-lg-6">
+      <div class="form-group mb-1">
+        <label for="photoSolar" class="form-label">Photo Solar</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="photoSolar"
+          name="photoSolar"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="bifocal" class="form-label">Bifocal</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="bifocal"
+          name="bifocal"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="progressive" class="form-label">Progressive</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="progressive"
+          name="progressive"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="scratchResistant" class="form-label">Scratch Resistant</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="scratchResistant"
+          name="scratchResistant"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="resinPlastic" class="form-label">Resin Plastic</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="resinPlastic"
+          name="resinPlastic"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="glareFree" class="form-label">Glare Free</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="glareFree"
+          name="glareFree"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="hiIndex" class="form-label">Hi Index</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="hiIndex"
+          name="hiIndex"
+        />
+      </div>
+    </div>
+  
+    <div class="text-center float-end mt-2">
+      <button
+        (click)="addPreexamcheckup()"
+        *ngIf="prescription.id == 0"
+        class="btn btn-primary"
+      >
+        Save
+      </button>
+      <button type="reset" class="btn btn-info ms-3">Reset</button>
+    </div>
+  </form>
+  

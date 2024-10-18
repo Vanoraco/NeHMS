@@ -208,6 +208,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { BedModule } from './components/bed/bed.module';
 import { PrimeNgModule } from './primeng.module';
+import { EyewearPrescriptionComponent } from './components/pharmacy/eye-wear/eye-wear.component';
+import { EyewearFormPrescriptionComponent } from './components/pharmacy/eye-wear/eye-wear-form/eye-wear-form/eye-wear-form.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -389,6 +391,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BloodGroupFormComponent,
     BloodGroupStatusComponent,
     BloodgroupStatusFormComponent,
+    EyewearPrescriptionComponent,
+    EyewearFormPrescriptionComponent,
   ],
   imports: [
     BrowserModule,

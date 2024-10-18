@@ -105,6 +105,7 @@ namespace HospitalManagementSystem.API.Data
         public DbSet<Permission> Permissions{ get; set; }
         public DbSet<EmployeeAuth> EmployeeAuths { get; set; }
         public DbSet<Revenue> Revenues { get; set; }
+        public DbSet<EyewearPrescription> EyewearPrescriptions { get; set; }
 
 
 
@@ -206,7 +207,7 @@ namespace HospitalManagementSystem.API.Data
             builder.ApplyConfiguration(new PermissionConfigurations());
             builder.ApplyConfiguration(new EmployeeAuthConfigurations());
             builder.ApplyConfiguration(new RevenueConfigurations());
-
+            builder.ApplyConfiguration(new EyewearPrescriptionConfigurations());
         }
     }
 }

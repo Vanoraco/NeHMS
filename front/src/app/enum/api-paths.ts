@@ -94,4 +94,5 @@ export enum ApiPaths {
   RelationshipEndpoint = '/Relationships',
   BloodGroupEndpoint = '/BloodGroups',
   BloodGroupStatusEndpoint = '/BloodGroupStatus',
+  EyewearPrescriptionEndpoint = '/EyewearPrescription'
 }

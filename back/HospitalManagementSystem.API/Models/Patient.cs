@@ -63,6 +63,8 @@ namespace HospitalManagementSystem.API.Models
         public ICollection<MedicalHistoryDrug> MedicalHistoryDrugs { get; set; }
         public ICollection<MedicalHistory> MedicalHistorys { get; set; }
 
+        public ICollection<EyewearPrescription> EyewearPrescriptions { get; set; }
+
 
         public Patient()
         {
@@ -78,6 +80,7 @@ namespace HospitalManagementSystem.API.Models
             MedicalInterviewSocrates = new Collection<MedicalInterviewSocrates>();
             MedicalHistoryFamilies = new Collection<MedicalHistoryFamily>();
             MedicalHistoryDrugs = new Collection<MedicalHistoryDrug>();
+            EyewearPrescriptions = new Collection<EyewearPrescription>(); 
         }
     }
 }
