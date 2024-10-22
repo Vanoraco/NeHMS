@@ -3,6 +3,7 @@ import { PharmacyService } from 'src/app/services/pharmacy.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-eyewear-prescription',
@@ -31,7 +32,8 @@ export class EyewearPrescriptionComponent implements OnInit {
     private pharmacyService: PharmacyService,
     private employeeService: EmployeeService,
     private toast: NgToastService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -112,11 +114,7 @@ export class EyewearPrescriptionComponent implements OnInit {
   deletePrescription(id: number): void {
     if (confirm('Are you sure you want to delete this prescription?')) {
       this.pharmacyService.deleteEyewearPrescription(id).subscribe(() => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Successfully Deleted!',
-          duration: 4000,
-        });
+        this.toastr.success('Successfully Deleted!');
         this.loadPrescriptions(); // Refresh the list
       });
     }

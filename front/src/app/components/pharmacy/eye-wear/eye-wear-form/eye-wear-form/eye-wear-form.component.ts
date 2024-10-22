@@ -1,14 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PharmacyService } from 'src/app/services/pharmacy.service';
 import { AdmissionService } from 'src/app/services/admission.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { AuthService } from 'src/app/services/auth.service';
 
+
 @Component({
-  selector: 'app-add-edit-eyewear-prescription',
+  selector: 'app-eye-wear-form',
   templateUrl: './eye-wear-form.component.html',
   styleUrls: ['./eye-wear-form.component.css'],
 })
@@ -25,9 +27,14 @@ export class EyewearFormPrescriptionComponent implements OnInit {
   rightEyeCylDistant: number = 0;
   rightEyeAxisDistant: number = 0;
   rightEyeSphClose: number = 0;
+  rightEyeCylClose: number = 0;
+  rightEyeAxisClose: number = 0
   leftEyeSphDistant: number = 0;
   leftEyeCylDistant: number = 0;
   leftEyeAxisDistant: number = 0;
+  leftEyeSphClose: number = 0;
+  leftEyeCylClose: number = 0;
+  leftEyeAxisClose: number = 0;
   far: string = '';
   near: string = '';
   orderDate: string = '';
@@ -49,18 +56,20 @@ export class EyewearFormPrescriptionComponent implements OnInit {
     private admissionService: AdmissionService,
     private employeeService: EmployeeService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.AdmissionId = this.route.snapshot.params['admissionId'];
-
+    console.log("Hi")
     this.admissionService
       .getAdmissionByIdApi(this.AdmissionId)
       .subscribe((res) => {
         this.admissionList = res;
+        console.log(this.admissionList)
       });
-
+    
     this.prescription$ = this.pharmacyService.getEyewearPrescriptions();
 
     if (this.prescription) {
@@ -115,17 +124,24 @@ export class EyewearFormPrescriptionComponent implements OnInit {
   addEyewearPrescription() {
     const prescription = {
       admissionId: this.admissionList.id,
+      
       rightEyeCylDistant: this.rightEyeCylDistant,
       rightEyeAxisDistant: this.rightEyeAxisDistant,
+      rightEyeSphDistant: this.rightEyeSphDistant ,
       rightEyeSphClose: this.rightEyeSphClose,
+      rightEyeCylClose: this.rightEyeCylClose,
+      rightEyeAxisClose: this.rightEyeAxisClose,
       leftEyeSphDistant: this.leftEyeSphDistant,
       leftEyeCylDistant: this.leftEyeCylDistant,
       leftEyeAxisDistant: this.leftEyeAxisDistant,
+      leftEyeSphClose: this.leftEyeSphClose,
+      leftEyeCylClose: this.leftEyeCylClose,
+      leftEyeAxisClose: this.leftEyeAxisClose,
       far: this.far,
       near: this.near,
       orderDate: this.orderDate,
       employeeId: this.employee.id,
-      patientId: this.patientId,
+      patientId: this.admissionList.patientId,
       // New fields
       photoSolar: this.photoSolar,
       bifocal: this.bifocal,
@@ -135,22 +151,14 @@ export class EyewearFormPrescriptionComponent implements OnInit {
       glareFree: this.glareFree,
       hiIndex: this.hiIndex,
     };
-
+   console.log(prescription)
     this.pharmacyService.addEyewearPrescription(prescription).subscribe(
       (res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Successfully Added!',
-          duration: 4000,
-        });
+        this.toastr.success('Sucessfully Added!');
         document.getElementById('pre-modal-close')?.click();
       },
       (err) => {
-        this.toast.error({
-          detail: 'ERROR',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
+        this.toastr.error('Something went wrong!!!');
       }
     );
   }
@@ -182,19 +190,11 @@ export class EyewearFormPrescriptionComponent implements OnInit {
 
     this.pharmacyService.updateEyewearPrescription(prescription.id, prescription).subscribe(
       (res) => {
-        this.toast.success({
-          detail: 'SUCCESS',
-          summary: 'Successfully Updated!',
-          duration: 4000,
-        });
+        this.toastr.success('Sucessfully Updated!');
         document.getElementById('pre-modal-close')?.click();
       },
       (err) => {
-        this.toast.error({
-          detail: 'ERROR',
-          summary: 'Something went wrong!',
-          duration: 4000,
-        });
+        this.toastr.error('Something went wrong!!!');
       }
     );
   }

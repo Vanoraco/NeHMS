@@ -12,7 +12,7 @@
       <button
         type="button"
         data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
+        data-bs-target="#eyeWearModal"
         class="btn btn-primary float-end"
         (click)="openAddModal()"
       >
@@ -24,33 +24,61 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Employee</th>
-        <th>Right Eye (Distant)</th>
-        <th>Left Eye (Distant)</th>
-        <th>Right Eye (Close)</th>
-        <th>Left Eye (Close)</th>
+        <th>Emp</th>
+        <th>Prescription Details</th>
         <th>Far</th> <!-- New Field -->
         <th>Near</th> <!-- New Field -->
-        <th>PhotoSolar</th> <!-- New Field -->
-        <th>Bifocal</th> <!-- New Field -->
-        <th>Progressive</th> <!-- New Field -->
-        <th>Scratch Resistant</th> <!-- New Field -->
-        <th>Resin Plastic</th> <!-- New Field -->
-        <th>Glare Free</th> <!-- New Field -->
-        <th>Hi-Index</th> <!-- New Field -->
-        <th>Order Date</th>
-        <th>Actions</th>
+        <th>PS</th> <!-- New Field -->
+        <th>BF</th> <!-- New Field -->
+        <th>Prog</th> <!-- New Field -->
+        <th>SR</th> <!-- New Field -->
+        <th>RP</th> <!-- New Field -->
+        <th>GF</th> <!-- New Field -->
+        <th>HI</th> <!-- New Field -->
+        <th>Ac</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let prescription of filteredPrescriptions">
-        <td>{{ prescription.id }}</td>
+        
         <td>{{ employeeNameMap.get(prescription.employeeId) }}</td>
-        <td>{{ prescription.rightEyeSphDistant }} Sph, {{ prescription.rightEyeCylDistant }} Cyl, Axis {{ prescription.rightEyeAxisDistant }}</td>
-        <td>{{ prescription.leftEyeSphDistant }} Sph, {{ prescription.leftEyeCylDistant }} Cyl, Axis {{ prescription.leftEyeAxisDistant }}</td>
-        <td>{{ prescription.rightEyeSphClose }} Sph, {{ prescription.rightEyeCylClose }} Cyl, Axis {{ prescription.rightEyeAxisClose }}</td>
-        <td>{{ prescription.leftEyeSphClose }} Sph, {{ prescription.leftEyeCylClose }} Cyl, Axis {{ prescription.leftEyeAxisClose }}</td>
+        <td>
+          <strong>Right Eye</strong>
+          <br>
+          <table>
+            <tr>
+              <td>Distant&nbsp;</td>
+              <td>Sph-{{  prescription.rightEyeSphDistant }}&nbsp;</td>
+              <td>Cyl-{{ prescription.rightEyeCylDistant }}&nbsp;</td>
+              <td>Axis-{{ prescription.rightEyeAxisDistant }}</td>
+            </tr>
+            
+            <tr>
+              <td>Close</td>
+              <td>Sph-{{ prescription.rightEyeSphClose }}&nbsp;</td>
+              <td>Cyl-{{ prescription.rightEyeCylClose }}&nbsp;</td>
+              <td>Axis-{{ prescription.rightEyeAxisClose }}</td>
+            </tr>
+          </table>
+          <hr>
+          <strong>Left Eye</strong>
+          
+          <table>
+            <tr>
+              <td>Distant&nbsp;</td>
+              <td>Sph-{{ prescription.leftEyeSphDistant }}&nbsp;</td>
+              <td>Cyl-{{ prescription.leftEyeCylDistant }}&nbsp;</td>
+              <td>Axis-{{ prescription.leftEyeAxisDistant }}</td>
+            </tr>
+            
+            <tr>
+              <td>Close</td>
+              <td>Sph-{{ prescription.leftEyeSphClose }}&nbsp;</td>
+              <td>Cyl-{{ prescription.leftEyeCylClose }}&nbsp;</td>
+              <td>Axis-{{ prescription.leftEyeAxisClose }}</td>
+            </tr>
+          </table>
+        </td>
         <td>{{ prescription.far }}</td> <!-- Displaying Far -->
         <td>{{ prescription.near }}</td> <!-- Displaying Near -->
         <td>{{ prescription.photoSolar ? 'Yes' : 'No' }}</td> <!-- Displaying PhotoSolar -->
@@ -60,21 +88,26 @@
         <td>{{ prescription.resinPlastic ? 'Yes' : 'No' }}</td> <!-- Displaying Resin Plastic -->
         <td>{{ prescription.glareFree ? 'Yes' : 'No' }}</td> <!-- Displaying Glare Free -->
         <td>{{ prescription.hiIndex ? 'Yes' : 'No' }}</td> <!-- Displaying Hi-Index -->
-        <td>{{ prescription.orderDate | date: 'short' }}</td>
+        
         <td>
-          <button class="btn btn-sm btn-warning" (click)="openEditModal(prescription)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deletePrescription(prescription.id)">Delete</button>
+          <i  
+            data-bs-toggle="modal"
+            data-bs-target="#eyeWearModal"
+            class="bi bi-pencil-square icon-edit" 
+            (click)="openEditModal(prescription)"></i>
+          <i class="bi bi-trash icon-delete" (click)="deletePrescription(prescription.id)"></i>
         </td>
       </tr>
     </tbody>
   </table>
+  
   
   <!-- Pagination controls -->
   <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
   
   <div
     class="modal fade"
-    id="staticBackdrop"
+    id="eyeWearModal"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"

@@ -37,6 +37,26 @@
         />
       </div>
       <div class="form-group mb-1">
+        <label for="rightEyeCylClose" class="form-label">Right Eye Cyl (Close)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeCylClose"
+          name="rightEyeCylClose"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="rightEyeAxisClose" class="form-label">Right Eye Axis (Close)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rightEyeAxisClose"
+          name="rightEyeAxisClose"
+        />
+      </div>
+      </div>
+      <div class="col-lg-6">
+      <div class="form-group mb-1">
         <label for="leftEyeSphDistant" class="form-label">Left Eye Sph (Distant)</label>
         <input
           type="number"
@@ -64,6 +84,35 @@
         />
       </div>
       <div class="form-group mb-1">
+        <label for="leftEyeSphClose" class="form-label">Left Eye Sph (Close)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeSphClose"
+          name="leftEyeSphClose"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="leftEyeCylClose" class="form-label">Left Eye Cyl (CLose)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeCylClose"
+          name="leftEyeCylClose"
+        />
+      </div>
+      <div class="form-group mb-1">
+        <label for="leftEyeAxisClose" class="form-label">Left Eye Axis (CLose)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="leftEyeAxisClose"
+          name="leftEyeAxisClose"
+        />
+      </div>
+    </div>
+    <div class="row row-cols-lg-6">
+      <div class="form-group mb-1">
         <label for="far" class="form-label">Far</label>
         <input
           type="text"
@@ -81,16 +130,9 @@
           name="near"
         />
       </div>
-      <div class="form-group mb-1">
-        <label for="orderDate" class="form-label">Order Date</label>
-        <input
-          type="date"
-          class="form-control"
-          [(ngModel)]="orderDate"
-          name="orderDate"
-        />
-      </div>
     </div>
+    
+    
   
     <div class="col-lg-6">
       <div class="form-group mb-1">
@@ -129,6 +171,8 @@
           name="scratchResistant"
         />
       </div>
+      </div>
+      <div class="col-lg-6">
       <div class="form-group mb-1">
         <label for="resinPlastic" class="form-label">Resin Plastic</label>
         <input
@@ -157,15 +201,31 @@
         />
       </div>
     </div>
-  
+    <br>
+    <div class="form-group mb-1">
+      <label for="orderDate" class="form-label">Order Date</label>
+      <input
+        type="date"
+        class="form-control"
+        [(ngModel)]="orderDate"
+        name="orderDate"
+      />
+    </div>
     <div class="text-center float-end mt-2">
       <button
-        (click)="addPreexamcheckup()"
+        (click)="addEyewearPrescription()"
         *ngIf="prescription.id == 0"
         class="btn btn-primary"
       >
         Save
       </button>
+      <button
+      (click)="updateEyewearPrescription()"
+      *ngIf="prescription.id != 0"
+      class="btn btn-primary"
+    >
+      Update
+    </button>
       <button type="reset" class="btn btn-info ms-3">Reset</button>
     </div>
   </form>

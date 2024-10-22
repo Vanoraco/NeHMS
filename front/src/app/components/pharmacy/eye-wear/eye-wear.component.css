@@ -1,0 +1,11 @@
+.icon-edit {
+    padding: 2px;
+    color: rgb(32, 32, 209);
+    cursor: pointer;
+}
+
+.icon-delete {
+    padding: 2px;
+    color: rgb(202, 37, 37);
+    cursor: pointer;
+}
