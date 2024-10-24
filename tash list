@@ -1,0 +1,12 @@
+[33m675dc91[m[33m ([m[1;36mHEAD -> [m[1;32meyewear[m[33m, [m[1;31morigin/eyeform[m[33m)[m eye wear form for nurse
+[33m8d4b8ff[m[33m ([m[1;31morigin/eyewear[m[33m)[m migrated eye wear
+[33m6115421[m[33m ([m[1;31morigin/visac[m[33m, [m[1;32mvisac[m[33m)[m added va and icp to preexam
+[33m166fe6f[m[33m ([m[1;31morigin/oper[m[33m, [m[1;32moper[m[33m)[m added status to operation section
+[33m1d16d4d[m[33m ([m[1;31morigin/pharupd[m[33m, [m[1;32mpharupd[m[33m)[m Fixed pharmacy sales
+[33m2902678[m[33m ([m[1;31morigin/labReq[m[33m, [m[1;32mlabReq[m[33m)[m added dynamic dropdown
+[33m8527689[m[33m ([m[1;31morigin/update[m[33m, [m[1;32mupdate[m[33m, [m[1;32mmain[m[33m)[m added some updated
+[33m92f385d[m some updates
+[33m0e89822[m Merge branch 'main' of https://github.com/Vanoraco/NeHMS
+[33m32eaad7[m[33m ([m[1;31morigin/master[m[33m)[m Initial commit of backend and frontend
+[33m296f482[m Update README.md
+[33mf94c3a3[m Initial commit
