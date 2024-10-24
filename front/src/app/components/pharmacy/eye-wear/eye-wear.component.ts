@@ -4,6 +4,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-eyewear-prescription',
@@ -27,16 +28,35 @@ export class EyewearPrescriptionComponent implements OnInit {
   eyewearcheckupList: any;
   modalTitle: string;
   activateyewearformComponent: boolean = false;
+  AdmissionId: any;
+  prescription$: any;
+  email: any;
+  employeeList: any;
+  employeeRole: any = [];
+  employee: any;
 
   constructor(
     private pharmacyService: PharmacyService,
     private employeeService: EmployeeService,
+    private authService: AuthService,
     private toast: NgToastService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.AdmissionId = this.route.snapshot.params['admissionId'];
+    this.email = this.authService.getEmailFromToken();
+    this.employeeService.getEmployeeApi().subscribe((data) => {
+      this.employeeList = data;
+      for (let index = 0; index < this.employeeList.length; index++) {
+        if (this.email == this.employeeList[index].emailAddress) {
+          this.getEmployeeById(this.employeeList[index].id);
+        }
+      }
+    });
+   
+    this.prescription$ = this.pharmacyService.getEyewearPrescriptions();
     this.loadPrescriptions();
     this.getEmployeeNameMap();
   }
@@ -56,10 +76,27 @@ export class EyewearPrescriptionComponent implements OnInit {
     });
   }
 
+  getEmployeeById(id: string | number) {
+    this.employeeService.getEmployeeByIdApi(id).subscribe((data) => {
+      this.employee = data;
+      this.getEmployeeRole(this.employee.employeeRoleId);
+    });
+  }
+
+  getEmployeeRole(id: string | number) {
+    this.employeeService.getEmployeeRoleByIdApi(id).subscribe((data) => {
+      this.employeeRole = data;
+      console.log(this.employeeRole + " Miko")
+    });
+  }
+  
   loadPrescriptions(): void {
     this.pharmacyService.getEyewearPrescriptions().subscribe((data) => {
       this.prescriptions = data;
-      this.filteredPrescriptions = data;
+      this.filteredPrescriptions = this.prescriptions.filter(
+        (admission: { admissionId: number }) =>
+          admission.admissionId == this.AdmissionId
+      );;
     });
   }
 
@@ -69,6 +106,7 @@ export class EyewearPrescriptionComponent implements OnInit {
     );
   }
 
+  
   openAddModal(): void {
     this.eyewearcheckupList = {
       id: 0,
@@ -109,6 +147,18 @@ export class EyewearPrescriptionComponent implements OnInit {
     this.eyewearcheckupList = prescription;
     this.modalTitle = 'Edit Eyewear Prescription';
     this.activateyewearformComponent = true;
+  }
+
+  sellEyewear(prescription: any): void {
+    prescription.isCancelled = true
+    this.pharmacyService.updateEyewearPrescription(prescription.id, prescription).subscribe(
+      (res) => {
+        this.toastr.success('Sold!');
+      },
+      (err) => {
+        this.toastr.error('Something went wrong!!!');
+      }
+    );
   }
 
   deletePrescription(id: number): void {

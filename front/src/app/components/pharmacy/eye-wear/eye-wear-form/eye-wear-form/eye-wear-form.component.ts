@@ -49,6 +49,8 @@ export class EyewearFormPrescriptionComponent implements OnInit {
   resinPlastic: boolean = false;
   glareFree: boolean = false;
   hiIndex: boolean = false;
+  isUpdating: string = 'Update';
+  isSaving: string = 'Save';
 
   constructor(
     private pharmacyService: PharmacyService,
@@ -152,18 +154,21 @@ export class EyewearFormPrescriptionComponent implements OnInit {
       hiIndex: this.hiIndex,
     };
    console.log(prescription)
+   this.isSaving = 'Saving'
     this.pharmacyService.addEyewearPrescription(prescription).subscribe(
       (res) => {
+        this.isSaving = 'Save'
         this.toastr.success('Sucessfully Added!');
         document.getElementById('pre-modal-close')?.click();
       },
       (err) => {
+        this.isSaving = 'Save'
         this.toastr.error('Something went wrong!!!');
       }
     );
   }
 
-  updateEyewearPrescription() {
+  sellEyewearPrescription() {
     const prescription = {
       id: this.prescription.id, // Assuming prescription object has an id
       admissionId: this.admissionList.id,
@@ -186,14 +191,65 @@ export class EyewearFormPrescriptionComponent implements OnInit {
       resinPlastic: this.resinPlastic,
       glareFree: this.glareFree,
       hiIndex: this.hiIndex,
+      isCancelled: true,
     };
 
     this.pharmacyService.updateEyewearPrescription(prescription.id, prescription).subscribe(
       (res) => {
         this.toastr.success('Sucessfully Updated!');
-        document.getElementById('pre-modal-close')?.click();
+        document.getElementById('eyeWearModal')?.click();
       },
       (err) => {
+        this.toastr.error('Something went wrong!!!');
+      }
+    );
+  }
+
+  updateEyewearPrescription() {
+    const prescription = {
+      id: this.prescription.id, // Assuming prescription object has an id
+      admissionId: this.admissionList.id,
+      rightEyeCylDistant: this.rightEyeCylDistant,
+      rightEyeAxisDistant: this.rightEyeAxisDistant,
+      rightEyeSphDistant:this.rightEyeSphDistant,
+      rightEyeSphClose: this.rightEyeSphClose,
+      rightEyeCylClose: this.rightEyeCylClose,
+      rightEyeAxisClose: this.rightEyeAxisClose,
+      leftEyeSphDistant: this.leftEyeSphDistant,
+      leftEyeCylDistant: this.leftEyeCylDistant,
+      leftEyeAxisDistant: this.leftEyeAxisDistant,
+      leftEyeSphClose: this.leftEyeSphClose,
+      leftEyeCylClose: this.leftEyeCylClose,
+      leftEyeAxisClose: this.leftEyeAxisClose,
+      far: this.far,
+      near: this.near,
+      orderDate: this.orderDate,
+      employeeId: this.employee.id,
+      patientId: this.patientId,
+      // New fields
+      photoSolar: this.photoSolar,
+      bifocal: this.bifocal,
+      progressive: this.progressive,
+      scratchResistant: this.scratchResistant,
+      resinPlastic: this.resinPlastic,
+      glareFree: this.glareFree,
+      hiIndex: this.hiIndex,
+    };
+    this.isUpdating = 'Updating'
+    this.pharmacyService.updateEyewearPrescription(prescription.id, prescription).subscribe(
+      (res) => {
+        this.isUpdating = 'Update'
+        this.toastr.success('Sucessfully Updated!');
+        var closeModalBtn = document.getElementById(
+          'eye-modal-close'
+        );
+        if (closeModalBtn) {
+          closeModalBtn.click();
+          console.log("Closed")
+        }
+      },
+      (err) => {
+        this.isUpdating = 'Update'
         this.toastr.error('Something went wrong!!!');
       }
     );

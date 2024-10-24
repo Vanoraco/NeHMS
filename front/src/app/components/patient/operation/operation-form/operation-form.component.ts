@@ -95,11 +95,11 @@ export class OperationFormComponent implements OnInit {
         if (closeModalBtn) {
           closeModalBtn.click();
         }
-        this.isUpdating = true
+        this.isUpdating = false
       },
       (err) => {
         this.toastr.error('Something went wrong!');
-        this.isUpdating = true
+        this.isUpdating = false
       }
     );
   }
