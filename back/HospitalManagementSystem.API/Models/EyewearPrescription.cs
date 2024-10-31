@@ -54,6 +54,8 @@ namespace HospitalManagementSystem.API.Models
         public bool GlareFree { get; set; }    // Checkbox for Glare Free
         public bool HiIndex { get; set; }      // Checkbox for Hi-Index
 
+        public int Price { get; set; }
+
         // Relationships and Additional Properties
         public Patient Patient { get; set; } // Navigation property for Patient
         public int PatientId { get; set; }    // Foreign key for Patient
