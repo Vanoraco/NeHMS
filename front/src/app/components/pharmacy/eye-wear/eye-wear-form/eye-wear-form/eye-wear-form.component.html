@@ -6,6 +6,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeSphDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeSphDistant"
       />
     </div>
@@ -15,6 +16,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeCylDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeCylDistant"
       />
     </div>
@@ -24,6 +26,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeAxisDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeAxisDistant"
       />
     </div>
@@ -33,6 +36,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeSphClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeSphClose"
       />
     </div>
@@ -42,6 +46,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeCylClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeCylClose"
       />
     </div>
@@ -51,6 +56,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="rightEyeAxisClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="rightEyeAxisClose"
       />
     </div>
@@ -62,6 +68,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeSphDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeSphDistant"
       />
     </div>
@@ -71,6 +78,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeCylDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeCylDistant"
       />
     </div>
@@ -80,6 +88,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeAxisDistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeAxisDistant"
       />
     </div>
@@ -89,6 +98,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeSphClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeSphClose"
       />
     </div>
@@ -98,6 +108,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeCylClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeCylClose"
       />
     </div>
@@ -107,6 +118,7 @@
         type="number"
         class="form-control"
         [(ngModel)]="leftEyeAxisClose"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="leftEyeAxisClose"
       />
     </div>
@@ -118,6 +130,7 @@
         type="text"
         class="form-control"
         [(ngModel)]="far"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="far"
       />
     </div>
@@ -127,7 +140,18 @@
         type="text"
         class="form-control"
         [(ngModel)]="near"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="near"
+      />
+    </div>
+    <div class="form-group mb-1">
+      <label for="price" class="form-label">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="price"
+        [disabled]="employeeRole.name != 'Pharmacist'"
+        name="price"
       />
     </div>
   </div>
@@ -141,6 +165,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="photoSolar"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="photoSolar"
       />
     </div>
@@ -150,6 +175,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="bifocal"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="bifocal"
       />
     </div>
@@ -159,6 +185,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="progressive"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="progressive"
       />
     </div>
@@ -168,6 +195,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="scratchResistant"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="scratchResistant"
       />
     </div>
@@ -179,6 +207,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="resinPlastic"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="resinPlastic"
       />
     </div>
@@ -188,6 +217,7 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="glareFree"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="glareFree"
       />
     </div>
@@ -197,10 +227,13 @@
         type="checkbox"
         class="form-check-input"
         [(ngModel)]="hiIndex"
+        [disabled]="employeeRole.name == 'Pharmacist'"
         name="hiIndex"
       />
     </div>
   </div>
+  <br>
+  
   <br>
   <div class="form-group mb-1">
     <label for="orderDate" class="form-label">Order Date</label>
@@ -208,10 +241,20 @@
       type="date"
       class="form-control"
       [(ngModel)]="orderDate"
+      [disabled]="employeeRole.name == 'Pharmacist'"
       name="orderDate"
     />
   </div>
+  
   <div class="text-center float-end mt-2">
+    <button
+      (click)="selAddEyewearPrescription()"
+      *ngIf="prescription.id != 0 && employeeRole.name == 'Pharmacist'"
+      [disabled]="isSelling == 'Processing'" 
+      class="btn btn-primary"
+    >
+      {{ isSelling }}
+    </button>
     <button
       (click)="addEyewearPrescription()"
       *ngIf="prescription.id == 0"
@@ -222,7 +265,7 @@
     </button>
     <button
     (click)="updateEyewearPrescription()"
-    *ngIf="prescription.id != 0"
+    *ngIf="prescription.id != 0 && employeeRole.name != 'Pharmacist'"
     [disabled] = "isUpdating == 'Updating'"
     class="btn btn-primary"
   >

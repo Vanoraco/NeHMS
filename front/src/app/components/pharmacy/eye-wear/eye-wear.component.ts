@@ -149,7 +149,16 @@ export class EyewearPrescriptionComponent implements OnInit {
     this.activateyewearformComponent = true;
   }
 
+  openSellModal(prescription: any): void {
+    this.eyewearcheckupList = prescription;
+    this.modalTitle = 'Sell Eyewear Prescription';
+    this.activateyewearformComponent = true;
+  }
+
   sellEyewear(prescription: any): void {
+    this.eyewearcheckupList = prescription;
+    this.modalTitle = 'Sell Eyewear Prescription';
+    this.activateyewearformComponent = true;
     prescription.isCancelled = true
     this.pharmacyService.updateEyewearPrescription(prescription.id, prescription).subscribe(
       (res) => {

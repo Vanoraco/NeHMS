@@ -95,11 +95,10 @@
           >Sold
         </label>
         <i
-        *ngIf="
-          (employeeRole.name == 'Pharmacist' && prescription.isCancelled == false)
-        "
-        (click)="sellEyewear(prescription)"
-        
+        *ngIf="employeeRole.name == 'Pharmacist' && prescription.isCancelled == false"
+          data-bs-toggle="modal"
+          data-bs-target="#eyeWearModal"
+        (click)="openSellModal(prescription)"
         class="bi bi-bag-plus icon-edit"
         
       ></i>
