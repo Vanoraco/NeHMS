@@ -28,6 +28,7 @@ export class PrescriptionComponent implements OnInit {
   modalTitle: string = '';
   activatePrescriptionComponent: boolean = false;
   prescriptions: any;
+  userRole: string;
 
   //search
   searchName: string = '';
@@ -56,6 +57,14 @@ export class PrescriptionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
     this.AdmissionId = this.route.snapshot.params['admissionId'];
 
     this.getPrescription();

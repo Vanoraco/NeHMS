@@ -19,7 +19,7 @@
       placeholder="Search here ..."
     />
   </div>
-  <div class="col-4 mb-2">
+  <div class="col-4 mb-2" *ngIf="userRole !== 'Patient'">
     <button
       type="button"
       class="btn btn-primary float-end"
@@ -66,6 +66,7 @@
       <td>{{ item.date | date : "mediumDate" }}</td>
       <td>
         <i
+           *ngIf="userRole !== 'Patient'"
           (click)="modalEdit(item)"
           data-bs-toggle="modal"
           data-toggle="tooltip"
@@ -73,7 +74,7 @@
           data-bs-target="#case-modal"
           class="bi bi-pencil-square icon-edit"
         ></i>
-        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+        <i *ngIf="userRole !== 'Patient'" (click)="delete(item)" class="bi bi-trash icon-delete"></i>
       </td>
     </tr>
   </tbody>

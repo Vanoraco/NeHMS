@@ -23,6 +23,7 @@ export class CaseComponent implements OnInit {
   //sort
   key: string = 'id';
   reverse: boolean = false;
+  userRole: string;
   //pagination
   page: number = 1;
   count: number = 0;
@@ -43,6 +44,14 @@ export class CaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
     this.admissionId = this.route.snapshot.params['admissionId'];
     this.admissionService
       .getAdmissionByIdApi(this.admissionId)

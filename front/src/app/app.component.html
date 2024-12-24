@@ -2,7 +2,7 @@
   *ngIf="!(_router.url === '/login' || _router.url === '/404')"
 ></app-header>
 <app-sidebar
-  *ngIf="!(_router.url === '/login' || _router.url === '/404')"
+  *ngIf="!(_router.url === '/login' || _router.url === '/404' )&& userRole !== 'Patient' "
 ></app-sidebar>
 <router-outlet></router-outlet>
 <lib-ng-toast></lib-ng-toast>

@@ -24,83 +24,118 @@
                     Login to Your Account
                   </h5>
                   <p class="text-center small">
-                    Enter your email address & password to login
+                    Select your role and enter your credentials to login
                   </p>
                 </div>
-                <form class="row g-3" [formGroup]="loginForm" 
-                (ngSubmit)="loginUser()">
-                  <div class="col-lg-12">
-                    <label for="youremailAddress" class="form-label"
-                      >Email Address</label
-                    >
-                    <div class="input-group">
-                      <input
-                        type="email"
-                        formControlName="emailAddress"
-                        class="form-control"
-                        id="youremailAddress"
-                        [ngClass]="{
-                          'is-invalid':
-                            submitted && controls['emailAddress'].errors
-                        }"
-                      />
-                      <div
-                        class="invalid-feedback"
-                        *ngIf="
-                          !submitted &&
-                          controls['emailAddress'].valid &&
-                          controls['emailAddress'].touched
-                        "
-                      >
-                        Invalid email address
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <label for="yourPassword" class="form-label"
-                      >Password</label
-                    >
-                    <div class="input-group mb-3">
-                      <input
-                        [type]="type"
-                        formControlName="password"
-                        class="form-control"
-                        id="yourPassword"
-                        [ngClass]="{
-                          'is-invalid': submitted && controls['password'].errors
-                        }"
-                      />
-                      <div
-                        class="invalid-feedback"
-                        *ngIf="
-                          !submitted &&
-                          controls['password'].valid &&
-                          controls['password'].touched
-                        "
-                      >
-                        Password must contain more than 8 characters, 1 upper
-                        case letter, and 1 special character
-                      </div>
-                      <i
-                        class="bi bi-{{ eyeIcon }} input-group-text"
-                        (click)="showHidePass()"
-                      ></i>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
+
+                <!-- Role Selection Section -->
+                <div class="row mb-3">
+                  <div class="col-12 d-flex justify-content-center gap-3">
                     <div class="form-check">
                       <input
                         class="form-check-input"
-                        type="checkbox"
-                        name="remember"
-                        value="true"
-                        id="rememberMe"
+                        type="radio"
+                        name="userRole"
+                        id="patientRole"
+                        [value]="'patient'"
+                        [(ngModel)]="selectedRole"
+                        (change)="onRoleChange()"
                       />
-                      <label class="form-check-label" for="rememberMe"
-                        >Remember me</label
-                      >
+                      <label class="form-check-label" for="patientRole">
+                        Patient
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="userRole"
+                        id="employeeRole"
+                        [value]="'employee'"
+                        [(ngModel)]="selectedRole"
+                        (change)="onRoleChange()"
+                      />
+                      <label class="form-check-label" for="employeeRole">
+                        Employee
+                      </label>
                     </div>
                   </div>
+                </div>
+
+                <form class="row g-3" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                  <!-- Employee Fields -->
+                  <ng-container *ngIf="selectedRole === 'employee'">
+                    <div class="col-lg-12">
+                      <label for="youremailAddress" class="form-label">Email Address</label>
+                      <div class="input-group">
+                        <input
+                          type="email"
+                          formControlName="emailAddress"
+                          class="form-control"
+                          id="youremailAddress"
+                          [ngClass]="{
+                            'is-invalid': submitted && controls['emailAddress'].errors
+                          }"
+                        />
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="submitted && controls['emailAddress'].errors"
+                        >
+                          Invalid email address
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <div class="input-group mb-3">
+                        <input
+                          [type]="type"
+                          formControlName="password"
+                          class="form-control"
+                          id="yourPassword"
+                          [ngClass]="{
+                            'is-invalid': submitted && controls['password'].errors
+                          }"
+                        />
+                        <i
+                          class="bi bi-{{ eyeIcon }} input-group-text"
+                          (click)="showHidePass()"
+                        ></i>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="submitted && controls['password'].errors"
+                        >
+                          Password is required
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <!-- Patient Fields -->
+                  <ng-container *ngIf="selectedRole === 'patient'">
+                    <div class="col-lg-12">
+                      <label for="patientId" class="form-label">Patient ID</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          formControlName="patientId"
+                          class="form-control"
+                          id="patientId"
+                          [ngClass]="{
+                            'is-invalid': submitted && controls['patientId'].errors
+                          }"
+                        />
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="submitted && controls['patientId'].errors"
+                        >
+                          Please enter a valid Patient ID
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
                   <div class="col-lg-12">
                     <button
                       class="btn btn-primary w-100"
@@ -110,7 +145,9 @@
                       Login
                     </button>
                   </div>
-                  <div class="col-12">
+                  
+                  <!-- Show forgot password only for employees -->
+                  <div class="col-12" *ngIf="selectedRole === 'employee'">
                     <p class="small mb-0">
                       <a routerLink="/forgot-password">Forgot Password?</a>
                     </p>

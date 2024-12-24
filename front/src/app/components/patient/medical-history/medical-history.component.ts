@@ -33,6 +33,7 @@ export class MedicalHistoryComponent implements OnInit {
   fileName = 'medical-history.xlsx';
   // Map to display data associate with foreign keys
   patientListMap: Map<number, string> = new Map();
+  userRole: string;
 
   constructor(
     private medicalHistoryService: LaboratoryService,
@@ -43,6 +44,14 @@ export class MedicalHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
     this.admissionId = this.route.snapshot.params['admissionId'];
     this.admissionService
       .getAdmissionByIdApi(this.admissionId)

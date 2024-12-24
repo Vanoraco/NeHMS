@@ -49,6 +49,7 @@ export class AdmissionDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   
     this.admissionId = this.route.snapshot.params['admissionId'];
     this.admissionService
       .getAdmissionByIdApi(this.admissionId)
