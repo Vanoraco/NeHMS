@@ -26,7 +26,7 @@ export class AdmissionService {
   //get View list of Admissions
   getAdmissionByIdApi(id: number): Observable<any> {
     return this.httpClient
-      .get(this.BASE_URL + ApiPaths.AdmissionEndpoint + `/${id}`)
+      .get( this.BASE_URL + ApiPaths.AdmissionEndpoint + `/${id}`)
       .pipe(catchError(this.errorHandler));
   }
   //put Update Admission by id

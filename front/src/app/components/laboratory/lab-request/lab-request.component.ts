@@ -52,6 +52,7 @@ export class LabRequestComponent implements OnInit {
   count: number = 0;
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20];
+  userRole: string;
 
   // Map to display data associate with foreign keys
   constructor(
@@ -63,6 +64,14 @@ export class LabRequestComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
     this.AdmissionId = this.route.snapshot.params['admissionId'];
     this.PatientId = this.route.snapshot.params['PatientId'];
     this.getLabRequestList();

@@ -19,7 +19,7 @@
       placeholder="Search here ..."
     />
   </div>
-  <div class="col-4 mb-3">
+  <div class="col-4 mb-3" *ngIf="userRole !== 'Patient'">
     <button
       type="button"
       class="btn btn-primary float-end"
@@ -88,12 +88,13 @@
       <td>{{ item.intraocularPressure }}</td>
       <td>
         <i
+           *ngIf="userRole !== 'Patient'"
           (click)="modalEdit(item)"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
           class="bi bi-pencil-square icon-edit"
         ></i>
-        <i (click)="delete(item)" class="bi bi-trash icon-delete"></i>
+        <i *ngIf="userRole !== 'Patient'" (click)="delete(item)" class="bi bi-trash icon-delete"></i>
       </td>
     </tr>
   </tbody>

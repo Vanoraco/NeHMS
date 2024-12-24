@@ -235,14 +235,19 @@
             alt="Profile"
             class="rounded-circle"
           />
-          <span class="d-none d-md-block dropdown-toggle ps-2 text-white">{{
+          <span class="d-none d-md-block dropdown-toggle ps-2 text-white" *ngIf="userRole !== 'Patient'">{{
             employee.firstName
           }}</span>
+          <span class="d-none d-md-block dropdown-toggle ps-2 text-white" *ngIf="userRole == 'Patient'">
+            Patient</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>{{ employee.firstName + " " + employee.lastName }}</h6>
-            <span>{{ employeeRole.name }}</span>
+            <h6 *ngIf="userRole !== 'Patient'">{{ employee.firstName + " " + employee.lastName }}</h6>
+            <h6 *ngIf="userRole == 'Patient'">Patient</h6>
+            <span *ngIf="userRole !== 'Patient'">{{ employeeRole.name }}</span>
+            <span *ngIf="userRole == 'Patient'">
+              Patient</span>
           </li>
           <li>
             <hr class="dropdown-divider" />
@@ -252,7 +257,7 @@
               class="dropdown-item d-flex align-items-center"
               routerLink="/employee-profile/{{ employee.id }}"
             >
-              <i class="bi bi-person"></i> <span>My Profile</span>
+              <i class="bi bi-person" *ngIf="userRole !== 'Patient'"></i> <span *ngIf="userRole !== 'Patient'">My Profile</span>
             </a>
           </li>
           <li>
@@ -263,7 +268,7 @@
               class="dropdown-item d-flex align-items-center"
               routerLink="/employee-profile/{{ employee.id }}"
             >
-              <i class="bi bi-gear"></i> <span>Account Settings</span>
+              <i class="bi bi-gear" *ngIf="userRole !== 'Patient'"></i> <span *ngIf="userRole !== 'Patient'">Account Settings</span>
             </a>
           </li>
           <li>

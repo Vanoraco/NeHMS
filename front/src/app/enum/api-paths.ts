@@ -2,6 +2,7 @@ export enum ApiPaths {
   //login and register endpoint
   LoginApiEndpoint = '/EmployeeAuths/login',
   RegisterApiEndpoint = '/EmployeeAuths/register',
+  PatientLoginApiEndpoint = '/patient/login',
 
   ImageUploadEndpoint = '/Images',
   NotificationEndpoint = '/Notifications',

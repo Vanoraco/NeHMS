@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   messages: any = [];
   notificationMessagesAll: any;
   lang: string = '';
+  userRole: string;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     public authService: AuthService,
@@ -28,6 +29,15 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      this.sidebarToggle()
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
+    
     this.lang = localStorage.getItem('lang') || 'en';
     this.email = this.authService.getEmailFromToken();
     this.employeeService.getEmployeeApi().subscribe((data) => {

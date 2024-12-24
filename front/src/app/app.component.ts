@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'HMS Frontend';
+  userRole: any;
   constructor(
     private elementRef: ElementRef,
     public _router: Router,
@@ -24,6 +25,14 @@ export class AppComponent {
     s.type = 'text/javascript';
     s.src = '../assets/js/main.js';
     this.elementRef.nativeElement.appendChild(s);
+
+    const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
   }
   checkPath(path: string): boolean {
     return this._router.config.some((route) => route.path === path);

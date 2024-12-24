@@ -16,6 +16,7 @@ export class PreExamCheckUpComponent implements OnInit {
   employeeID$: any;
   employeeNameMap: Map<number, string> = new Map();
   searchName: string = '';
+  userRole: string;
   //sort
   key: string = 'id';
   reverse: boolean = false;
@@ -32,6 +33,14 @@ export class PreExamCheckUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+     const storedData = localStorage.getItem('Role');
+
+    if (storedData) {
+      
+      this.userRole = storedData;
+      
+      console.log(this.userRole) // Assuming 'role' is stored in the patientData object
+    }
     this.getEmployeeNameMap();
     this.getPreexamCheckup();
   }

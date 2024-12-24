@@ -20,7 +20,7 @@
     />
   </div>
   <div
-    *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+    *ngIf="(employeeRole.name == 'Admin' || employeeRole.name == 'Doctor') && userRole !== 'Patient'"
     class="col-4 mb-3"
   >
     <button
@@ -95,14 +95,14 @@
       </td>
       <td>
         <i
-          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          *ngIf="(employeeRole.name == 'Admin' || employeeRole.name == 'Doctor') && userRole !== 'Patient'"
           (click)="modalEdit(item)"
           data-bs-toggle="modal"
           data-bs-target="#labRequest"
           class="bi bi-pencil-square icon-edit"
         ></i>
         <i
-          *ngIf="employeeRole.name == 'Laboratorist' && item.isPaid == true"
+          *ngIf="(employeeRole.name == 'Laboratorist' && item.isPaid == true) && userRole !== 'Patient'"
           (click)="modalEdit(item)"
           data-bs-toggle="modal"
           data-bs-target="#labRequest"
@@ -110,7 +110,7 @@
         ></i>
         <i
           *ngIf="
-            employeeRole.name == 'Admin' || employeeRole.name == 'Accountant'
+            (employeeRole.name == 'Admin' || employeeRole.name == 'Accountant')&& userRole !== 'Patient'
           "
           class="bi bi-cash icon-edit"
           (click)="modalBillLabAdd(item.id)"
@@ -127,7 +127,7 @@
           title="Add Lab Test Result"
         ></i> -->
         <i
-          *ngIf="employeeRole.name == 'Admin' || employeeRole.name == 'Doctor'"
+          *ngIf="(employeeRole.name == 'Admin' || employeeRole.name == 'Doctor')&& userRole !== 'Patient'"
           (click)="delete(item)"
           class="bi bi-trash icon-delete"
         ></i>
