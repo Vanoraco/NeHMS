@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementSystem.API.Data;
+using HospitalManagementSystem.API.Dtos.Pharmacy;
 using HospitalManagementSystem.API.Models;
 
 namespace HospitalManagementSystem.API.Controllers
@@ -50,14 +51,30 @@ namespace HospitalManagementSystem.API.Controllers
         // PUT: api/PharmacySales/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPharmacySale(int id, PharmacySale pharmacySale)
+        public async Task<IActionResult> PutPharmacySale(int id, PharmacySaleUpdateDto pharmacySale)
         {
-            if (id != pharmacySale.Id)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pharmacySale).State = EntityState.Modified;
+            var entity = new PharmacySale
+            {
+                Id = id,
+                description = pharmacySale.Description,
+                Amount = pharmacySale.Amount,
+                Price = pharmacySale.Price,
+                TimeStamp = pharmacySale.TimeStamp,
+                PharmacyMedStockId = pharmacySale.PharmacyMedStockId,
+                EmployeeId = pharmacySale.EmployeeId
+            };
+
+            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
@@ -81,12 +98,27 @@ namespace HospitalManagementSystem.API.Controllers
         // POST: api/PharmacySales
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PharmacySale>> PostPharmacySale(PharmacySale pharmacySale)
+        public async Task<ActionResult<PharmacySale>> PostPharmacySale(PharmacySaleCreateDto pharmacySale)
         {
-            _context.PharmacySales.Add(pharmacySale);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entity = new PharmacySale
+            {
+                description = pharmacySale.Description,
+                Amount = pharmacySale.Amount,
+                Price = pharmacySale.Price,
+                TimeStamp = pharmacySale.TimeStamp,
+                PharmacyMedStockId = pharmacySale.PharmacyMedStockId,
+                EmployeeId = pharmacySale.EmployeeId
+            };
+
+            _context.PharmacySales.Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPharmacySale", new { id = pharmacySale.Id }, pharmacySale);
+            return CreatedAtAction("GetPharmacySale", new { id = entity.Id }, entity);
         }
 
         // DELETE: api/PharmacySales/5

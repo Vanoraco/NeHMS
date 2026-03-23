@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementSystem.API.Data;
+using HospitalManagementSystem.API.Dtos.Pharmacy;
 using HospitalManagementSystem.API.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -47,14 +48,28 @@ namespace HospitalManagementSystem.API.Controllers
         // PUT: api/PharmacyExpenses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPharmacyExpense(int id, PharmacyExpense pharmacyExpense)
+        public async Task<IActionResult> PutPharmacyExpense(int id, PharmacyExpenseUpdateDto pharmacyExpense)
         {
-            if (id != pharmacyExpense.Id)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pharmacyExpense).State = EntityState.Modified;
+            var entity = new PharmacyExpense
+            {
+                Id = id,
+                PharmacyExpenseCatagoryId = pharmacyExpense.PharmacyExpenseCatagoryId,
+                Amount = pharmacyExpense.Amount,
+                Date = pharmacyExpense.Date,
+                Description = pharmacyExpense.Description
+            };
+
+            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
@@ -78,12 +93,25 @@ namespace HospitalManagementSystem.API.Controllers
         // POST: api/PharmacyExpenses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PharmacyExpense>> PostPharmacyExpense(PharmacyExpense pharmacyExpense)
+        public async Task<ActionResult<PharmacyExpense>> PostPharmacyExpense(PharmacyExpenseCreateDto pharmacyExpense)
         {
-            _context.PharmacyExpenses.Add(pharmacyExpense);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entity = new PharmacyExpense
+            {
+                PharmacyExpenseCatagoryId = pharmacyExpense.PharmacyExpenseCatagoryId,
+                Amount = pharmacyExpense.Amount,
+                Date = pharmacyExpense.Date,
+                Description = pharmacyExpense.Description
+            };
+
+            _context.PharmacyExpenses.Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPharmacyExpense", new { id = pharmacyExpense.Id }, pharmacyExpense);
+            return CreatedAtAction("GetPharmacyExpense", new { id = entity.Id }, entity);
         }
 
         // DELETE: api/PharmacyExpenses/5

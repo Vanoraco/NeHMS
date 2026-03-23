@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementSystem.API.Data;
+using HospitalManagementSystem.API.Dtos.Pharmacy;
 using HospitalManagementSystem.API.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -47,14 +48,34 @@ namespace HospitalManagementSystem.API.Controllers
         // PUT: api/PharmacyMedStocks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPharmacyMedStock(int id, PharmacyMedStock pharmacyMedStock)
+        public async Task<IActionResult> PutPharmacyMedStock(int id, PharmacyMedStockUpdateDto pharmacyMedStock)
         {
-            if (id != pharmacyMedStock.Id)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pharmacyMedStock).State = EntityState.Modified;
+            var entity = new PharmacyMedStock
+            {
+                Id = id,
+                Name = pharmacyMedStock.Name,
+                Description = pharmacyMedStock.Description,
+                MedicationId = pharmacyMedStock.MedicationId,
+                BatchNumber = pharmacyMedStock.BatchNumber,
+                ExpirationDate = pharmacyMedStock.ExpirationDate,
+                Price = pharmacyMedStock.Price,
+                Quantity = pharmacyMedStock.Quantity,
+                EmployeeId = pharmacyMedStock.EmployeeId,
+                MedSupplierId = pharmacyMedStock.MedSupplierId,
+                TimeStamp = pharmacyMedStock.TimeStamp
+            };
+
+            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
@@ -78,12 +99,31 @@ namespace HospitalManagementSystem.API.Controllers
         // POST: api/PharmacyMedStocks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PharmacyMedStock>> PostPharmacyMedStock(PharmacyMedStock pharmacyMedStock)
+        public async Task<ActionResult<PharmacyMedStock>> PostPharmacyMedStock(PharmacyMedStockCreateDto pharmacyMedStock)
         {
-            _context.PharmacyMedStocks.Add(pharmacyMedStock);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entity = new PharmacyMedStock
+            {
+                Name = pharmacyMedStock.Name,
+                Description = pharmacyMedStock.Description,
+                MedicationId = pharmacyMedStock.MedicationId,
+                BatchNumber = pharmacyMedStock.BatchNumber,
+                ExpirationDate = pharmacyMedStock.ExpirationDate,
+                Price = pharmacyMedStock.Price,
+                Quantity = pharmacyMedStock.Quantity,
+                EmployeeId = pharmacyMedStock.EmployeeId,
+                MedSupplierId = pharmacyMedStock.MedSupplierId,
+                TimeStamp = pharmacyMedStock.TimeStamp
+            };
+
+            _context.PharmacyMedStocks.Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPharmacyMedStock", new { id = pharmacyMedStock.Id }, pharmacyMedStock);
+            return CreatedAtAction("GetPharmacyMedStock", new { id = entity.Id }, entity);
         }
 
         // DELETE: api/PharmacyMedStocks/5

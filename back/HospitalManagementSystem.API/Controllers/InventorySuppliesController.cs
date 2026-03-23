@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementSystem.API.Data;
 using Microsoft.AspNetCore.Authorization;
+using HospitalManagementSystem.API.Dtos.Inventory;
 using HospitalManagementSystem.API.Models;
 
 namespace HospitalManagementSystem.API.Controllers
@@ -47,14 +48,28 @@ namespace HospitalManagementSystem.API.Controllers
         // PUT: api/InventorySupplies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInventorySupply(int id, InventorySupply inventorySupply)
+        public async Task<IActionResult> PutInventorySupply(int id, InventorySupplyUpdateDto inventorySupply)
         {
-            if (id != inventorySupply.Id)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Entry(inventorySupply).State = EntityState.Modified;
+            var entity = new InventorySupply
+            {
+                Id = id,
+                Name = inventorySupply.Name,
+                Description = inventorySupply.Description,
+                Address = inventorySupply.Address,
+                PhoneNumber = inventorySupply.PhoneNumber
+            };
+
+            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
@@ -78,12 +93,25 @@ namespace HospitalManagementSystem.API.Controllers
         // POST: api/InventorySupplies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<InventorySupply>> PostInventorySupply(InventorySupply inventorySupply)
+        public async Task<ActionResult<InventorySupply>> PostInventorySupply(InventorySupplyCreateDto inventorySupply)
         {
-            _context.InventorySupplies.Add(inventorySupply);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var entity = new InventorySupply
+            {
+                Name = inventorySupply.Name,
+                Description = inventorySupply.Description,
+                Address = inventorySupply.Address,
+                PhoneNumber = inventorySupply.PhoneNumber
+            };
+
+            _context.InventorySupplies.Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInventorySupply", new { id = inventorySupply.Id }, inventorySupply);
+            return CreatedAtAction("GetInventorySupply", new { id = entity.Id }, entity);
         }
 
         // DELETE: api/InventorySupplies/5
