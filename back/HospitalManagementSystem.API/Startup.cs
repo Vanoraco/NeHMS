@@ -40,7 +40,7 @@ namespace HospitalManagementSystem.API
         {
             services.AddDbContext<DatabaseContext>(
                 options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection"))
+                    options.UseNpgsql(Configuration.GetConnectionString("DatabaseConnection"))
             );
 
             services.AddCors(c =>
@@ -135,6 +135,12 @@ namespace HospitalManagementSystem.API
                             "HospitalManagementSystem.API v1"
                         )
                 );
+
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                    db.Database.Migrate();
+                }
             }
 
             app.UseHttpsRedirection();
