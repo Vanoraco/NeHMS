@@ -37,7 +37,7 @@ namespace HospitalManagementSystem.API.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Image> ImageUploads { get; set; }
         public DbSet<MedicineCategory> MedicineCategories { get; set; }
-        public DbSet<MedicineStockHospital> MedicineStockHospitas { get; set; }
+        public DbSet<MedicineStockHospital> MedicineStockHospitals { get; set; }
         public DbSet<PatientFile> PatientFiles { get; set; }
         public DbSet<Laboratoriest> Laboratoriests { get; set; }
         public DbSet<Weekday> Weekdays { get; set; }
@@ -67,21 +67,21 @@ namespace HospitalManagementSystem.API.Data
         public DbSet<TaxRule> TaxRules { get; set; }
         public DbSet<Overtime> Overtimes { get; set; }
 
-        public DbSet<RevenueCategory> RevenueCategorys { get; set; }
+        public DbSet<RevenueCategory> RevenueCategories { get; set; }
         public DbSet<LabTestResult> LabTestResults { get; set; }
         public DbSet<MedSupplier> MedSuppliers { get; set; }
         public DbSet<PharmacyMedStock> PharmacyMedStocks { get; set; }
-        public DbSet<PharmacySale> pharmacySales { get; set; }
+        public DbSet<PharmacySale> PharmacySales { get; set; }
         public DbSet<Notice> Notices { get; set; }
         public DbSet<BloodGroupStatus> BloodGroupStatuses { get; set; }
         public DbSet<ScheduleStatus> ScheduleStatuses { get; set; }
-        public DbSet<InventorySupply> InventorySupplys { get; set; }
-        public DbSet<Inventory> Inventorys { get; set; }
-        public DbSet<PharmacyExpenseCatagory> PharmacyExpenseCatagorys { get; set; }
+        public DbSet<InventorySupply> InventorySupplies { get; set; }
+        public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<PharmacyExpenseCatagory> PharmacyExpenseCategories { get; set; }
         public DbSet<PharmacyExpense> PharmacyExpenses { get; set; }
         public DbSet<MedicalCertificate> MedicalCertificates { get; set; }
         public DbSet<PreExamCheckup> PreExamCheckups { get; set; }
-        public DbSet<ExpenseCatagory> ExpenseCatagories { get; set; }
+        public DbSet<ExpenseCatagory> ExpenseCategories { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Birth> Births { get; set; }
         public DbSet<Death> Deaths { get; set; }
@@ -96,11 +96,11 @@ namespace HospitalManagementSystem.API.Data
         public DbSet<PayrollReport> PayrollReports { get; set; }
         public DbSet<MedicalHistoryDrug> MedicalHistoryDrugs { get; set; }
         public DbSet<MedicalHistoryFamily> MedicalHistoryFamilies { get; set; }
-        public DbSet<MedicalHistory> MedicalHistorys { get; set; }
+        public DbSet<MedicalHistory> MedicalHistories { get; set; }
         public DbSet<Designation> Designations { get; set; }
         public DbSet<ServiceCharge> ServiceCharges { get; set; }
         public DbSet<AllowanceDeductionType> AllowanceDeductionTypes { get; set; }
-        public DbSet<AllowanceDeduction> AllowanceDeductionS { get; set; }
+        public DbSet<AllowanceDeduction> AllowanceDeductions { get; set; }
         public DbSet<Permission> Permissions{ get; set; }
         public DbSet<EmployeeAuth> EmployeeAuths { get; set; }
         public DbSet<Revenue> Revenues { get; set; }
@@ -172,6 +172,7 @@ namespace HospitalManagementSystem.API.Data
             builder.ApplyConfiguration(new RevenueCategoryConfigurations());
             builder.ApplyConfiguration(new MedSupplierConfigurations());
             builder.ApplyConfiguration(new PharmacyMedStockConfigurations());
+            builder.ApplyConfiguration(new PharmacySaleConfigurations());
             builder.ApplyConfiguration(new NoticeConfigurations());
             builder.ApplyConfiguration(new BloodGroupStatusConfigurations());
             builder.ApplyConfiguration(new ScheduleStatusConfigurations());

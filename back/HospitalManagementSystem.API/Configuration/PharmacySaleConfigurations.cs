@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<PharmacySale> builder)
         {
+            builder.ToTable("pharmacySales");
             builder.Property(ps => ps.Amount)
                  .IsRequired();
             builder.Property(ps => ps.Price)

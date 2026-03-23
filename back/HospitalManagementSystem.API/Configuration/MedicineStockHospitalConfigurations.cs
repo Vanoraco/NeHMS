@@ -12,6 +12,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<MedicineStockHospital> builder)
         {
+            builder.ToTable("MedicineStockHospitas");
 
             builder.Property(m => m.Name)
                 .IsRequired()

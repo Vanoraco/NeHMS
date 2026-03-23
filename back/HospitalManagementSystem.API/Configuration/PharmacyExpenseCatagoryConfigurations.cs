@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<PharmacyExpenseCatagory> builder)
         {
+            builder.ToTable("PharmacyExpenseCatagorys");
             builder.Property(pec => pec.Id)
                .IsRequired()
                .HasMaxLength(50);

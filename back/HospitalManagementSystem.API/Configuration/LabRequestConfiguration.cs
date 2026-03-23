@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<LabRequest> builder)
         {
+            builder.ToTable("LabRequest");
             builder.Property(lr => lr.Id)
                 .IsRequired()
                 .HasMaxLength(50);

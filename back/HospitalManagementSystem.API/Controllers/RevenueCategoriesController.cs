@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RevenueCategory>>> GetRevenueCategorys()
         {
-            return await _context.RevenueCategorys.ToListAsync();
+            return await _context.RevenueCategories.ToListAsync();
         }
 
         // GET: api/RevenueCategories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RevenueCategory>> GetRevenueCategory(int id)
         {
-            var revenueCategory = await _context.RevenueCategorys.FindAsync(id);
+            var revenueCategory = await _context.RevenueCategories.FindAsync(id);
 
             if (revenueCategory == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<RevenueCategory>> PostRevenueCategory(RevenueCategory revenueCategory)
         {
-            _context.RevenueCategorys.Add(revenueCategory);
+            _context.RevenueCategories.Add(revenueCategory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRevenueCategory", new { id = revenueCategory.Id }, revenueCategory);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRevenueCategory(int id)
         {
-            var revenueCategory = await _context.RevenueCategorys.FindAsync(id);
+            var revenueCategory = await _context.RevenueCategories.FindAsync(id);
             if (revenueCategory == null)
             {
                 return NotFound();
             }
 
-            _context.RevenueCategorys.Remove(revenueCategory);
+            _context.RevenueCategories.Remove(revenueCategory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool RevenueCategoryExists(int id)
         {
-            return _context.RevenueCategorys.Any(e => e.Id == id);
+            return _context.RevenueCategories.Any(e => e.Id == id);
         }
     }
 }

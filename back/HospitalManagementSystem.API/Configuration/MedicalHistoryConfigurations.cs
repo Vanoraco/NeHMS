@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<MedicalHistory> builder)
         {
+            builder.ToTable("MedicalHistorys");
             builder.Property(mh => mh.Id)
              .IsRequired();
             builder.Property(mh => mh.PatientId)

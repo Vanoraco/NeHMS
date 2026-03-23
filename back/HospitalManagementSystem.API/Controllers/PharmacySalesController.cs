@@ -27,7 +27,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PharmacySale>>> GetpharmacySales()
         {
-            return await _context.pharmacySales.Include(ps => ps.PharmacyMedStock)
+            return await _context.PharmacySales.Include(ps => ps.PharmacyMedStock)
                 .Include(ps => ps.Employee)
                 
                 .ToListAsync();
@@ -37,7 +37,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PharmacySale>> GetPharmacySale(int id)
         {
-            var pharmacySale = await _context.pharmacySales.FindAsync(id);
+            var pharmacySale = await _context.PharmacySales.FindAsync(id);
 
             if (pharmacySale == null)
             {
@@ -83,7 +83,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PharmacySale>> PostPharmacySale(PharmacySale pharmacySale)
         {
-            _context.pharmacySales.Add(pharmacySale);
+            _context.PharmacySales.Add(pharmacySale);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPharmacySale", new { id = pharmacySale.Id }, pharmacySale);
@@ -93,13 +93,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePharmacySale(int id)
         {
-            var pharmacySale = await _context.pharmacySales.FindAsync(id);
+            var pharmacySale = await _context.PharmacySales.FindAsync(id);
             if (pharmacySale == null)
             {
                 return NotFound();
             }
 
-            _context.pharmacySales.Remove(pharmacySale);
+            _context.PharmacySales.Remove(pharmacySale);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -107,7 +107,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool PharmacySaleExists(int id)
         {
-            return _context.pharmacySales.Any(e => e.Id == id);
+            return _context.PharmacySales.Any(e => e.Id == id);
         }
     }
 }

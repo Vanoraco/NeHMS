@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MedicalHistory>>> GetMedicalHistorys()
         {
-            return await _context.MedicalHistorys.ToListAsync();
+            return await _context.MedicalHistories.ToListAsync();
         }
 
         // GET: api/MedicalHistories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MedicalHistory>> GetMedicalHistory(int id)
         {
-            var medicalHistory = await _context.MedicalHistorys.FindAsync(id);
+            var medicalHistory = await _context.MedicalHistories.FindAsync(id);
 
             if (medicalHistory == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<MedicalHistory>> PostMedicalHistory(MedicalHistory medicalHistory)
         {
-            _context.MedicalHistorys.Add(medicalHistory);
+            _context.MedicalHistories.Add(medicalHistory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMedicalHistory", new { id = medicalHistory.Id }, medicalHistory);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicalHistory(int id)
         {
-            var medicalHistory = await _context.MedicalHistorys.FindAsync(id);
+            var medicalHistory = await _context.MedicalHistories.FindAsync(id);
             if (medicalHistory == null)
             {
                 return NotFound();
             }
 
-            _context.MedicalHistorys.Remove(medicalHistory);
+            _context.MedicalHistories.Remove(medicalHistory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool MedicalHistoryExists(int id)
         {
-            return _context.MedicalHistorys.Any(e => e.Id == id);
+            return _context.MedicalHistories.Any(e => e.Id == id);
         }
     }
 }

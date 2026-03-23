@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PharmacyExpenseCatagory>>> GetPharmacyExpenseCatagorys()
         {
-            return await _context.PharmacyExpenseCatagorys.ToListAsync();
+            return await _context.PharmacyExpenseCategories.ToListAsync();
         }
 
         // GET: api/PharmacyExpenseCatagories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PharmacyExpenseCatagory>> GetPharmacyExpenseCatagory(int id)
         {
-            var pharmacyExpenseCatagory = await _context.PharmacyExpenseCatagorys.FindAsync(id);
+            var pharmacyExpenseCatagory = await _context.PharmacyExpenseCategories.FindAsync(id);
 
             if (pharmacyExpenseCatagory == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PharmacyExpenseCatagory>> PostPharmacyExpenseCatagory(PharmacyExpenseCatagory pharmacyExpenseCatagory)
         {
-            _context.PharmacyExpenseCatagorys.Add(pharmacyExpenseCatagory);
+            _context.PharmacyExpenseCategories.Add(pharmacyExpenseCatagory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPharmacyExpenseCatagory", new { id = pharmacyExpenseCatagory.Id }, pharmacyExpenseCatagory);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePharmacyExpenseCatagory(int id)
         {
-            var pharmacyExpenseCatagory = await _context.PharmacyExpenseCatagorys.FindAsync(id);
+            var pharmacyExpenseCatagory = await _context.PharmacyExpenseCategories.FindAsync(id);
             if (pharmacyExpenseCatagory == null)
             {
                 return NotFound();
             }
 
-            _context.PharmacyExpenseCatagorys.Remove(pharmacyExpenseCatagory);
+            _context.PharmacyExpenseCategories.Remove(pharmacyExpenseCatagory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool PharmacyExpenseCatagoryExists(int id)
         {
-            return _context.PharmacyExpenseCatagorys.Any(e => e.Id == id);
+            return _context.PharmacyExpenseCategories.Any(e => e.Id == id);
         }
     }
 }

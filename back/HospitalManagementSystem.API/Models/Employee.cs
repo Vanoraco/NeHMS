@@ -28,7 +28,7 @@ namespace HospitalManagementSystem.API.Models
         public EducationLevel EducationLevel { get; set; }
         public int EducationLevelId { get; set; }
         public EmployeeRole EmployeeRole { get; set; }
-        public String EmployeeRoleId { get; set; }
+        public int EmployeeRoleId { get; set; }
        // public string RoleId { get; set; }
        public EmployeeAuth EmployeeAuth { get; set; }
        //public string EmployeeAuthId { get; set; }
@@ -46,7 +46,7 @@ namespace HospitalManagementSystem.API.Models
 
 
         public ICollection<Schedule> Schedules { get; set; }
-        public ICollection<Inventory> Inventorys { get; set; }
+        public ICollection<Inventory> Inventories { get; set; }
         public ICollection<Prescription> Prescriptions { get; set; }
         public ICollection<Holiday> Holidays { get; set; }
         public ICollection<Recommendation> Recommendations { get; set; }
@@ -89,7 +89,7 @@ namespace HospitalManagementSystem.API.Models
             Recommendations = new Collection<Recommendation>();
             PatientSchedules = new Collection<PatientSchedule>();
             BillSchedules = new Collection<BillSchedule>();
-            Inventorys = new Collection<Inventory>();
+            Inventories = new Collection<Inventory>();
             Operations = new Collection<Operation>();
             Deaths = new Collection<Death>();
             MedicalCertificates = new Collection<MedicalCertificate>();

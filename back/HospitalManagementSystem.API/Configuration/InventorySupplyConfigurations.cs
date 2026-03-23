@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<InventorySupply> builder)
         {
+            builder.ToTable("InventorySupplys");
             builder.Property(IS => IS.Id)
                .IsRequired()
                .HasMaxLength(50);

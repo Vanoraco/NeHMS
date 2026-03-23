@@ -64,25 +64,25 @@ namespace HospitalManagementSystem.API.Data.Repositories
         private IGenericRepository<BillLab> _billlabs;
         private IGenericRepository<TaxRule> _taxrules;
         private IGenericRepository<Overtime> _overtimes;
-        private IGenericRepository<RevenueCategory> _revenuecategorys;
+        private IGenericRepository<RevenueCategory> _revenuecategories;
         private IGenericRepository<MedSupplier> _medsuppliers;
         private IGenericRepository<PharmacyMedStock> _pharmacymedstocks;
         private IGenericRepository<PharmacySale> _pharmacysales;
-        private IGenericRepository<InventorySupply> _inventorysupplys;
-        private IGenericRepository<Inventory> _inventorys;
-        private IGenericRepository<PharmacyExpenseCatagory> _pharmacyexpensecatagorys;
+        private IGenericRepository<InventorySupply> _inventorysupplies;
+        private IGenericRepository<Inventory> _inventories;
+        private IGenericRepository<PharmacyExpenseCatagory> _pharmacyexpensecategories;
         private IGenericRepository<PharmacyExpense> _pharmacyexpenses;
         private IGenericRepository<Birth> _births;
         private IGenericRepository<MedicalCertificate> _medicalcertificate;
         private IGenericRepository<PreExamCheckup> _preexamcheckup;
-        private IGenericRepository<ExpenseCatagory> _expensecatagory;
+        private IGenericRepository<ExpenseCatagory> _expensecategory;
         private IGenericRepository<Expense> _expense;
         private IGenericRepository<Allergy> _allergy;
         private IGenericRepository<MedicalInterviewAllergy> _medicalinterviewallergy;
         private IGenericRepository<EmployeeSalary> _employeesalary;
         private IGenericRepository<PayrollReport> _payrollreport;
         private IGenericRepository<MedicalHistoryDrug> _medicalhistorydrugs;
-        private IGenericRepository<MedicalHistory> _medicalhistory;
+        private IGenericRepository<MedicalHistory> _medicalhistories;
         private IGenericRepository<EmployeeAuth> _employeeauth;
         private IGenericRepository<Revenue> _revenues;
 
@@ -158,18 +158,18 @@ namespace HospitalManagementSystem.API.Data.Repositories
 
         public IGenericRepository<BillLab> BillLabs => _billlabs ??= new GenericRepository<BillLab>(_context);
         public IGenericRepository<Overtime> Overtimes => _overtimes ??= new GenericRepository<Overtime>(_context);
-        public IGenericRepository<RevenueCategory> RevenueCategorys => _revenuecategorys ??= new GenericRepository<RevenueCategory>(_context);
+        public IGenericRepository<RevenueCategory> RevenueCategories => _revenuecategories ??= new GenericRepository<RevenueCategory>(_context);
         public IGenericRepository<MedSupplier> MedSuppliers => _medsuppliers ??= new GenericRepository<MedSupplier>(_context);
         public IGenericRepository<PharmacyMedStock> PharmacyMedStocks => _pharmacymedstocks ??= new GenericRepository<PharmacyMedStock>(_context);
         public IGenericRepository<PharmacySale> PharmacySales => _pharmacysales ??= new GenericRepository<PharmacySale>(_context);
-        public IGenericRepository<InventorySupply> InventorySupplys => _inventorysupplys ??= new GenericRepository<InventorySupply>(_context);
-        public IGenericRepository<Inventory> Inventorys => _inventorys ??= new GenericRepository<Inventory>(_context);
-        public IGenericRepository<PharmacyExpenseCatagory> PharmacyExpenseCatagorys => _pharmacyexpensecatagorys ??= new GenericRepository<PharmacyExpenseCatagory>(_context);
+        public IGenericRepository<InventorySupply> InventorySupplies => _inventorysupplies ??= new GenericRepository<InventorySupply>(_context);
+        public IGenericRepository<Inventory> Inventories => _inventories ??= new GenericRepository<Inventory>(_context);
+        public IGenericRepository<PharmacyExpenseCatagory> PharmacyExpenseCategories => _pharmacyexpensecategories ??= new GenericRepository<PharmacyExpenseCatagory>(_context);
         public IGenericRepository<PharmacyExpense> PharmacyExpenses => _pharmacyexpenses ??= new GenericRepository<PharmacyExpense>(_context);
         public IGenericRepository<Birth> Births => _births ??= new GenericRepository<Birth>(_context);
         public IGenericRepository<MedicalCertificate> MedicalCertificates => _medicalcertificate ??= new GenericRepository<MedicalCertificate>(_context);
         public IGenericRepository<PreExamCheckup> PreExamCheckups => _preexamcheckup ??= new GenericRepository<PreExamCheckup>(_context);
-        public IGenericRepository<ExpenseCatagory> ExpenseCatagories => _expensecatagory ??= new GenericRepository<ExpenseCatagory>(_context);
+        public IGenericRepository<ExpenseCatagory> ExpenseCategories => _expensecategory ??= new GenericRepository<ExpenseCatagory>(_context);
         public IGenericRepository<Image> Images => _images ??= new GenericRepository<Image>(_context);
         public IGenericRepository<Expense> Expenses => _expense ??= new GenericRepository<Expense>(_context);
         public IGenericRepository<Allergy> Allergies => _allergy ??= new GenericRepository<Allergy>(_context);
@@ -177,7 +177,7 @@ namespace HospitalManagementSystem.API.Data.Repositories
         public IGenericRepository<EmployeeSalary> EmployeeSalaries => _employeesalary ??= new GenericRepository<EmployeeSalary>(_context);
         public IGenericRepository<PayrollReport> PayrollReports => _payrollreport ??= new GenericRepository<PayrollReport>(_context);
         public IGenericRepository<MedicalHistoryDrug> MedicalHistoryDrugs => _medicalhistorydrugs ??= new GenericRepository<MedicalHistoryDrug>(_context);
-        public IGenericRepository<MedicalHistory> MedicalHistorys => _medicalhistory??= new GenericRepository<MedicalHistory>(_context);
+        public IGenericRepository<MedicalHistory> MedicalHistories => _medicalhistories ??= new GenericRepository<MedicalHistory>(_context);
         public IGenericRepository<EmployeeAuth> EmployeeAuths => _employeeauth ??= new GenericRepository<EmployeeAuth>(_context);
         public IGenericRepository<Revenue> Revenues => _revenues ??= new GenericRepository<Revenue>(_context);
  }

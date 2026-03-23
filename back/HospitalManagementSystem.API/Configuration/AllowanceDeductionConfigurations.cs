@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<AllowanceDeduction> builder)
         {
+            builder.ToTable("AllowanceDeductionS");
             builder.Property(a => a.Id).IsRequired();
             builder.Property(a => a.EmployeeId).IsRequired();
             builder.Property(a => a.AllowanceDeductionTypeId).IsRequired();

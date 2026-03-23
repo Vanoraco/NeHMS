@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Inventory>>> GetInventory()
         {
-            return await _context.Inventorys.ToListAsync();
+            return await _context.Inventories.ToListAsync();
         }
 
         // GET: api/Inventories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Inventory>> GetInventory(int id)
         {
-            var inventory = await _context.Inventorys.FindAsync(id);
+            var inventory = await _context.Inventories.FindAsync(id);
 
             if (inventory == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Inventory>> PostInventory(Inventory inventory)
         {
-            _context.Inventorys.Add(inventory);
+            _context.Inventories.Add(inventory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetInventory", new { id = inventory.Id }, inventory);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInventory(int id)
         {
-            var inventory = await _context.Inventorys.FindAsync(id);
+            var inventory = await _context.Inventories.FindAsync(id);
             if (inventory == null)
             {
                 return NotFound();
             }
 
-            _context.Inventorys.Remove(inventory);
+            _context.Inventories.Remove(inventory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool InventoryExists(int id)
         {
-            return _context.Inventorys.Any(e => e.Id == id);
+            return _context.Inventories.Any(e => e.Id == id);
         }
     }
 }

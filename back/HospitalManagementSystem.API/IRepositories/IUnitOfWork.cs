@@ -62,21 +62,21 @@ namespace HospitalManagementSystem.API.IRepositories
         IGenericRepository<Medication> Medications { get; }
         IGenericRepository<TaxRule> TaxRules { get; }
         IGenericRepository<Overtime> Overtimes { get; }
-        IGenericRepository<RevenueCategory> RevenueCategorys { get; }
+        IGenericRepository<RevenueCategory> RevenueCategories { get; }
         
         IGenericRepository<PatientSchedule> PatientSchedules { get; }
         IGenericRepository<BillSchedule> BillSchedules { get; }
         IGenericRepository<MedSupplier> MedSuppliers { get; }
         IGenericRepository<PharmacyMedStock> PharmacyMedStocks { get; }
         IGenericRepository<PharmacySale> PharmacySales { get; }
-        IGenericRepository<InventorySupply> InventorySupplys { get; }
-        IGenericRepository<Inventory> Inventorys { get; }
-        IGenericRepository<PharmacyExpenseCatagory> PharmacyExpenseCatagorys { get; }
+        IGenericRepository<InventorySupply> InventorySupplies { get; }
+        IGenericRepository<Inventory> Inventories { get; }
+        IGenericRepository<PharmacyExpenseCatagory> PharmacyExpenseCategories { get; }
         IGenericRepository<PharmacyExpense> PharmacyExpenses { get; }
         IGenericRepository<Birth> Births { get; }
         IGenericRepository<MedicalCertificate> MedicalCertificates { get; }
         IGenericRepository<PreExamCheckup> PreExamCheckups { get; }
-        IGenericRepository<ExpenseCatagory> ExpenseCatagories { get; }
+        IGenericRepository<ExpenseCatagory> ExpenseCategories { get; }
         IGenericRepository<Expense> Expenses { get; }
         IGenericRepository<Allergy> Allergies { get; }
         IGenericRepository<MedicalInterviewAllergy> MedicalInterviewAllergies { get; }
@@ -84,7 +84,7 @@ namespace HospitalManagementSystem.API.IRepositories
         IGenericRepository<PayrollReport> PayrollReports { get; }
 
         IGenericRepository<MedicalHistoryDrug> MedicalHistoryDrugs { get; }
-        IGenericRepository<MedicalHistory> MedicalHistorys { get; }
+        IGenericRepository<MedicalHistory> MedicalHistories { get; }
         IGenericRepository<EmployeeAuth> EmployeeAuths { get; }
         IGenericRepository<Revenue> Revenues { get; }
 

@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<InventorySupply>>> GetInventorySupplys()
         {
-            return await _context.InventorySupplys.ToListAsync();
+            return await _context.InventorySupplies.ToListAsync();
         }
 
         // GET: api/InventorySupplies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<InventorySupply>> GetInventorySupply(int id)
         {
-            var inventorySupply = await _context.InventorySupplys.FindAsync(id);
+            var inventorySupply = await _context.InventorySupplies.FindAsync(id);
 
             if (inventorySupply == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<InventorySupply>> PostInventorySupply(InventorySupply inventorySupply)
         {
-            _context.InventorySupplys.Add(inventorySupply);
+            _context.InventorySupplies.Add(inventorySupply);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetInventorySupply", new { id = inventorySupply.Id }, inventorySupply);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInventorySupply(int id)
         {
-            var inventorySupply = await _context.InventorySupplys.FindAsync(id);
+            var inventorySupply = await _context.InventorySupplies.FindAsync(id);
             if (inventorySupply == null)
             {
                 return NotFound();
             }
 
-            _context.InventorySupplys.Remove(inventorySupply);
+            _context.InventorySupplies.Remove(inventorySupply);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool InventorySupplyExists(int id)
         {
-            return _context.InventorySupplys.Any(e => e.Id == id);
+            return _context.InventorySupplies.Any(e => e.Id == id);
         }
     }
 }

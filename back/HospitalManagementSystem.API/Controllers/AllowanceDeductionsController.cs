@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AllowanceDeduction>>> GetAllowanceDeductionS()
         {
-            return await _context.AllowanceDeductionS.ToListAsync();
+            return await _context.AllowanceDeductions.ToListAsync();
         }
 
         // GET: api/AllowanceDeductions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AllowanceDeduction>> GetAllowanceDeduction(int id)
         {
-            var allowanceDeduction = await _context.AllowanceDeductionS.FindAsync(id);
+            var allowanceDeduction = await _context.AllowanceDeductions.FindAsync(id);
 
             if (allowanceDeduction == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AllowanceDeduction>> PostAllowanceDeduction(AllowanceDeduction allowanceDeduction)
         {
-            _context.AllowanceDeductionS.Add(allowanceDeduction);
+            _context.AllowanceDeductions.Add(allowanceDeduction);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAllowanceDeduction", new { id = allowanceDeduction.Id }, allowanceDeduction);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAllowanceDeduction(int id)
         {
-            var allowanceDeduction = await _context.AllowanceDeductionS.FindAsync(id);
+            var allowanceDeduction = await _context.AllowanceDeductions.FindAsync(id);
             if (allowanceDeduction == null)
             {
                 return NotFound();
             }
 
-            _context.AllowanceDeductionS.Remove(allowanceDeduction);
+            _context.AllowanceDeductions.Remove(allowanceDeduction);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool AllowanceDeductionExists(int id)
         {
-            return _context.AllowanceDeductionS.Any(e => e.Id == id);
+            return _context.AllowanceDeductions.Any(e => e.Id == id);
         }
     }
 }

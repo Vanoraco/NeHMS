@@ -27,14 +27,14 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ExpenseCatagory>>> GetExpenseCatagories()
         {
-            return await _context.ExpenseCatagories.ToListAsync();
+            return await _context.ExpenseCategories.ToListAsync();
         }
 
         // GET: api/ExpenseCatagories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ExpenseCatagory>> GetExpenseCatagory(int id)
         {
-            var expenseCatagory = await _context.ExpenseCatagories.FindAsync(id);
+            var expenseCatagory = await _context.ExpenseCategories.FindAsync(id);
 
             if (expenseCatagory == null)
             {
@@ -80,7 +80,7 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ExpenseCatagory>> PostExpenseCatagory(ExpenseCatagory expenseCatagory)
         {
-            _context.ExpenseCatagories.Add(expenseCatagory);
+            _context.ExpenseCategories.Add(expenseCatagory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetExpenseCatagory", new { id = expenseCatagory.Id }, expenseCatagory);
@@ -90,13 +90,13 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExpenseCatagory(int id)
         {
-            var expenseCatagory = await _context.ExpenseCatagories.FindAsync(id);
+            var expenseCatagory = await _context.ExpenseCategories.FindAsync(id);
             if (expenseCatagory == null)
             {
                 return NotFound();
             }
 
-            _context.ExpenseCatagories.Remove(expenseCatagory);
+            _context.ExpenseCategories.Remove(expenseCatagory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -104,7 +104,7 @@ namespace HospitalManagementSystem.API.Controllers
 
         private bool ExpenseCatagoryExists(int id)
         {
-            return _context.ExpenseCatagories.Any(e => e.Id == id);
+            return _context.ExpenseCategories.Any(e => e.Id == id);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace HospitalManagementSystem.API.Models
         public string Address { get; set; }
         public int PhoneNumber { get; set; }
 
-        public ICollection<Inventory> Inventorys { get; set; }
+        public ICollection<Inventory> Inventories { get; set; }
         public InventorySupply()
         {
-            Inventorys = new Collection<Inventory>();
+            Inventories = new Collection<Inventory>();
         }
     }
 }

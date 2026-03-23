@@ -8,6 +8,7 @@ namespace HospitalManagementSystem.API.Configuration
     {
         public void Configure(EntityTypeBuilder<ExpenseCatagory> builder)
         {
+            builder.ToTable("ExpenseCatagories");
             builder.Property(ex => ex.Id)
              .IsRequired();
 

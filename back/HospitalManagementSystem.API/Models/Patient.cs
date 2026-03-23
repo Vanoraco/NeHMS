@@ -61,7 +61,7 @@ namespace HospitalManagementSystem.API.Models
 
        
         public ICollection<MedicalHistoryDrug> MedicalHistoryDrugs { get; set; }
-        public ICollection<MedicalHistory> MedicalHistorys { get; set; }
+        public ICollection<MedicalHistory> MedicalHistories { get; set; }
 
         public ICollection<EyewearPrescription> EyewearPrescriptions { get; set; }
 
@@ -76,7 +76,7 @@ namespace HospitalManagementSystem.API.Models
             Operations = new Collection<Operation>();
            
             Allergies = new Collection<Allergy>();
-            MedicalHistorys = new Collection<MedicalHistory>();
+            MedicalHistories = new Collection<MedicalHistory>();
             MedicalInterviewSocrates = new Collection<MedicalInterviewSocrates>();
             MedicalHistoryFamilies = new Collection<MedicalHistoryFamily>();
             MedicalHistoryDrugs = new Collection<MedicalHistoryDrug>();
