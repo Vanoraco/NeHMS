@@ -29,7 +29,9 @@ namespace HospitalManagementSystem.API.Tests
             return new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string?>
                 {
-                    ["AppSettings:Token"] = "test-secret-key-1234567890-123456"
+                    ["AppSettings:Token"] = "test-secret-key-1234567890-123456",
+                    ["AppSettings:Issuer"] = "TestIssuer",
+                    ["AppSettings:Audience"] = "TestAudience"
                 })
                 .Build();
         }

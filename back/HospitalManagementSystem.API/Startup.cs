@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Security.Claims;
 using System.Text;
@@ -29,10 +30,12 @@ namespace HospitalManagementSystem.API
     public class Startup
     {
         private const long MaxUploadBytes = 5 * 1024 * 1024;
+        private readonly IWebHostEnvironment _env;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -101,22 +104,28 @@ namespace HospitalManagementSystem.API
                     options.JsonSerializerOptions.WriteIndented = true;
                 });
 
+            var jwtKey = Configuration.GetSection("AppSettings:Token").Value;
+            var jwtIssuer = Configuration.GetSection("AppSettings:Issuer").Value;
+            var jwtAudience = Configuration.GetSection("AppSettings:Audience").Value;
+            if (string.IsNullOrWhiteSpace(jwtKey) || string.IsNullOrWhiteSpace(jwtIssuer) || string.IsNullOrWhiteSpace(jwtAudience))
+            {
+                throw new InvalidOperationException("Missing JWT configuration: AppSettings:Token, Issuer, Audience must be set.");
+            }
+
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = !_env.IsDevelopment();
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding
-                                .ASCII
-                                .GetBytes(Configuration.GetSection("AppSettings:Token").Value)
-                        ),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = jwtIssuer,
+                        ValidAudience = jwtAudience
                     };
                 });
 

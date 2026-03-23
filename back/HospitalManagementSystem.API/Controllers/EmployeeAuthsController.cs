@@ -63,7 +63,10 @@ namespace HospitalManagementSystem.API.Controllers
         }
         private string CreateToken(EmployeeAuth employeeAuth)
         {
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            var jwtKey = _configuration.GetSection("AppSettings:Token").Value;
+            var issuer = _configuration.GetSection("AppSettings:Issuer").Value;
+            var audience = _configuration.GetSection("AppSettings:Audience").Value;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var roleClaimValue = employeeAuth.Employee?.EmployeeRoleId.ToString() ?? string.Empty;
             var identity = new ClaimsIdentity(new Claim[]
             {
@@ -75,13 +78,16 @@ namespace HospitalManagementSystem.API.Controllers
 
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var tokenDescriptor = new SecurityTokenDescriptor {
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = identity,
-                Expires= DateTime.UtcNow.AddDays(1),
-                SigningCredentials= cred
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = cred,
+                Issuer = issuer,
+                Audience = audience
             };
-            var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var securityToken = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(securityToken);
             return jwt;
 
     }
