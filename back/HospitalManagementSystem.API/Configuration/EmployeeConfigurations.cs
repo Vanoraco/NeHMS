@@ -69,6 +69,11 @@ namespace HospitalManagementSystem.API.Configuration
             builder.Property(e => e.SpecializationId)
              .IsRequired();
 
+            builder.HasOne(e => e.EmployeeRole)
+                .WithMany(er => er.Employees)
+                .HasForeignKey(e => e.EmployeeRoleId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
         }
     }

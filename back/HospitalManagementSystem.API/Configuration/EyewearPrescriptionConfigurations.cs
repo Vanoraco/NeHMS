@@ -36,7 +36,7 @@ namespace HospitalManagementSystem.API.Configuration
             // Configure relationships
 
             builder.HasOne(ep => ep.Patient)
-                .WithMany() 
+                .WithMany(p => p.EyewearPrescriptions)
                 .HasForeignKey(ep => ep.PatientId)
                 .OnDelete(DeleteBehavior.NoAction); // Restrict cascading delete
 

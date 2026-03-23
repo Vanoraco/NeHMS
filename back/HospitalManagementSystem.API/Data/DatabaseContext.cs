@@ -68,7 +68,6 @@ namespace HospitalManagementSystem.API.Data
         public DbSet<Overtime> Overtimes { get; set; }
 
         public DbSet<RevenueCategory> RevenueCategorys { get; set; }
-        public DbSet<LabRequest> Labrequests { get; set; }
         public DbSet<LabTestResult> LabTestResults { get; set; }
         public DbSet<MedSupplier> MedSuppliers { get; set; }
         public DbSet<PharmacyMedStock> PharmacyMedStocks { get; set; }
@@ -148,7 +147,6 @@ namespace HospitalManagementSystem.API.Data
             builder.ApplyConfiguration(new PrescriptionConfigurations());
             builder.ApplyConfiguration(new NurseConfigurations());
             builder.ApplyConfiguration(new NotificationConfigurations());
-            builder.ApplyConfiguration(new HolidayConfigurations());
             builder.ApplyConfiguration(new SpecializationConfigurations());
             builder.ApplyConfiguration(new HolidayConfigurations());
             builder.ApplyConfiguration(new PathologyConfigurations());
@@ -173,7 +171,6 @@ namespace HospitalManagementSystem.API.Data
             builder.ApplyConfiguration(new OvertimeConfigurations());
             builder.ApplyConfiguration(new RevenueCategoryConfigurations());
             builder.ApplyConfiguration(new MedSupplierConfigurations());
-            builder.ApplyConfiguration(new PharmacyMedStockConfigurations());
             builder.ApplyConfiguration(new PharmacyMedStockConfigurations());
             builder.ApplyConfiguration(new NoticeConfigurations());
             builder.ApplyConfiguration(new BloodGroupStatusConfigurations());

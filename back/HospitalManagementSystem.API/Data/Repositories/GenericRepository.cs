@@ -75,6 +75,11 @@ namespace HospitalManagementSystem.API.Data.Repositories
         {
             var entity = await _dbTable.FindAsync(id);
 
+            if (entity == null)
+            {
+                return;
+            }
+
             _dbTable.Remove(entity);
         }
 
