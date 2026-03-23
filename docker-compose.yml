@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: nehms-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+    ports:
+      - "5432:5432"
+    volumes:
+      - nehms_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api:
+    build:
+      context: .
+      dockerfile: back/HospitalManagementSystem.API/Dockerfile
+    container_name: nehms-api
+    env_file:
+      - .env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DatabaseConnection: Host=db;Port=5432;Database=${POSTGRES_DB:?err};Username=${POSTGRES_USER:?err};Password=${POSTGRES_PASSWORD:?err}
+      AppSettings__Token: ${APP_TOKEN:?err}
+      EmailSettings__Email: ${EMAIL_USER:?err}
+      EmailSettings__Password: ${EMAIL_PASS:?err}
+      EmailSettings__Host: ${EMAIL_HOST:-smtp.gmail.com}
+      EmailSettings__Displayname: ${EMAIL_DISPLAYNAME:-NeHMS}
+      EmailSettings__Port: ${EMAIL_PORT:-587}
+      Twilio__AccountSid: ${TWILIO_ACCOUNT_SID:?err}
+      Twilio__AuthToken: ${TWILIO_AUTH_TOKEN:?err}
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    container_name: nehms-web
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+volumes:
+  nehms_db_data:

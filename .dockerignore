@@ -1,0 +1,16 @@
+.git
+.gitignore
+.idea
+.vscode
+.vs
+.env
+.env.*
+**/node_modules
+**/dist
+**/bin
+**/obj
+**/TestResults
+**/coverage
+**/*.log
+**/npm-debug.log
+**/yarn-error.log

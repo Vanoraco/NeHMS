@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY back/HospitalManagementSystem.sln back/
+COPY back/HospitalManagementSystem.API/*.csproj back/HospitalManagementSystem.API/
+RUN dotnet restore "back/HospitalManagementSystem.API/HospitalManagementSystem.API.csproj"
+COPY back/ back/
+WORKDIR /src/back/HospitalManagementSystem.API
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+EXPOSE 5000
+ENTRYPOINT ["dotnet", "HospitalManagementSystem.API.dll"]
