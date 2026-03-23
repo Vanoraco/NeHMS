@@ -224,4 +224,30 @@ Install front dependencies with npm
   cd front
   ng serve
 ```
+
+## Docker Quick Start
+
+Create a `.env` in the repo root with:
+
+```
+POSTGRES_DB=HospitalDatabase
+POSTGRES_USER=nehms
+POSTGRES_PASSWORD=nehms_password
+APP_TOKEN=change-me
+EMAIL_USER=change-me
+EMAIL_PASS=change-me
+TWILIO_ACCOUNT_SID=change-me
+TWILIO_AUTH_TOKEN=change-me
+```
+
+Then run:
+
+```bash
+docker compose up -d db
+docker compose build api web
+docker compose up -d
+```
+
+API: `http://localhost:5002/swagger`
+Web: `http://localhost:4200`
     
