@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +11,23 @@ namespace HospitalManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ImagesController : ControllerBase
     {
+        private const long MaxUploadBytes = 5 * 1024 * 1024;
+        private static readonly HashSet<string> AllowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".gif"
+        };
+        private static readonly HashSet<string> AllowedContentTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "image/jpeg",
+            "image/png",
+            "image/gif"
+        };
         // GET: api/<ImagesController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,34 +43,52 @@ namespace HospitalManagementSystem.API.Controllers
         }
 
         // POST api/<ImagesController>
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost]
         public IActionResult Post()
         {
             try
             {
+                if (!Request.HasFormContentType || Request.Form.Files.Count == 0)
+                {
+                    return BadRequest("No file uploaded");
+                }
+
                 var file = Request.Form.Files[0];
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                if (file.Length > 0)
+                if (file.Length <= 0 || file.Length > MaxUploadBytes)
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
-                    string message = "Successfully  Uploaded!!";
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                    return Ok(new { dbPath, message });
+                    return BadRequest("Invalid file size");
                 }
-                else
+
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                var extension = Path.GetExtension(fileName);
+                if (string.IsNullOrWhiteSpace(extension) || !AllowedExtensions.Contains(extension))
                 {
-                    return BadRequest();
+                    return BadRequest("Invalid file type");
                 }
+
+                if (!AllowedContentTypes.Contains(file.ContentType))
+                {
+                    return BadRequest("Invalid content type");
+                }
+
+                var safeFileName = $"{Guid.NewGuid():N}{extension}";
+                Directory.CreateDirectory(pathToSave);
+
+                var fullPath = Path.Combine(pathToSave, safeFileName);
+                var dbPath = Path.Combine(folderName, safeFileName);
+                string message = "Successfully  Uploaded!!";
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return Ok(new { dbPath, message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, $"Internal server error: {ex}");
+                return StatusCode(500, "Internal server error");
             }
         }
         // PUT api/<ImagesController>/5

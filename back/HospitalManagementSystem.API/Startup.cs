@@ -28,6 +28,8 @@ namespace HospitalManagementSystem.API
 {
     public class Startup
     {
+        private const long MaxUploadBytes = 5 * 1024 * 1024;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -83,9 +85,10 @@ namespace HospitalManagementSystem.API
 
             services.Configure<FormOptions>(o =>
             {
-                o.ValueLengthLimit = int.MaxValue;
-                o.MultipartBodyLengthLimit = int.MaxValue;
-                o.MemoryBufferThreshold = int.MaxValue;
+                o.ValueLengthLimit = (int)MaxUploadBytes;
+                o.MultipartBodyLengthLimit = MaxUploadBytes;
+                o.MultipartHeadersLengthLimit = 1024 * 64;
+                o.MemoryBufferThreshold = (int)MaxUploadBytes;
             });
 
             services.AddControllers();

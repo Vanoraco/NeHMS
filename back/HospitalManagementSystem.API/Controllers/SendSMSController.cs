@@ -1,4 +1,5 @@
-﻿using HospitalManagementSystem.API.Models;
+using HospitalManagementSystem.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Twilio;
@@ -10,6 +11,7 @@ namespace HospitalManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SendSMSController : ControllerBase
     {
         private readonly ITwilioRestClient _client;

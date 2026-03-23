@@ -1,5 +1,6 @@
-﻿using HospitalManagementSystem.API.Models;
+using HospitalManagementSystem.API.Models;
 using HospitalManagementSystem.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -13,6 +14,7 @@ namespace HospitalManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmailController : ControllerBase
     {
         private readonly DatabaseContext _context;
