@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using HospitalManagementSystem.API.Data;
 using HospitalManagementSystem.API.Data.Repositories;
+using HospitalManagementSystem.API.Data.Seed;
 using HospitalManagementSystem.API.IRepositories;
 using HospitalManagementSystem.API.Mapper;
 using HospitalManagementSystem.API.Models;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -153,6 +155,14 @@ namespace HospitalManagementSystem.API
                     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
                     db.Database.Migrate();
                 }
+            }
+
+            if (Configuration.GetValue<bool>("SEED_DEMO_DATA"))
+            {
+                using var scope = app.ApplicationServices.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Startup>>();
+                SeedDemoData.EnsureSeededAsync(db, logger).GetAwaiter().GetResult();
             }
 
             app.UseHttpsRedirection();
