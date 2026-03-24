@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalManagementSystem.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -214,6 +215,50 @@ namespace HospitalManagementSystem.API.Data.Seed
                     CountryId = country.Id,
                     DesignationId = designations[1].Id,
                     SpecializationId = specializations[1].Id
+                },
+                new Employee
+                {
+                    FirstName = "Biruk",
+                    MiddleName = "Amanuel",
+                    LastName = "Demissie",
+                    DateOfBirth = now.AddYears(-38),
+                    Age = 38,
+                    Address = "Addis Ababa",
+                    Phone = 911000003,
+                    EmailAddress = "biruk.demissie@example.com",
+                    ImageUrl = "employee3.png",
+                    GenderId = genders[0].Id,
+                    MaritalStatusId = maritalStatuses[1].Id,
+                    LanguageId = languages[0].Id,
+                    EducationLevelId = educationLevels[2].Id,
+                    EmployeeRoleId = employeeRoles[0].Id,
+                    MedicalDepartmentId = departments[2].Id,
+                    CityId = cities[0].Id,
+                    CountryId = country.Id,
+                    DesignationId = designations[0].Id,
+                    SpecializationId = specializations[0].Id
+                },
+                new Employee
+                {
+                    FirstName = "Selamawit",
+                    MiddleName = "Kiros",
+                    LastName = "Mulu",
+                    DateOfBirth = now.AddYears(-27),
+                    Age = 27,
+                    Address = "Dire Dawa",
+                    Phone = 911000004,
+                    EmailAddress = "selamawit.mulu@example.com",
+                    ImageUrl = "employee4.png",
+                    GenderId = genders[1].Id,
+                    MaritalStatusId = maritalStatuses[0].Id,
+                    LanguageId = languages[0].Id,
+                    EducationLevelId = educationLevels[0].Id,
+                    EmployeeRoleId = employeeRoles[3].Id,
+                    MedicalDepartmentId = departments[0].Id,
+                    CityId = cities[4].Id,
+                    CountryId = country.Id,
+                    DesignationId = designations[1].Id,
+                    SpecializationId = specializations[1].Id
                 }
             };
             context.Employees.AddRange(employees);
@@ -263,6 +308,38 @@ namespace HospitalManagementSystem.API.Data.Seed
             };
             context.Patients.AddRange(patients);
 
+            await context.SaveChangesAsync();
+
+            var passwordHasher = new PasswordHasher<EmployeeAuth>();
+            var demoPassword = "Password123!";
+            var employeeAuths = new List<EmployeeAuth>
+            {
+                new EmployeeAuth
+                {
+                    EmailAddress = "admin@nehms.demo",
+                    EmployeeId = employees[2].Id
+                },
+                new EmployeeAuth
+                {
+                    EmailAddress = "doctor@nehms.demo",
+                    EmployeeId = employees[0].Id
+                },
+                new EmployeeAuth
+                {
+                    EmailAddress = "nurse@nehms.demo",
+                    EmployeeId = employees[1].Id
+                },
+                new EmployeeAuth
+                {
+                    EmailAddress = "reception@nehms.demo",
+                    EmployeeId = employees[3].Id
+                }
+            };
+            foreach (var employeeAuth in employeeAuths)
+            {
+                employeeAuth.Password = passwordHasher.HashPassword(employeeAuth, demoPassword);
+            }
+            context.EmployeeAuths.AddRange(employeeAuths);
             await context.SaveChangesAsync();
 
             var pharmacyMedStocks = new List<PharmacyMedStock>
