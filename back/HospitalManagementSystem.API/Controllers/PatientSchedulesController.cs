@@ -34,19 +34,22 @@ namespace HospitalManagementSystem.API.Controllers
 
         // GET: api/PatientSchedules
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PatientSchedule>>> GetPatientSchedules()
+        public async Task<ActionResult> GetPatientSchedules([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            var patientschedules = await _context.PatientSchedules.Include(e => e.Patient)
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 25 : pageSize;
+            pageSize = pageSize > 100 ? 100 : pageSize;
+
+            var query = _context.PatientSchedules.Include(e => e.Patient)
                 .Include(e => e.Employee)
                 .Include(e => e.AdmissionType)
                 .Include(e => e.Room)
+                .OrderBy(e => e.Id);
 
-                .ToListAsync();
-           
-           // var result = _mapper.Map<IList<PatientScheduleDisplayDto>>(patientschedules);
-            return Ok(patientschedules);
+            var total = await query.CountAsync();
+            var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-               
+            return Ok(new { items, page, pageSize, total });
         }
 
         // GET: api/PatientSchedules/5
