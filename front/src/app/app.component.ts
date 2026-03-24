@@ -21,11 +21,6 @@ export class AppComponent {
 
   ngOnInit() {
     // this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.src = '../assets/js/main.js';
-    this.elementRef.nativeElement.appendChild(s);
-
     const storedData = localStorage.getItem('Role');
 
     if (storedData) {

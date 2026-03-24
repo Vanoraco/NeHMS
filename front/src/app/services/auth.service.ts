@@ -66,11 +66,14 @@ export class AuthService {
   decodeToken() {
     const jwtHelper = new JwtHelperService();
     const token = this.getToken();
+    if (!token) {
+      return null;
+    }
     return jwtHelper.decodeToken(token);
   }
   getEmailFromToken() {
-    this.decodeToken();
-    return this.decodeToken().email;
+    const decoded = this.decodeToken();
+    return decoded?.email || '';
   }
 
   errorHandler(error: any) {
