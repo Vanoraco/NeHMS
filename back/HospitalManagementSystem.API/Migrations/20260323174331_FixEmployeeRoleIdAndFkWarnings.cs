@@ -34,13 +34,8 @@ namespace HospitalManagementSystem.API.Migrations
                 name: "EmployeeRoleId1",
                 table: "Employees");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "EmployeeRoleId",
-                table: "Employees",
-                type: "integer",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
+            migrationBuilder.Sql(
+                "ALTER TABLE \"Employees\" ALTER COLUMN \"EmployeeRoleId\" TYPE integer USING \"EmployeeRoleId\"::integer;");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_EmployeeRoleId",
@@ -72,13 +67,8 @@ namespace HospitalManagementSystem.API.Migrations
                 type: "integer",
                 nullable: true);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "EmployeeRoleId",
-                table: "Employees",
-                type: "text",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "integer");
+            migrationBuilder.Sql(
+                "ALTER TABLE \"Employees\" ALTER COLUMN \"EmployeeRoleId\" TYPE text USING \"EmployeeRoleId\"::text;");
 
             migrationBuilder.AddColumn<int>(
                 name: "EmployeeRoleId1",
