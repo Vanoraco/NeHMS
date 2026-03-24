@@ -95,10 +95,17 @@ namespace HospitalManagementSystem.API.Data.Seed
             };
             context.Specializations.AddRange(specializations);
 
+            var bloodGroupStatuses = new List<BloodGroupStatus>
+            {
+                new BloodGroupStatus { Status = 1 },
+                new BloodGroupStatus { Status = 1 }
+            };
+            context.BloodGroupStatuses.AddRange(bloodGroupStatuses);
+
             var bloodGroups = new List<BloodGroup>
             {
-                new BloodGroup { Name = "A+" },
-                new BloodGroup { Name = "O+" }
+                new BloodGroup { Name = "A+", BloodGroupStatus = bloodGroupStatuses[0] },
+                new BloodGroup { Name = "O+", BloodGroupStatus = bloodGroupStatuses[1] }
             };
             context.BloodGroups.AddRange(bloodGroups);
 
