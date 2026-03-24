@@ -26,9 +26,17 @@ namespace HospitalManagementSystem.API.Controllers
 
         // GET: api/PharmacyExpenses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PharmacyExpense>>> GetPharmacyExpenses()
+        public async Task<ActionResult> GetPharmacyExpenses([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            return await _context.PharmacyExpenses.ToListAsync();
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 25 : pageSize;
+            pageSize = pageSize > 100 ? 100 : pageSize;
+
+            var query = _context.PharmacyExpenses.OrderBy(p => p.Id);
+            var total = await query.CountAsync();
+            var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            return Ok(new { items, page, pageSize, total });
         }
 
         // GET: api/PharmacyExpenses/5
