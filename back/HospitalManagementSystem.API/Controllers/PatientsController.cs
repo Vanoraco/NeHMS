@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace HospitalManagementSystem.API.Controllers
 {
@@ -31,14 +32,23 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet(Name ="GetPatients")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPatients()
+        public async Task<IActionResult> GetPatients([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
             try
             {
-                var patients = await _unitOfWork.Patients.GetAll();
-                var result = _mapper.Map<IList<PatientDisplayDto>>(patients);
+                page = page < 1 ? 1 : page;
+                pageSize = pageSize < 1 ? 25 : pageSize;
+                pageSize = pageSize > 100 ? 100 : pageSize;
 
-                return Ok(result);
+                var total = await _unitOfWork.Patients.Count();
+                var patients = await _unitOfWork.Patients.GetAll(
+                    orderBy: q => q.OrderBy(p => p.Id),
+                    page: page,
+                    pageSize: pageSize
+                );
+                var items = _mapper.Map<IList<PatientDisplayDto>>(patients);
+
+                return Ok(new { items, page, pageSize, total });
             }
             catch (Exception ex)
             {

@@ -11,7 +11,11 @@ namespace HospitalManagementSystem.API.IRepositories
         Task<IList<T>> GetAll(
             Expression<Func<T, bool>> expression = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<string> includes = null);
+            List<string> includes = null,
+            int? page = null,
+            int? pageSize = null);
+
+        Task<int> Count(Expression<Func<T, bool>> expression = null);
 
         Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null);
 

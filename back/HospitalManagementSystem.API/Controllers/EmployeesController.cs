@@ -31,16 +31,23 @@ namespace HospitalManagementSystem.API.Controllers
         [HttpGet(Name = "GetEmployees")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetEmployees([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
             try
             {
-                var employees = await _unitOfWork.Employees.GetAll();
-                var result = _mapper.Map<IList<EmployeeDisplayDto>>(employees);
-                
+                page = page < 1 ? 1 : page;
+                pageSize = pageSize < 1 ? 25 : pageSize;
+                pageSize = pageSize > 100 ? 100 : pageSize;
 
+                var total = await _unitOfWork.Employees.Count();
+                var employees = await _unitOfWork.Employees.GetAll(
+                    orderBy: q => q.OrderBy(e => e.Id),
+                    page: page,
+                    pageSize: pageSize
+                );
+                var items = _mapper.Map<IList<EmployeeDisplayDto>>(employees);
 
-                return Ok(result);
+                return Ok(new { items, page, pageSize, total });
             }
             catch (Exception ex)
             {

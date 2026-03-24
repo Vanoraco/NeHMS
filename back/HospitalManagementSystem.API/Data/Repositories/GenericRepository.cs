@@ -34,7 +34,7 @@ namespace HospitalManagementSystem.API.Data.Repositories
             return await query.AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)
+        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null, int? page = null, int? pageSize = null)
         {
             IQueryable<T> query = _dbTable;
 
@@ -52,7 +52,24 @@ namespace HospitalManagementSystem.API.Data.Repositories
             if (orderBy != null)
                 query = orderBy(query);
 
+            if (page.HasValue && pageSize.HasValue)
+            {
+                var pageValue = page.Value < 1 ? 1 : page.Value;
+                var pageSizeValue = pageSize.Value < 1 ? 1 : pageSize.Value;
+                query = query.Skip((pageValue - 1) * pageSizeValue).Take(pageSizeValue);
+            }
+
             return await query.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<int> Count(Expression<Func<T, bool>> expression = null)
+        {
+            IQueryable<T> query = _dbTable;
+
+            if (expression != null)
+                query = query.Where(expression);
+
+            return await query.CountAsync();
         }
 
         public async Task Insert(T entity)
