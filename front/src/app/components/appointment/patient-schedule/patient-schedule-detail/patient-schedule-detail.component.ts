@@ -28,7 +28,7 @@ export class PatientScheduleDetailComponent implements OnInit {
   modalTitle: string = '';
   activateBillSchedulesComponent: boolean = false;
   billSchedulesList: any;
-  url = 'https://creavers.com/hms/image/uploads/1111.jpg';
+  url = 'assets/img/placeholder.jpg';
 
   // Map to display data associate with foreign keys
   patientMap: Map<number, string> = new Map();
